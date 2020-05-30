@@ -1,5 +1,4 @@
 const { exec } = require('child_process')
-require('dotenv').config()
 
 module.exports = {
     executeScript: function () {

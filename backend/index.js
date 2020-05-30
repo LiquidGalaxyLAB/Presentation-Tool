@@ -1,5 +1,9 @@
 const express = require('express')
 const app = express()
+const bodyParser = require('body-parser')
+
+app.use(bodyParser.urlencoded({extend: false})) //extends allows you to send big data
+app.use(bodyParser.json())
 
 // routes
 const presentationRoutes = require('./api/routes/presentation')
