@@ -2,7 +2,7 @@ const { exec } = require('child_process')
 
 module.exports = {
     executeScript: function(){
-        exec(`${process.env.FILES_PATH}/api/parser/scripts/test.sh`, (err, stdout, stderr) => {
+        exec(`${process.env.FILE_PATH}/api/parser/scripts/test.sh`, (err, stdout, stderr) => {
             if (err) {
                 //some err occurred
                 console.error(err)

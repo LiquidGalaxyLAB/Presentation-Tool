@@ -1,4 +1,3 @@
-const { exec } = require('child_process')
 const storage = require('../parser/modules/storage')
 const execute = require('../parser/modules/execute')
 

@@ -7,7 +7,7 @@ var multer = require('multer')
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
         //storage/all - both dirs need to be created before receiving a request
-        cb(null, `${process.env.FILES_PATH}/storage/all`)
+        cb(null, `${process.env.FILE_PATH}/storage/all`)
     },
     filename: function (req, file, cb) {
         //const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
