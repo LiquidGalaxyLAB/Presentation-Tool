@@ -72,5 +72,5 @@ async function callParser() {
 }
 
 async function sendToStorage(media, path) {
-    return await parser.sendMediaToLG(media, path)
+    return await parser.mediaStorage(media, path)
 }
