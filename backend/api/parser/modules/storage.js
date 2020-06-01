@@ -57,5 +57,11 @@ module.exports = {
             }
 
         }
+    },
+    deleteMediaFromLG: function () {
+        console.log('DELETE ALL MEDIA RELATED TO THAT PRESENTATION')
+    },
+    updateMediaInLG: function(data){
+        console.log('UPDATE',data)
     }
 }

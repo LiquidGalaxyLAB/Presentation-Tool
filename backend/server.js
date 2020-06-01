@@ -1,5 +1,5 @@
 require('dotenv').config()
-require('./database/main')
+require('./database/index')
 const http = require('http')
 const port = process.env.PORT || 3000
 const app = require('./index')
