@@ -34,7 +34,7 @@ router.get("/execute/:id", (req, res, next) => {
 // get all
 // gets all saved presentations from the database
 router.get("/getall", (req, res, next) => {
-    getAllPresentations().then((array) => {
+   getAllPresentations().then((array) => {
         console.log('array', array)
         res.send(array)
     })

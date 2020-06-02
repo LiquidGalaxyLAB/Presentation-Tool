@@ -3,8 +3,9 @@ const execute = require('../parser/modules/execute')
 const database = require('../parser/modules/database')
 
 module.exports = {
-    executePresentation: function (id) {
-        execute.execPresentation(id)
+    executePresentation: async function (id) {
+       var p = await database.getPresentationById(id)
+       execute.execPresentation(p)
     },
     mediaStorage: function (media, path) {
         storage.sendMediaToDefinedLG(media,path)

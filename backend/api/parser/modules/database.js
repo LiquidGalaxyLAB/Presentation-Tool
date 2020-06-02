@@ -14,25 +14,31 @@ module.exports = {
     },
     // Deletes a document into the presentations collection
     deletePresentation: function(id){
-        console.log('DELETE FROM MONGO',id)
+        Presentation.deleteOne({_id: id}, (err) =>{
+            if(!err){
+                console.log('Document deleted with success', id)
+            }
+            else{
+                console.log('Unable to delete document', err)
+            }
+        })
     },
     // Updates a document into the presentations collection
     updatePresentation: function(data){
         console.log('UPDATE DOC IN MONGO',data)
     },
     // Gets a presentation by ID from the presentations collection 
-    getPresentationById: function(id){
-        console.log('get one')
+    getPresentationById: async function(id){
+        const document = await Presentation.find({_id:id})
+        console.log('Retrieved doc with success',document)
+
+        return document
     },
     // Gets all documents from the presentations collection
-    getAllPresentations: function(){
-        console.log('GET ALL FROM MONGO',id)
+    getAllPresentations: async function(){
+        const array = await Presentation.find({})
+        console.log('Retrieved all docs with success',array)
 
-        //testing only
-        var array = [
-            {oi: "aaaaaaaaaaa"},
-            {tchau: "aaaaaaaaaaa"}
-        ]
         return array
     }
 }
