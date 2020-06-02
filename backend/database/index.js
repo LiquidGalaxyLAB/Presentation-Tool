@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-module.exports = mongoose.connect(`mongodb://localhost:27017/${process.env.DATABASE_NAME}`,{
+module.exports = mongoose.connect(`mongodb://localhost:27017/presentationsDB`,{
     useNewUrlParser: true,
     useUnifiedTopology: true
 })
@@ -10,3 +10,45 @@ db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
   console.log('Connected to db')
 });
+
+
+// Defining the model schema
+var PresentationSchema = new mongoose.Schema({
+  id:{
+    type: String,
+    require: true
+  },
+  title: {
+    type: String,
+    require: true
+  },
+  description: {type: String},
+  audiopath: {type: String},
+  slides: [{
+    _id:false,
+    order: {type: Number, require: true},
+    duration: {type: Number, require: true},
+    audiopath: {type:String},
+    screens: [{
+      _id:false,
+      screennumber: {type: Number, require:true},
+      media: [{
+        _id:false,
+        filename: {type: String, require:true},
+        type: {type: String, require:true},
+        storagepath: {type: String, require: true},
+        position: {type: String, require:true},
+        sharing: {type: String},
+        partner: {type: Number}
+      }]
+    }]
+  }]
+})
+
+// Defining the collection
+mongoose.model('presentations',PresentationSchema)
+var Presentation = mongoose.model('presentations')
+module.exports = Presentation
+
+
+
