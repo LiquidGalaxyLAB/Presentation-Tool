@@ -95,8 +95,6 @@ router.patch("/update", (req,res, next) =>{
     .catch(() => {
         res.json('500')
     })
-
-    res.json('200')
 })
 
 module.exports = router

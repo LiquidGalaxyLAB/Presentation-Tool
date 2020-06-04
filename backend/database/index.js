@@ -23,12 +23,13 @@ var PresentationSchema = new mongoose.Schema({
     require: true
   },
   description: {type: String},
+  category: {type: String},
   audiopath: {type: String},
   slides: [{
     _id:false,
-    order: {type: Number, require: true},
     duration: {type: Number, require: true},
     audiopath: {type:String},
+    flyto: {type: String},
     screens: [{
       _id:false,
       screennumber: {type: Number, require:true},

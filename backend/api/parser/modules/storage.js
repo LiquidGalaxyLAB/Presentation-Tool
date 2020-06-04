@@ -18,7 +18,7 @@ module.exports = {
 
                     }
                 })
-                exec(`cp ${process.env.FILE_PATH}/storage/all/${media[i].filename} ${process.env.FILE_PATH}/storage/${path}/`, (err, stdout, stderr) => {
+                exec(`cp ${process.env.FILE_PATH}/storage/all/"${media[i].filename}" ${process.env.FILE_PATH}/storage/${path}/`, (err, stdout, stderr) => {
                     if (err) {
                         //some err occurred
                         console.error(err)
@@ -43,7 +43,7 @@ module.exports = {
                         console.log(`stderr: ${stderr}`);
                     }
                 })
-                exec(`scp ${process.env.FILE_PATH}/storage/all/${media[i].filename} lg${media[i].screen}:${process.env.SLAVE_STORAGE}/${path}/`, (err, stdout, stderr) => {
+                exec(`scp ${process.env.FILE_PATH}/storage/all/"${media[i].filename}" lg${media[i].screen}:${process.env.SLAVE_STORAGE}/${path}/`, (err, stdout, stderr) => {
                     if (err) {
                         //some err occurred
                         console.error(err)

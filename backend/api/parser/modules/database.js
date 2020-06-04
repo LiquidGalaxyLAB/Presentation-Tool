@@ -24,8 +24,15 @@ module.exports = {
         })
     },
     // Updates a document into the presentations collection
-    updatePresentation: function(data){
-        console.log('UPDATE DOC IN MONGO',data)
+    updatePresentation: async function(obj){
+        Presentation.updateOne({_id: obj.id},{ $set : obj.data}, (err) =>{
+            if(!err){
+                console.log('Document updated with success')
+            }
+            else{
+                console.log('Unable to update document')
+            }
+        } )
     },
     // Gets a presentation by ID from the presentations collection 
     getPresentationById: async function(id){
