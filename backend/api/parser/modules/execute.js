@@ -121,25 +121,13 @@ function openImage(media, screen) {
     promise.then(() => {
         console.log('Execute')
         if (screen == 1) {
-            file_path = `${process.env.FILE_PATH}/storage`
+            file_path = `${process.env.FILE_PATH}/storage/${media.storagepath}/${media.filename}`
         }
         else {
-            file_path = `${process.env.SLAVE_STORAGE}`
+            file_path = `${process.env.SLAVE_STORAGE}/${media.filename}`
         }
 
-        // TEST ON LG
-        exec(`${process.env.FILE_PATH}/api/parser/scripts/openImage.sh ${screen} ${file_path}/"${media.storagepath}"/"${media.filename}" ${width} ${height} ${x} ${y}`, (err, stdout, stderr) => {
-            // BUG = EXEC HAS A MAX BUFFER LIMIT, WHEN ACHIEVES IT, STOPS EXECUTION 
-            // putting on background doesn't work, possible solution: increase buffer size 
-            if (err) {
-                //some err occurred
-                console.error(err)
-            } else {
-                // the *entire* stdout and stderr (buffered)
-                console.log(`stdout: ${stdout}`);
-                console.log(`stderr: ${stderr}`);
-            }
-        })
+       runOpenScript('Image',screen, file_path, width,height,x,y)
     })
     promise.catch(() => {
         console.log('Error on executing script')
@@ -215,8 +203,36 @@ function openVideo(media, screen) {
     })
 }
 
-function openSharedImage() {
+function runOpenScript(type,screen, file_path, width, height, x, y){
+ // TEST ON LG
+ exec(`${process.env.FILE_PATH}/api/parser/scripts/open${type}.sh ${screen} ${file_path} ${width} ${height} ${x} ${y}`, (err, stdout, stderr) => {
+    // BUG = EXEC HAS A MAX BUFFER LIMIT, WHEN ACHIEVES IT, STOPS EXECUTION 
+    // putting on background doesn't work, possible solution: increase buffer size 
+    if (err) {
+        //some err occurred
+        console.error(err)
+    } else {
+        // the *entire* stdout and stderr (buffered)
+        console.log(`stdout: ${stdout}`);
+        console.log(`stderr: ${stderr}`);
+    }
+})
+}
+
+async function openSharedImage(media,screen) {
+    var file_path
+
+    if(screen != 1)
+        file_path = `${process.env.SLAVE_STORAGE}/${media.storagepath}`
+    else
+        file_path = `${process.env.FILE_PATH}/storage/${media.storagepath}`
     
+    await storage.cropImageInTwo(screen, media.partner, file_path, media.filename,media.storagepath)
+    .then(() =>{
+        // very wrong and hardcoded for now
+        runOpenScript('Image',screen, file_path, `${media.filename}Left.png`,800,800,2000,500)
+        runOpenScript('Image',media.partner,file_path, `${media.filename}Right.png`,800,800,0,500 )
+    })
 }
 
 function openSharedVideo(media, screen) {

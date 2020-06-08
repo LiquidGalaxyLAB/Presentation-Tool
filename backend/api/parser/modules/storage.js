@@ -1,6 +1,30 @@
 const { exec } = require('child_process')
 
 module.exports = {
+    cropImageInTwo: function(leftScreen,rightScreen,file_path,file_name,folder){
+        // checks if file already exists
+        exec(`if [ ! -f ${file_path} ]; then 
+           bash ${process.env.FILE_PATH}/api/parser/scripts/cropImage2.sh ${leftScreen} ${rightScreen} ${file_path} ${file_name} ${folder}
+        fi`,(err, stdout, stderr) => {
+            if(err){
+                console.log(err)
+                console.log(stderr)
+            }
+            else{
+                console.log('stdout',stdout)
+            }
+        } )
+
+        /*exec(`${process.env.FILE_PATH}/api/parser/scripts/cropImage2.sh ${leftScreen} ${rightScreen} ${file_path} ${file_name} ${folder}`, (err, stdout, stderr) => {
+            if(err){
+                console.log(err)
+                console.log(stderr)
+            }
+            else{
+                console.log('stdout',stdout)
+            }
+        })*/
+    },
     sendMediaToDefinedLG: function (media, path) {
         for (var i = 0; i < media.length; i++) {
             if (media[i].screen == 1) {
@@ -30,7 +54,6 @@ module.exports = {
                 })
             }
             else {
-                //TEST IN THE LG LATER
                 exec(`ssh lg${media[i].screen} "if [ ! -d ${process.env.SLAVE_STORAGE}/${path} ]; then 
                 mkdir ${process.env.SLAVE_STORAGE}/${path}
                 fi"`, (err, stdout, stderr) => {
