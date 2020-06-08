@@ -4,6 +4,7 @@ var fs = require('fs')
 module.exports = {
     execPresentation: async function (presentationJson) {
         // if presentation has an audio that will be played the whole time
+        console.log('ENTERED EXE')
         if ('audiopath' in presentationJson) {
             //execAudio(presentationJson.audiopath)
         }
@@ -11,8 +12,8 @@ module.exports = {
         // iterates the slides
         for (var i = 0; i < presentationJson.slides.length; i++) {
             execSlide(presentationJson.slides[i])
-            //await sleep(presentationJson.slides[i].duration).then(() => killSlide(presentationJson.slides[i]))
-            await sleep(120000).then(() => killSlide(presentationJson.slides[i]))
+            await sleep(presentationJson.slides[i].duration).then(() => killSlide(presentationJson.slides[i]))
+            //await sleep(120000).then(() => killSlide(presentationJson.slides[i]))
         }
     },
 
@@ -28,7 +29,7 @@ function killSlide(slide) {
 
 function execSlide(slide) {
     if ('flyto' in slide) {
-        //flyTo(slide.flyto)
+        flyTo(slide.flyto)
     }
     if ('audiopath' in slide) {
         //execAudio(slide.audiopath)
@@ -38,7 +39,7 @@ function execSlide(slide) {
         screen.media.forEach(m => {
             if ('type' in m) {
                 if (m.type == 'image') {
-                    if (sharing) {
+                    if (m.sharing) {
                         openSharedImage(m, screen.screennumber)
                     }
                     else{
@@ -47,7 +48,7 @@ function execSlide(slide) {
                     
                 }
                 else if (m.type = 'video') {
-                    if (sharing) {
+                    if (m.sharing) {
                         openSharedVideo(m, screen.screennumber)
                     }
                     else{
@@ -124,7 +125,7 @@ function openImage(media, screen) {
             file_path = `${process.env.FILE_PATH}/storage/${media.storagepath}/${media.filename}`
         }
         else {
-            file_path = `${process.env.SLAVE_STORAGE}/${media.filename}`
+            file_path = `${process.env.SLAVE_STORAGE}/${media.storagepath}/${media.filename}`
         }
 
        runOpenScript('Image',screen, file_path, width,height,x,y)

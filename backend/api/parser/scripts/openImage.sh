@@ -9,9 +9,7 @@ HEIGHT=$4	# height of the image
 XPOSITION=$5    # the position in X around the screen
 YPOSITION=$6    # the position in Y around the screen
 LG_MAX=$(sed "2q;d" ${HOME}/personavars.txt)      # maximum screens this lg has
-DIMENSION_LARGEST=$(xrandr | grep '*' | head -n1 | awk '{print $1}' | cut -d 'x' -f1) # gets the screen dimension of the largest side
-DIMENSION_SHORTEST=$(xrandr | grep '*' | head -n1 | awk '{print $1}' | cut -d 'x' -f2) # gets the screen dimension of the shortest side
-SIZE="${WIDTH}x${HEIGHT}"
+ORIENTATION=$(xrandr --query --verbose | grep -w "connected" | cut -d ' ' -f 6)
 
 echo "LG_SCREEN: $LG_SCREEN"
 echo "FILE_PATH: $FILE_PATH"
@@ -20,11 +18,25 @@ echo "HEIGHT: $HEIGHT"
 echo "XPOSITION: $XPOSITION"
 echo "YPOSITION: $YPOSITION"
 echo "LG_MAX: $LG_MAX"
-echo "DIMENSION_LARGEST: $DIMENSION_LARGEST"
-echo "DIMENSION_SHORTEST: $DIMENSION_SHORTEST"
-echo "SIZE: $SIZE"
+echo "ORIENTATION: $ORIENTATION"
 
 # Checking parameters passed
+
+# check orientation
+if [ "$ORIENTATION" = "right" ] ; then
+    # invert width and height
+    echo "ORIENTATION $ORIENTATION"
+    #AUX=$WIDTH
+    #WIDTH=$HEIGHT
+    #HEIGHT=$AUX
+    AUX=$XPOSITION
+    XPOSITION=$YPOSITION
+    YPOSITION=$AUX
+fi
+
+# concat the string of size
+SIZE="${WIDTH}x${HEIGHT}"
+echo "SIZE: $SIZE"
 
 # check if lg screen exists
 if [[ $LG_SCREEN -gt 0 ]] && [[ $LG_SCREEN -le $LG_MAX ]] ; then
