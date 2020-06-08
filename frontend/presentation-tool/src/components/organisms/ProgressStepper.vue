@@ -1,4 +1,5 @@
 <template>
+<v-container>
   <v-stepper v-model="e1">
     <v-stepper-header>
       <v-stepper-step editable :complete="e1 > 1" step="1" color="pink">Basic Information</v-stepper-step>
@@ -54,6 +55,7 @@
       </v-stepper-content>
     </v-stepper-items>
   </v-stepper>
+</v-container>
 </template>
 
 <script>
