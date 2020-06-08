@@ -93,7 +93,7 @@ function openImage(media, screen) {
         height = maxY / 3
         //i have the dimensions of the screen, now i have to calculate the positions
         if (media.position == 'top') {
-            y = 0   
+            y = 0
         }
         else if (media.position == 'center') {
             y = maxY / 3
@@ -114,7 +114,7 @@ function openImage(media, screen) {
         else {
             file_path = `${process.env.SLAVE_STORAGE}`
         }
-        
+
         // TEST ON LG
         exec(`${process.env.FILE_PATH}/api/parser/scripts/openImage.sh ${screen} ${file_path}/"${media.storagepath}"/"${media.filename}" ${width} ${height} ${x} ${y}`, (err, stdout, stderr) => {
             // BUG = EXEC HAS A MAX BUFFER LIMIT, WHEN ACHIEVES IT, STOPS EXECUTION 
@@ -129,7 +129,7 @@ function openImage(media, screen) {
             }
         })
     })
-    promise.catch(() =>{
+    promise.catch(() => {
         console.log('Error on executing script')
     })
 
@@ -137,6 +137,48 @@ function openImage(media, screen) {
 
 function openVideo(media, screen) {
     console.log('video media/screen', media, screen)
+    var x, y, width, height, file_path
+
+    x = 0
+    width = 100
+    height = 100 / 3
+    //i have the dimensions of the screen, now i have to calculate the positions
+    if (media.position == 'top') {
+        y = 0
+    }
+    else if (media.position == 'center') {
+        y = 100 / 3
+    }
+    else if (media.position == 'bottom') {
+        y = 2 * (100 / 3)
+    }
+    else {
+        y = 0
+    }
+    console.log('Final dimension', x, y, width, height)
+
+    console.log('Execute')
+    if (screen == 1) {
+        file_path = `${process.env.FILE_PATH}/storage`
+    }
+    else {
+        file_path = `${process.env.SLAVE_STORAGE}`
+    }
+
+    // TEST ON LG
+    exec(`${process.env.FILE_PATH}/api/parser/scripts/openVideo.sh ${screen} ${file_path}/"${media.storagepath}"/"${media.filename}" ${width} ${height} ${x} ${y}`, (err, stdout, stderr) => {
+        // BUG = EXEC HAS A MAX BUFFER LIMIT, WHEN ACHIEVES IT, STOPS EXECUTION 
+        // putting on background doesn't work, possible solution: increase buffer size 
+        if (err) {
+            //some err occurred
+            console.error(err)
+        } else {
+            // the *entire* stdout and stderr (buffered)
+            console.log(`stdout: ${stdout}`);
+            console.log(`stderr: ${stderr}`);
+        }
+    })
+
 }
 
 function openSharedImage() {
