@@ -67,35 +67,71 @@ function execAudio(audiopath) {
     })
 
 }
-async function openImage(media, screen) {
-    //console.log('img media/screen', media, screen)
+function openImage(media, screen) {
+    var x, y, maxX, maxY, width, height, dimensions, file_path
 
-    // bug -> this is ending before the promise inside calculatePosition
-    var position = await calculatePosition(media.position)
-    position.then(() => {
-        console.log('pos', position)
+    var promise = new Promise((resolve, reject) => {
+        exec("xdpyinfo | awk '/dimensions/\{print $2\}'", (err, stdout, stderr) => {
+            if (err) {
+                console.log('ERROR', stderr)
+                reject()
+            }
+            else {
+                dimensions = stdout
+                resolve()
+            }
+        })
     })
-
-    var file_path
-    if (screen == 1) {
-        file_path = `${process.env.FILE_PATH}/storage`
-    }
-    else {
-        file_path = `${process.env.SLAVE_STORAGE}`
-    }
-
-    /* exec(`${process.env.FILE_PATH}/api/parser/scripts/openImage.sh ${screen} ${file_path}/"${media.storagepath}"/"${media.filename}" width height xpos ypos`, (err, stdout, stderr) => {
-         // BUG = EXEC HAS A MAX BUFFER LIMIT, WHEN ACHIEVES IT, STOPS EXECUTION 
-         // putting on background doesn't work, possible solution: increase buffer size 
-         if (err) {
-             //some err occurred
-             console.error(err)
-         } else {
-             // the *entire* stdout and stderr (buffered)
-             console.log(`stdout: ${stdout}`);
-             console.log(`stderr: ${stderr}`);
-         }
-     })*/
+    promise.then(() => {
+        console.log('Dimensions')
+        dimensions = dimensions.replace(/\n/g, '')
+        dimensions = dimensions.split('x')
+        maxX = dimensions[0]
+        maxY = dimensions[1]
+        x = 0
+        width = maxX
+        height = maxY / 3
+        //i have the dimensions of the screen, now i have to calculate the positions
+        if (media.position == 'top') {
+            y = 0   
+        }
+        else if (media.position == 'center') {
+            y = maxY / 3
+        }
+        else if (media.position == 'bottom') {
+            y = 2 * (maxY / 3)
+        }
+        else {
+            y = 0
+        }
+        console.log('Final dimension', x, y, width, height)
+    })
+    promise.then(() => {
+        console.log('Execute')
+        if (screen == 1) {
+            file_path = `${process.env.FILE_PATH}/storage`
+        }
+        else {
+            file_path = `${process.env.SLAVE_STORAGE}`
+        }
+        
+        // TEST ON LG
+        exec(`${process.env.FILE_PATH}/api/parser/scripts/openImage.sh ${screen} ${file_path}/"${media.storagepath}"/"${media.filename}" ${width} ${height} ${x} ${y}`, (err, stdout, stderr) => {
+            // BUG = EXEC HAS A MAX BUFFER LIMIT, WHEN ACHIEVES IT, STOPS EXECUTION 
+            // putting on background doesn't work, possible solution: increase buffer size 
+            if (err) {
+                //some err occurred
+                console.error(err)
+            } else {
+                // the *entire* stdout and stderr (buffered)
+                console.log(`stdout: ${stdout}`);
+                console.log(`stderr: ${stderr}`);
+            }
+        })
+    })
+    promise.catch(() =>{
+        console.log('Error on executing script')
+    })
 
 }
 
@@ -108,66 +144,6 @@ function openSharedImage() {
 }
 
 function openSharedVideo() {
-
-}
-
-function calculatePosition(position) {
-    var x, y, maxX, maxY, width, height, dimensions
-    new Promise((resolve, reject) => {
-        exec("xdpyinfo | awk '/dimensions/\{print $2\}'", (err, stdout, stderr) => {
-            console.log(`stdout: ${stdout}`);
-            console.log(`stderr: ${stderr}`);
-            dimensions = stdout
-            resolve()
-        })
-    })
-        .then(() => {
-            dimensions = dimensions.replace(/\n/g, '')
-            dimensions = dimensions.split('x')
-            maxX = dimensions[0]
-            maxY = dimensions[1]
-            //i have the dimensions of the screen, now i have to calculate the positions
-            if (position == 'top') {
-                x = 0
-                y = 0
-                width = maxX
-                height = maxY / 3
-            }
-            else if (position == 'center') {
-                x = 0
-                y = maxY / 3
-                width = maxX
-                height = maxY / 3
-            }
-            else if (position == 'bottom') {
-                x = 0
-                y = 2 * (maxY / 3)
-                width = maxX
-                height = maxY / 3
-            }
-            else {
-                x = 0
-                y = 0
-                width = maxX
-                height = maxY / 3
-            }
-        })
-        .then(() => {
-
-            console.log('POS', x, y, width, height)
-            return [x, y, width, height]
-        })
-        .catch(() => {
-            console.log('Error when loading screen dimensions')
-            x = 0
-            y = 0
-            width = 800
-            height = 800
-
-            console.log('POS', x, y, width, height)
-            return [x, y, width, height]
-        })
-
 
 }
 
