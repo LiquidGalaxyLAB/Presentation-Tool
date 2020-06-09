@@ -4,24 +4,49 @@
 
 LG_SCREEN=$1    # the first parameter is the lg screen
 FILE_PATH=$2    # the path where the video is located
-WIDTH=$3	# width of the videoplayer
-HEIGHT=$4	# height of the videoplayer
-XPOSITION=$5    # the position in X around the screen
-YPOSITION=$6    # the position in Y around the screen
+POSITION=$3     # string thar represents the location in the screen
+
 LG_MAX=$(sed "2q;d" ${HOME}/personavars.txt)      # maximum screens this lg has
-SIZE="${WIDTH}x${HEIGHT}"
-POSITION="${XPOSITION}%+${YPOSITION}%"
+ORIENTATION=$(xrandr --query --verbose | grep -w "connected" | cut -d ' ' -f 6)
+DIMENSION_LARGEST=$(xrandr | grep '*' | head -n1 | awk '{print $1}' | cut -d 'x' -f1) # gets the screen dimension of the largest side
+DIMENSION_SHORTEST=$(xrandr | grep '*' | head -n1 | awk '{print $1}' | cut -d 'x' -f2) # gets the screen dimension of the shortest side
+
 
 echo "LG_SCREEN: $LG_SCREEN"
 echo "FILE_PATH: $FILE_PATH"
-echo "WIDTH: $WIDTH"
-echo "HEIGHT: $HEIGHT"
-echo "XPOSITION: $XPOSITION"
-echo "YPOSITION: $YPOSITION"
 echo "LG_MAX: $LG_MAX"
-echo "SIZE: $SIZE"
+echo "ORIENTATION: $ORIENTATION"
+echo "POSITION: $POSITION"
+
 
 # Checking parameters passed
+if [ "$ORIENTATION" = "right" ] || [ "$ORIENTATION" = "left" ] ; then
+    # calculates width and height
+    XPOSITION=0
+    WIDTH=$DIMENSION_SHORTEST
+    HEIGHT=$((DIMENSION_LARGEST / 3))
+else
+    # calculates width and height
+    XPOSITION=0
+    WIDTH=$DIMENSION_LARGEST
+    HEIGHT=$((DIMENSION_SHORTEST / 3))
+fi
+
+if [ "$POSITION" = "top" ]; then
+    YPOSITION=0
+elif [ "$POSITION" = "center" ]; then
+    YPOSITION=$HEIGHT
+    echo "here"  
+elif [ "$POSITION" = "bottom" ]; then
+    YPOSITION=$((2*HEIGHT))
+else
+    YPOSITION=0
+fi
+
+SIZE="${WIDTH}x${HEIGHT}"
+echo "SIZE: $SIZE"
+POSITION="${XPOSITION}+${YPOSITION}"
+echo "POSITION: $POSITION"
 
 # check if lg screen exists
 if [[ $LG_SCREEN -gt 0 ]] && [[ $LG_SCREEN -le $LG_MAX ]] ; then

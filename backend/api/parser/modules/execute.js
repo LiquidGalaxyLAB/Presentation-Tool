@@ -60,7 +60,7 @@ function execSlide(slide) {
 
     slide.screens.forEach(screen => {
         screen.media.forEach(m => {
-            if ('type' in m) {
+            if (m.type != undefined) {
                 if (m.type == 'image') {
                     if (m.sharing) {
                         openSharedImage(m, screen.screennumber)
@@ -70,7 +70,7 @@ function execSlide(slide) {
                     }
                     
                 }
-                else if (m.type = 'video') {
+                else if (m.type == 'video') {
                     if (m.sharing) {
                         openSharedVideo(m, screen.screennumber)
                     }
@@ -115,71 +115,15 @@ function openImage(media, screen) {
 }
 
 function openVideo(media, screen) {
-    console.log('video media/screen', media, screen)
-    var x, y, maxX, maxY, width, height, dimensions, file_path
+    var file_path
+    if(screen == 1){
+        file_path = `${process.env.FILE_PATH}/storage/${media.storagepath}/${media.filename}`
+    }
+    else {
+        file_path = `${process.env.SLAVE_STORAGE}/${media.storagepath}/${media.filename}`
+    }
 
-    var promise = new Promise((resolve, reject) => {
-        exec("xdpyinfo | awk '/dimensions/\{print $2\}'", (err, stdout, stderr) => {
-            if (err) {
-                console.log('ERROR', stderr)
-                reject()
-            }
-            else {
-                dimensions = stdout
-                resolve()
-            }
-        })
-    })
-    promise.then(() => {
-        console.log('Dimensions')
-        dimensions = dimensions.replace(/\n/g, '')
-        dimensions = dimensions.split('x')
-        maxX = dimensions[0]
-        maxY = dimensions[1]
-        x = 0
-        width = maxX
-        height = maxY / 3
-        // x and y dimensions on video script are measured in %
-        if (media.position == 'top') {
-            y = 0
-        }
-        else if (media.position == 'center') {
-            y = 100 / 3
-        }
-        else if (media.position == 'bottom') {
-            y = 2 * (100 / 3)
-        }
-        else {
-            y = 0
-        }
-        console.log('Final dimension', x, y, width, height)
-    })
-    promise.then(() => {
-        console.log('Execute')
-        if (screen == 1) {
-            file_path = `${process.env.FILE_PATH}/storage`
-        }
-        else {
-            file_path = `${process.env.SLAVE_STORAGE}`
-        }
-
-        // TEST ON LG
-        exec(`${process.env.FILE_PATH}/api/parser/scripts/openVideo.sh ${screen} ${file_path}/"${media.storagepath}"/"${media.filename}" ${width} ${height} ${x} ${y}`, (err, stdout, stderr) => {
-            // BUG = EXEC HAS A MAX BUFFER LIMIT, WHEN ACHIEVES IT, STOPS EXECUTION 
-            // putting on background doesn't work, possible solution: increase buffer size 
-            if (err) {
-                //some err occurred
-                console.error(err)
-            } else {
-                // the *entire* stdout and stderr (buffered)
-                console.log(`stdout: ${stdout}`);
-                console.log(`stderr: ${stderr}`);
-            }
-        })
-    })
-    promise.catch(() => {
-        console.log('Error on executing script')
-    })
+    runOpenScript('Video',screen,file_path,media.position)
 }
 
 function runOpenScript(type,screen, file_path, position){
