@@ -13,7 +13,7 @@ module.exports = {
         for (var i = 0; i < presentationJson.slides.length; i++) {
             execSlide(presentationJson.slides[i])
             await sleep(presentationJson.slides[i].duration).then(() => killSlide(presentationJson.slides[i]))
-            //await sleep(120000).then(() => killSlide(presentationJson.slides[i]))
+            //await sleep(3600).then(() => killSlide(presentationJson.slides[i]))
         }
     },
 
@@ -27,13 +27,14 @@ function killSlide(slide) {
     // kill slide when time is off-- didnt work
     slide.screens.forEach(screen => {
         screen.media.forEach(m => {
+            console.log(m)
             if(m.type == 'image'){
                 //call exec to do ssh and pkill feh
-                exec(`ssh lg${slide.screennumber} "pkill feh"`)
+                exec(`ssh lg${screen.screennumber} "pkill feh"`)
             }
             else if(m.type == 'video'){
                 //call exec to do ssh and pkill mpv
-                exec(`ssh lg${slide.screennumber} "pkill mpv"`)
+                exec(`ssh lg${screen.screennumber} "pkill mpv"`)
             }
         });
     });
@@ -41,7 +42,7 @@ function killSlide(slide) {
     // also implement to kill slide audio
     if('audiopath' in slide){
         //call exec to pkill ffplay
-        exec(`ssh lg${slide.screennumber} "pkill ffplay"`)
+        exec(`pkill ffplay`)
     }
 }
 
