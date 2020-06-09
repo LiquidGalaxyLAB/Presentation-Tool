@@ -11,7 +11,7 @@ module.exports = {
 
         // iterates the slides
         for (var i = 0; i < presentationJson.slides.length; i++) {
-            execSlide(presentationJson.slides[i])
+            //execSlide(presentationJson.slides[i])
             await sleep(presentationJson.slides[i].duration).then(() => killSlide(presentationJson.slides[i]))
             //await sleep(120000).then(() => killSlide(presentationJson.slides[i]))
         }
@@ -25,6 +25,24 @@ function sleep(ms) {
 
 function killSlide(slide) {
     // kill slide when time is off
+    slide.screens.forEach(screen => {
+        screen.media.forEach(m => {
+            if(m.type == 'image'){
+                //call exec to do ssh and pkill feh
+                exec(`ssh lg${slide.screennumber} "pkill feh"`)
+            }
+            else if(m.type == 'video'){
+                //call exec to do ssh and pkill mpv
+                exec(`ssh lg${slide.screennumber} "pkill mpv"`)
+            }
+        });
+    });
+
+    // also implement to kill slide audio
+    if('audiopath' in slide){
+        //call exec to pkill ffplay
+        exec(`ssh lg${slide.screennumber} "pkill ffplay"`)
+    }
 }
 
 function execSlide(slide) {
