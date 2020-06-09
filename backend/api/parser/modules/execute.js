@@ -5,8 +5,8 @@ module.exports = {
     execPresentation: async function (presentationJson) {
         // if presentation has an audio that will be played the whole time
         console.log('ENTERED EXE')
-        if ('audiopath' in presentationJson) {
-            //execAudio(presentationJson.audiopath)
+        if (presentationJson.audiopath != undefined) {
+            execAudio(presentationJson.audiopath)
         }
 
         // iterates the slides
@@ -14,6 +14,11 @@ module.exports = {
             execSlide(presentationJson.slides[i])
             await sleep(presentationJson.slides[i].duration).then(() => killSlide(presentationJson.slides[i]))
             //await sleep(3600).then(() => killSlide(presentationJson.slides[i]))
+
+            // kills audio if it is the end of the presentation
+            if(i == presentationJson.slides.length -1)
+                exec(`pkill ffplay`)
+
         }
     },
 
@@ -40,18 +45,17 @@ function killSlide(slide) {
     });
 
     // also implement to kill slide audio
-    if('audiopath' in slide){
-        //call exec to pkill ffplay
+    if(slide.audiopath != undefined){
         exec(`pkill ffplay`)
     }
 }
 
 function execSlide(slide) {
-    if ('flyto' in slide) {
+    if (slide.flyto != undefined) {
         flyTo(slide.flyto)
     }
-    if ('audiopath' in slide) {
-        //execAudio(slide.audiopath)
+    if (slide.audiopath != undefined) {
+        execAudio(slide.audiopath)
     }
 
     slide.screens.forEach(screen => {
