@@ -11,7 +11,7 @@ module.exports = {
 
         // iterates the slides
         for (var i = 0; i < presentationJson.slides.length; i++) {
-            //execSlide(presentationJson.slides[i])
+            execSlide(presentationJson.slides[i])
             await sleep(presentationJson.slides[i].duration).then(() => killSlide(presentationJson.slides[i]))
             //await sleep(120000).then(() => killSlide(presentationJson.slides[i]))
         }
@@ -24,7 +24,7 @@ function sleep(ms) {
 }
 
 function killSlide(slide) {
-    // kill slide when time is off
+    // kill slide when time is off-- didnt work
     slide.screens.forEach(screen => {
         screen.media.forEach(m => {
             if(m.type == 'image'){
@@ -99,59 +99,14 @@ function execAudio(audiopath) {
 
 }
 function openImage(media, screen) {
-    var x, y, maxX, maxY, width, height, dimensions, file_path
-
-    var promise = new Promise((resolve, reject) => {
-        exec("xdpyinfo | awk '/dimensions/\{print $2\}'", (err, stdout, stderr) => {
-            if (err) {
-                console.log('ERROR', stderr)
-                reject()
-            }
-            else {
-                dimensions = stdout
-                resolve()
-            }
-        })
-    })
-    promise.then(() => {
-        console.log('Dimensions')
-        dimensions = dimensions.replace(/\n/g, '')
-        dimensions = dimensions.split('x')
-        maxX = dimensions[0]
-        maxY = dimensions[1]
-        x = 0
-        width = maxX
-        height = maxY / 3
-        //i have the dimensions of the screen, now i have to calculate the positions
-        if (media.position == 'top') {
-            y = 0
-        }
-        else if (media.position == 'center') {
-            y = maxY / 3
-        }
-        else if (media.position == 'bottom') {
-            y = 2 * (maxY / 3)
-        }
-        else {
-            y = 0
-        }
-        console.log('Final dimension', x, y, width, height)
-    })
-    promise.then(() => {
-        console.log('Execute')
-        if (screen == 1) {
-            file_path = `${process.env.FILE_PATH}/storage/${media.storagepath}/${media.filename}`
-        }
-        else {
-            file_path = `${process.env.SLAVE_STORAGE}/${media.storagepath}/${media.filename}`
-        }
-
-       runOpenScript('Image',screen, file_path, width,height,x,y)
-    })
-    promise.catch(() => {
-        console.log('Error on executing script')
-    })
-
+    var file_path
+    if (screen == 1) {
+        file_path = `${process.env.FILE_PATH}/storage/${media.storagepath}/${media.filename}`
+    }
+    else {
+        file_path = `${process.env.SLAVE_STORAGE}/${media.storagepath}/${media.filename}`
+    }
+    runOpenScript('Image',screen,file_path, media.position)
 }
 
 function openVideo(media, screen) {
@@ -222,9 +177,8 @@ function openVideo(media, screen) {
     })
 }
 
-function runOpenScript(type,screen, file_path, width, height, x, y){
- // TEST ON LG
- exec(`${process.env.FILE_PATH}/api/parser/scripts/open${type}.sh ${screen} ${file_path} ${width} ${height} ${x} ${y}`, (err, stdout, stderr) => {
+function runOpenScript(type,screen, file_path, position){
+ exec(`${process.env.FILE_PATH}/api/parser/scripts/open${type}.sh ${screen} ${file_path} "${position}"`, (err, stdout, stderr) => {
     // BUG = EXEC HAS A MAX BUFFER LIMIT, WHEN ACHIEVES IT, STOPS EXECUTION 
     // putting on background doesn't work, possible solution: increase buffer size 
     if (err) {
