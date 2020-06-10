@@ -60,12 +60,15 @@ router.post("/create", (req, res, next) => {
 // upload media
 // receives an array of multipart content-type media + storagePath + array of screens
 router.post("/upload", upload.array('media'), (req, res, next) => {
-
+    
     var media = []
     var storagePath = req.body.storagepath
     for (var i = 0; i < req.files.length; i++) {
-        media.push(Object.assign({ filename: req.files[i].originalname, screen: req.body.screens[i] }))
-    }
+        if(req.body.screens[i].partner != undefined)
+            media.push(Object.assign({ filename: req.files[i].originalname, screen: req.body.screens[i].screen , partner: req.body.screens[i].partner}))
+        else
+        media.push(Object.assign({ filename: req.files[i].originalname, screen: req.body.screens[i].screen}))
+        }
 
     console.log('MEDIA', media)
     console.log('PATH', storagePath)

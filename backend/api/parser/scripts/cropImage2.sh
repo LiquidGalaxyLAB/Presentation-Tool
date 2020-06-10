@@ -4,13 +4,13 @@ LEFTSCREEN=$1
 RIGHTSCREEN=$2
 IMAGEPATH=$3
 IMAGENAME=$4
-PRESENTATIONID=$5
+LEFTDESTINATION=$5
+RIGHTDESTINATION=$6
 
 echo "Left Screen $LEFTSCREEN"
 echo "Right Screen $RIGHTSCREEN"
 echo "Image path $IMAGEPATH"
 echo "Image name $IMAGENAME"
-echo "Presentation id $PRESENTATIONID"
 
 # find out the size of the image
 IMAGEWIDTH=$(identify -format "%w" $IMAGEPATH)
@@ -28,23 +28,25 @@ SIZETOCROP="${IMAGECROPX}x${IMAGEHEIGHT}"
 
 
 # left side
-magick "${IMAGEPATH}" -crop $SIZETOCROP+0+0 "${HOME}/${IMAGENAME}Left.png"
+magick "${IMAGEPATH}" -crop $SIZETOCROP+0+0 "${HOME}/Left${IMAGENAME}"
 
 # right side
-magick "${IMAGEPATH}" -crop $SIZETOCROP+$IMAGECROPX+0 "${HOME}/${IMAGENAME}Right.png"
+magick "${IMAGEPATH}" -crop $SIZETOCROP+$IMAGECROPX+0 "${HOME}/Right${IMAGENAME}"
 
 # send cropped images to storage in the correct slaves
 
 if [ $LEFTSCREEN != "1" ]; then
-	scp ${HOME}/${IMAGENAME}Left.png lg$LEFTSCREEN:${HOME}/storage/${PRESENTATIONID}/
+	scp ${HOME}/Left${IMAGENAME} lg$LEFTSCREEN:${LEFTDESTINATION}/
+	rm ${HOME}/Left${IMAGENAME}
 else
-	mv ${HOME}/${IMAGENAME}Left.png ${HOME}/storage/${PRESENTATIONID}/
+	mv ${HOME}/Left${IMAGENAME} ${LEFTDESTINATION}/
 fi
 
 if [ $RIGHTSCREEN != "1" ]; then
-	scp ${HOME}/${IMAGENAME}Right.png lg$RIGHTSCREEN:${HOME}/storage/${PRESENTATIONID}/
+	scp ${HOME}/Right${IMAGENAME} lg$RIGHTSCREEN:${RIGHTDESTINATION}/
+	rm ${HOME}/Right${IMAGENAME}
 else
-	mv ${HOME}/${IMAGENAME}Right.png ${HOME}/storage/${PRESENTATIONID}/
+	mv ${HOME}/Right${IMAGENAME} ${RIGHTDESTINATION}/
 fi
 	
 
