@@ -4,7 +4,12 @@ module.exports = {
     sendMediaToDefinedLG: function (media, path) {
         for (var i = 0; i < media.length; i++) {
             if (media[i].partner != undefined) {
-                cropImageInTwoAndSave(media[i].screen,media[i].partner,path,media[i].filename)
+                if(media[i].type == 'image'){
+                    cropImageInTwoAndSave(media[i].screen,media[i].partner,path,media[i].filename)
+                }
+                else{
+                    console.log('video sharing')
+                }
             }
             else {
                 if (media[i].screen == 1) {

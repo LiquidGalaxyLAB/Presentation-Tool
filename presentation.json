@@ -39,8 +39,12 @@
 	]
 	{"storagepath":"", "//the path where to send this presentation"},
 	"screens":[
-		"1",
-		"4"
+		{
+		"screen":"1",
+		"partner":"2",
+		"type":"image"
+		},
+		
 	]
 	
 }

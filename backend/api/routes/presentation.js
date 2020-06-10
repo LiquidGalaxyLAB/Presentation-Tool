@@ -65,9 +65,9 @@ router.post("/upload", upload.array('media'), (req, res, next) => {
     var storagePath = req.body.storagepath
     for (var i = 0; i < req.files.length; i++) {
         if(req.body.screens[i].partner != undefined)
-            media.push(Object.assign({ filename: req.files[i].originalname, screen: req.body.screens[i].screen , partner: req.body.screens[i].partner}))
+            media.push(Object.assign({ filename: req.files[i].originalname, screen: req.body.screens[i].screen , partner: req.body.screens[i].partner, type: req.body.screens[i].type}))
         else
-        media.push(Object.assign({ filename: req.files[i].originalname, screen: req.body.screens[i].screen}))
+            media.push(Object.assign({ filename: req.files[i].originalname, screen: req.body.screens[i].screen}))
         }
 
     console.log('MEDIA', media)
