@@ -1,6 +1,5 @@
 const { exec } = require('child_process')
 const fs = require('fs')
-const storage = require('./storage')
 
 module.exports = {
     execPresentation: async function (presentationJson) {
@@ -33,14 +32,21 @@ function killSlide(slide) {
     // kill slide when time is off
     slide.screens.forEach(screen => {
         screen.media.forEach(m => {
-            console.log(m)
             if(m.type == 'image'){
                 //call exec to do ssh and pkill feh
                 exec(`ssh lg${screen.screennumber} "pkill feh"`)
+
+                if(m.sharing != undefined){
+                    exec(`ssh lg${m.partner} "pkill feh"`)
+                }
             }
             else if(m.type == 'video'){
                 //call exec to do ssh and pkill mpv
-                exec(`ssh lg${screen.screennumber} "pkill mpv"`) //i think it didn't work. gotta test
+                exec(`ssh lg${screen.screennumber} "pkill mpv"`)
+
+                if(m.sharing != undefined){
+                    exec(`ssh lg${m.partner} "pkill mpv"`)
+                }
             }
         });
     });
@@ -53,10 +59,10 @@ function killSlide(slide) {
 
 function execSlide(slide) {
     if (slide.flyto != undefined) {
-        //flyTo(slide.flyto)
+        flyTo(slide.flyto)
     }
     if (slide.audiopath != undefined) {
-        //execAudio(slide.audiopath)
+        execAudio(slide.audiopath)
     }
 
     slide.screens.forEach(screen => {
@@ -68,7 +74,7 @@ function execSlide(slide) {
                         openSharedImage(m, screen.screennumber)
                     }
                     else{
-                        //openImage(m, screen.screennumber)
+                        openImage(m, screen.screennumber)
                     }
                     
                 }
@@ -77,7 +83,7 @@ function execSlide(slide) {
                         openSharedVideo(m, screen.screennumber)
                     }
                     else{
-                        //openVideo(m, screen.screennumber)
+                        openVideo(m, screen.screennumber)
                     }
                     
                 }
@@ -144,20 +150,24 @@ function runOpenScript(type,screen, file_path, position){
 }
 
 async function openSharedImage(media,screen) {
-    var file_path
+    
     console.log('SECOND')
 
-    if(screen != 1)
-        file_path = `${process.env.SLAVE_STORAGE}/${media.storagepath}`
-    else
-        file_path = `${process.env.FILE_PATH}/storage/${media.storagepath}`
+    var leftDest,rightDest
     
-   // await storage.cropImageInTwo(screen, media.partner, file_path, media.filename,media.storagepath)
-    //.then(() =>{
-        // very wrong and hardcoded for now
-        //runOpenScript('Image',screen, file_path, `${media.filename}Left.png`,800,800,2000,500)
-        //runOpenScript('Image',media.partner,file_path, `${media.filename}Right.png`,800,800,0,500 )
-    //})
+    if(screen != 1)
+        leftDest = `${process.env.SLAVE_STORAGE}/${media.storagepath}/Left${media.filename}`
+    else
+        leftDest = `${process.env.FILE_PATH}/storage/${media.storagepath}/Left${media.filename}`
+
+    if(media.partner != 1)
+        rightDest = `${process.env.SLAVE_STORAGE}/${media.storagepath}/Right${media.filename}`
+    else
+        rightDest = `${process.env.FILE_PATH}/storage/${media.storagepath}/Right${media.filename}`
+
+    runOpenScript('Image',screen,leftDest, media.position)
+    runOpenScript('Image',media.partner,rightDest, media.position)
+
 }
 
 function openSharedVideo(media, screen) {
