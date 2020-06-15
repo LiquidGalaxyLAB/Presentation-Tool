@@ -31,6 +31,16 @@ router.get("/execute/:id", (req, res, next) => {
 
 })
 
+router.get("/stop", (req, res, next) =>{
+    stopPresentation()
+    .then(() =>{
+        res.json('200')
+    })
+    .catch((err) =>{
+        res.json('500')
+    })
+})
+
 // get all
 // gets all saved presentations from the database
 router.get("/getall", (req, res, next) => {
@@ -125,4 +135,8 @@ async function updatePresentation(data){
 
 async function getAllPresentations() {
     return await parser.getAllPresentations()
+}
+
+async function stopPresentation(){
+    return await parser.stopPresentation()
 }

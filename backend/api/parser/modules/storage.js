@@ -4,10 +4,10 @@ module.exports = {
     sendMediaToDefinedLG: function (media, path) {
         for (var i = 0; i < media.length; i++) {
             if (media[i].partner != undefined) {
-                if(media[i].type == 'image'){
-                    cropImageInTwoAndSave(media[i].screen,media[i].partner,path,media[i].filename)
+                if (media[i].type == 'image') {
+                    cropImageInTwoAndSave(media[i].screen, media[i].partner, path, media[i].filename)
                 }
-                else{
+                else {
                     console.log('video sharing')
                 }
             }
@@ -77,24 +77,48 @@ module.exports = {
 }
 
 function cropImageInTwoAndSave(leftScreen, rightScreen, file_path, file_name) {
-    var leftDest,rightDest
-    
-    if(leftScreen != 1)
+    var leftDest, rightDest
+
+    if (leftScreen != 1) 
         leftDest = `${process.env.SLAVE_STORAGE}/${file_path}`
     else
         leftDest = `${process.env.FILE_PATH}/storage/${file_path}`
-
-    if(rightScreen != 1)
+    if (rightScreen != 1) 
         rightDest = `${process.env.SLAVE_STORAGE}/${file_path}`
     else
         rightDest = `${process.env.FILE_PATH}/storage/${file_path}`
 
-
-    exec(`${process.env.FILE_PATH}/api/parser/scripts/cropImage2.sh ${leftScreen} ${rightScreen} ${process.env.FILE_PATH}/storage/all/${file_name} ${file_name} ${leftDest} ${rightDest}`, (err,stdout,stderr) =>{
-        if(err){
-            console.log('ERR',err)
+    exec(`ssh lg${leftScreen} "if [ ! -d ${leftDest} ]; then 
+        mkdir ${leftDest}
+        fi"`, (err, stdout, stderr) => {
+        if (err) {
+            //some err occurred
+            console.error(err)
+        } else {
+            // the *entire* stdout and stderr (buffered)
+            console.log(`stdout: ${stdout}`);
+            console.log(`stderr: ${stderr}`);
         }
-        else{
+    })
+    exec(`ssh lg${rightScreen} "if [ ! -d ${rightDest} ]; then 
+            mkdir ${rightDest}
+            fi"`, (err, stdout, stderr) => {
+        if (err) {
+            //some err occurred
+            console.error(err)
+        } else {
+            // the *entire* stdout and stderr (buffered)
+            console.log(`stdout: ${stdout}`);
+            console.log(`stderr: ${stderr}`);
+        }
+    })
+
+    //crop image and send to created storage
+    exec(`${process.env.FILE_PATH}/api/parser/scripts/cropImage2.sh ${leftScreen} ${rightScreen} ${process.env.FILE_PATH}/storage/all/${file_name} ${file_name} ${leftDest} ${rightDest}`, (err, stdout, stderr) => {
+        if (err) {
+            console.log('ERR', err)
+        }
+        else {
             console.log('stdout', stdout)
             console.log('stderr', stderr)
         }

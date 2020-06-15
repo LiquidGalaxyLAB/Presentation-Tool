@@ -23,6 +23,9 @@ module.exports = {
     },
     getAllPresentations: function (){
         return database.getAllPresentations()
+    },
+    stopPresentation: function(){
+        execute.stop()
     }
 
 }
