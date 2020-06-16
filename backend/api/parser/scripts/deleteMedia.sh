@@ -1,17 +1,17 @@
 #!/bin/bash
+
+SLAVEDELETEPATH=$1
+MASTERDELETEPATH=$2
 . ${HOME}/etc/shell.conf
 
 for lg in $LG_FRAMES ; do
    echo $lg:
    if [ $lg == "lg1" ]; then
        echo "Master"
-	   #kill all proccess from master
-       pkill mpv
-       pkill feh
-       pkill ffplay
+	   rm -rf $MASTERDELETEPATH
    else
        echo "Slave"
 	   #kill all proccess from the slaves via ssh
-       ssh $lg "pkill mpv; pkill feh; pkill ffplay"
+       ssh $lg "rm -rf $SLAVEDELETEPATH"
    fi
 done
