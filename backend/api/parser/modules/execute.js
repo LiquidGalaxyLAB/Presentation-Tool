@@ -28,7 +28,15 @@ module.exports = {
     },
     stop: function () {
         playing = false
-        exec(`ssh lg${screen.screennumber} "pkill feh pkill mpv pkill ffplay"`)
+        exec(`${process.env.FILE_PATH}/api/parser/scripts/killPresentation.sh`, (err, stdout, stderr) =>{
+            if(err){
+                console.log(err)
+                console.log('stdout',stderr)
+            }
+            else{
+                console.log('stdout',stdout)
+            }
+        })
     }
 
 }
