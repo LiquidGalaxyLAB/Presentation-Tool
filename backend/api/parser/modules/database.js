@@ -37,7 +37,13 @@ module.exports = {
     // Gets a presentation by ID from the presentations collection 
     getPresentationById: async function(id){
         const document = await Presentation.find({_id:id})
-        console.log('Retrieved doc with success',document)
+        
+        if(document.length == 0){
+            console.log('Document not found')
+        }
+        else{
+            console.log('Retrieved doc with success',document)
+        }
 
         return document
     },

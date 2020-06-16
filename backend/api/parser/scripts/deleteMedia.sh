@@ -11,7 +11,6 @@ for lg in $LG_FRAMES ; do
 	   rm -rf $MASTERDELETEPATH
    else
        echo "Slave"
-	   #kill all proccess from the slaves via ssh
        ssh $lg "rm -rf $SLAVEDELETEPATH"
    fi
 done

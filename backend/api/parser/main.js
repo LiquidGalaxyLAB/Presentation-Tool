@@ -5,7 +5,9 @@ const database = require('../parser/modules/database')
 module.exports = {
     executePresentation: async function (id) {
        var p = await database.getPresentationById(id)
-       execute.execPresentation(p[0])
+       if(p.length != 0){
+        execute.execPresentation(p[0])
+       }
     },
     mediaStorage: function (media, path) {
         storage.sendMediaToDefinedLG(media,path)
@@ -13,13 +15,13 @@ module.exports = {
     createPresentation: function (presentation){
         database.createPresentation(presentation)
     },
-    deletePresentation:function(id){
+    deletePresentation:async function(id){
+        var p = await database.getPresentationById(id)
+        storage.deleteMediaFromLG(p[0])
         database.deletePresentation(id)
-        storage.deleteMediaFromLG()
     },
     updatePresentation: function(data){
         database.updatePresentation(data)
-        storage.updateMediaInLG(data)
     },
     getAllPresentations: function (){
         return database.getAllPresentations()

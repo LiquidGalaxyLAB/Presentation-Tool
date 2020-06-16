@@ -68,11 +68,11 @@ module.exports = {
         }
 
     },
-    deleteMediaFromLG: function () {
+    deleteMediaFromLG: function (presentationJson) {
         console.log('DELETE ALL MEDIA RELATED TO THAT PRESENTATION')
-    },
-    updateMediaInLG: function (data) {
-        console.log('UPDATE', data)
+        var storagepath = presentationJson.slides[0].screens[0].media[0].storagepath
+        exec(`${process.env.FILE_PATH}/api/parser/scripts/deleteMedia.sh ${process.env.SLAVE_STORAGE}/${storagepath} ${process.env.FILE_PATH}/storage/${storagepath}`)
+              
     }
 }
 
