@@ -1,4 +1,5 @@
 const { exec } = require('child_process')
+const { stderr, stdout } = require('process')
 
 module.exports = {
     sendMediaToDefinedLG: function (media, path) {
@@ -68,10 +69,26 @@ module.exports = {
         }
 
     },
+    cleanStorage: function(){
+        exec(`rm ${process.env.FILE_PATH}/storage/all/*`, (err, stdout, stderr) =>{
+            if(err){    
+                console.log(err)
+            }
+            else{
+                console.log(stdout)
+            }
+        })
+    },
     deleteMediaFromLG: function (presentationJson) {
-        console.log('DELETE ALL MEDIA RELATED TO THAT PRESENTATION')
         var storagepath = presentationJson.slides[0].screens[0].media[0].storagepath
-        exec(`${process.env.FILE_PATH}/api/parser/scripts/deleteMedia.sh ${process.env.SLAVE_STORAGE}/${storagepath} ${process.env.FILE_PATH}/storage/${storagepath}`)
+        exec(`${process.env.FILE_PATH}/api/parser/scripts/deleteMedia.sh ${process.env.SLAVE_STORAGE}/${storagepath} ${process.env.FILE_PATH}/storage/${storagepath}`, (err, stdout, stderr) =>{
+            if(err){
+                console.log(err)
+            }
+            else{
+                console.log(stdout)
+            }
+        })
               
     }
 }

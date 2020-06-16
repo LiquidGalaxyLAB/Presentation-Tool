@@ -7,7 +7,9 @@ app.use(bodyParser.json())
 
 // routes
 const presentationRoutes = require('./api/routes/presentation')
+const storageRoutes = require('./api/routes/storage')
 app.use('/presentation',presentationRoutes)
+app.use('/storage',storageRoutes)
 
 app.get('/',(req,res,next)=>{res.json('Welcome to Liquid Galaxy Presentation Tool!')})
 

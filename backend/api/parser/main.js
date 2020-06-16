@@ -28,6 +28,9 @@ module.exports = {
     },
     stopPresentation: function(){
         execute.stop()
+    },
+    cleanStorage: function(){
+        storage.cleanStorage()
     }
 
 }
