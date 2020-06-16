@@ -1,6 +1,7 @@
 const { exec } = require('child_process')
 const fs = require('fs')
 
+// controls if presentation is currently running
 var playing = false
 
 module.exports = {
@@ -184,7 +185,7 @@ async function openSharedImage(media, screen) {
 }
 
 function openSharedVideo(media, screen) {
-    console.log('video media/screen', media, screen)
+    console.log('NOT IMPLEMENTED video media/screen', media, screen)
 
 }
 

@@ -1,5 +1,4 @@
 const { exec } = require('child_process')
-const { stderr, stdout } = require('process')
 
 module.exports = {
     sendMediaToDefinedLG: function (media, path) {
