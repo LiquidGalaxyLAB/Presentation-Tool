@@ -21,7 +21,7 @@
     </v-row>
     <v-slide-group multiple show-arrows>
       <v-slide-item v-for="n in screens" :key="n">
-        <full-template></full-template>
+        <component :is="component"></component>
       </v-slide-item>
     </v-slide-group>
   </div>
@@ -29,6 +29,7 @@
 
 <script>
 import FullTemplate from '@/components/molecules/presentation_templates/FullTemplate'
+import SharingTemplate from '@/components/molecules/presentation_templates/SharingTemplate'
 
 export default {
   data: () => ({
@@ -36,14 +37,15 @@ export default {
     screens: 5,
     audio: "",
     slider: "",
-    max: 120000
+    max: 120000,
+    component: "FullTemplate"
   }),
   components:{
-    FullTemplate
+    FullTemplate,SharingTemplate
   },
   methods:{
     changeTemplate(){
-      
+      this.component = "SharingTemplate"
     }
   }
 };
