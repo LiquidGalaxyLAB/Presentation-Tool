@@ -53,10 +53,20 @@ export default {
     uploadMedia: async (payload) => {
         axios.post(`${process.env.VUE_APP_API_URL}/storage/upload`,payload)
         .then((res) =>{
-            console.log('Succes: ',res)
+            console.log('Success: ',res)
+        })
+        .catch((err) =>{
+            console.log('Error: ',err)
+        })
+    },
+    cleanStorage: async () =>{
+        axios.get(`${process.env.VUE_APP_API_URL}/storage/clean`)
+        .then((res) =>{
+            console.log('Success: ',res)
         })
         .catch((err) =>{
             console.log('Error: ',err)
         })
     }
+
 }

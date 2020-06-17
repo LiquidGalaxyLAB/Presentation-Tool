@@ -35,7 +35,7 @@ export default {
   data: () => ({
     model: null,
     screens: 5,
-    audio: "",
+    audio: [],
     slider: "",
     max: 120000,
     component: "FullTemplate"

@@ -42,7 +42,6 @@
             v-model="presentation.audio"
             clearable
             outlined
-            show-size
             label="Audio"
             hint="NOTE: this audio will play through the whole presentation. If you don't want that, don't upload here"
             persistent-hint
@@ -52,7 +51,7 @@
       <v-row>
         <v-col cols="12" md="6">
           <v-select
-            v-model="presentation.screensqt"
+            v-model="screensqt"
             :items="screens"
             :rules="[v => !!v || 'Number of screens is required']"
             label="Screens *"
@@ -64,7 +63,7 @@
         </v-col>
         <v-col cols="12" md="6">
           <v-select
-            v-model="presentation.slidesqt"
+            v-model="slidesqt"
             :items="slides"
             :rules="[v => !!v || 'Number of slides is required']"
             label="Slides *"
@@ -77,7 +76,7 @@
       </v-row>
       <v-row justify="space-between" class="pl-2">
         <v-btn color="red" text class="mr-4" @click="$router.push('/')">Cancel</v-btn>
-        <v-btn  color="blue" class="mr-4" dark @click="validate">Save and continue</v-btn>
+        <v-btn color="blue" class="mr-4" dark @click="validate">Save and continue</v-btn>
       </v-row>
     </v-form>
   </v-container>
@@ -85,21 +84,21 @@
 
 <script>
 export default {
-   props: {
+  props: {
     value: String
   },
 
   data: () => ({
     //models
-    valid: true, 
+    valid: true,
     presentation: {
       title: "",
-      description:"",
+      description: "",
       category: "",
-      audio:null,
-      screensqt:"",
-      slidesqt:""
+      audio: null
     },
+    screensqt: "",
+    slidesqt: "",
     //rules
     titleRules: [
       v => !!v || "Title is required",
@@ -107,28 +106,44 @@ export default {
     ],
     //selection data
     categories: ["Education", "Travel", "Nature", "Real State", "History"],
-    screens: ["1", "2", "3", "4", "5", "6","7"],
-    slides: ["1", "2", "3", "4", "5"],
+    screens: ["1", "2", "3", "4", "5", "6", "7"],
+    slides: ["1", "2", "3", "4", "5"]
   }),
 
   methods: {
     validate() {
-      if(this.$refs.form.validate()){
-        this.step='2'
-        this.$store.dispatch('addBasicInformation',this.presentation)
+      if (this.$refs.form.validate()) {
+        this.step = "2";
+        this.$store.dispatch(
+          "generateStoragePathName",
+          this.presentation.title
+        );
+
+        var presentationObj = this.cleanObject(this.presentation)
+        console.log('obj',presentationObj)
+        this.$store.dispatch("addBasicInformation", presentationObj);
       }
-      
+    },
+    cleanObject(obj) {
+      // this method removes all unused attributes defined on the presentation
+      for (var propName in obj) {
+        if (obj[propName] === null || obj[propName] === undefined || obj[propName] === '') {
+          delete obj[propName];
+        }
+      }
+
+      return obj
     }
   },
-computed: {
+  computed: {
     step: {
-     get() {
+      get() {
         return this.value;
       },
       set(value) {
         this.$emit("input", value);
       }
-    },
-  },
+    }
+  }
 };
 </script>
