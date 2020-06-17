@@ -115,7 +115,7 @@ export default {
     validate() {
       if(this.$refs.form.validate()){
         this.step='2'
-        //other validations
+        this.$store.dispatch('addBasicInformation',this.presentation)
       }
       
     }

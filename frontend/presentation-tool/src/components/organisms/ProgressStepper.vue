@@ -25,7 +25,7 @@
 
 <script>
 import BasicInfoForm from "@/components/molecules/BasicInfoForm.vue";
-import SlideBuilder from "@/components/molecules/SlideBuilder.vue";
+import SlideBuilder from "@/components/organisms/SlideBuilder.vue";
 
 export default {
   components: {
