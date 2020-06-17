@@ -1,18 +1,23 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div>
+    <toolbar></toolbar>
+    <v-container>
+      <group-cards></group-cards>
+    </v-container>
+    <new-pres-button></new-pres-button>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+import Toolbar from "@/components/atoms/Toolbar.vue";
+import GroupCards from "@/components/organisms/GroupCards.vue";
+import NewPresButton from "@/components/atoms/NewPresentationFloatButton.vue"
 
 export default {
-  name: 'Home',
   components: {
-    HelloWorld
+    Toolbar,
+    GroupCards,
+    NewPresButton
   }
-}
+};
 </script>
