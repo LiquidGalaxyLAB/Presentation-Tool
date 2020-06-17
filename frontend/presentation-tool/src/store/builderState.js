@@ -6,7 +6,9 @@ export default {
             media: [],
             storagepath:"",
             screens:[]
-        }
+        },
+        screensQt:"",
+        slidesQt:""
     },
     mutations: {
         setBasicInformation(state, payload) {
@@ -19,6 +21,12 @@ export default {
         },
         setStoragePath(state, payload) {
             state.storagePath = payload
+        },
+        setSlidesQt(state,payload){
+            state.slidesQt = payload
+        },
+        setScreensQt(state,payload){
+            state.screensQt = payload
         }
     },
     actions: {

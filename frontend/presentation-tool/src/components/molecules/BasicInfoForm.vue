@@ -76,7 +76,7 @@
       </v-row>
       <v-row justify="space-between" class="pl-2">
         <v-btn color="red" text class="mr-4" @click="$router.push('/')">Cancel</v-btn>
-        <v-btn color="blue" class="mr-4" dark @click="validate">Save and continue</v-btn>
+        <v-btn color="green" class="mr-4" dark @click="validate">Save and continue</v-btn>
       </v-row>
     </v-form>
   </v-container>
@@ -118,9 +118,9 @@ export default {
           "generateStoragePathName",
           this.presentation.title
         );
-
+        this.$store.commit('setScreensQt',parseInt(this.screensqt))
+        this.$store.commit('setSlidesQt',parseInt(this.slidesqt))
         var presentationObj = this.cleanObject(this.presentation)
-        console.log('obj',presentationObj)
         this.$store.dispatch("addBasicInformation", presentationObj);
       }
     },

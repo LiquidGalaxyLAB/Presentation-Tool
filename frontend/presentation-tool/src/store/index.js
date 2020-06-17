@@ -1,11 +1,11 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import presentationStore from '@/store/presentation'
+import builderStore from '@/store/builderState'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   modules: {
-    presentationStore
+    builderStore
   }
 })

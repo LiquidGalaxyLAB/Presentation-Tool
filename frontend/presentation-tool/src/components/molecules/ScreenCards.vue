@@ -1,26 +1,30 @@
 <template>
   <div>
-    <v-row align="center">
-      <v-col cols="12" md="3">
-        <!--weird bug with value-->
-        <v-file-input v-model="audio" clearable outlined show-size label="Audio" persistent-hint></v-file-input>
+    <v-row justify="center">
+      <v-col cols="12" md="6">
+        <v-file-input v-model="audio" clearable outlined label="Audio" persistent-hint></v-file-input>
       </v-col>
-      <v-col cols="12" md="3">
+      <v-col cols="12" md="6">
         <v-text-field label="Fly to..." append-icon="mdi-map" outlined></v-text-field>
       </v-col>
-      <v-col cols="12" md="4">
-        <v-slider v-model="slider" class="align-center" :max="max">
-          <template v-slot:append>
-            <div class="pb-6">{{slider}}ms</div>
-          </template>
-        </v-slider>
+    </v-row>
+
+    <v-row justify="center">
+      <v-col cols="12" md="6" class="pl-12">
+        <v-slider v-model="slider" thumb-label="always" :max="max"></v-slider>
       </v-col>
-      <v-col class="pb-12" cols="12" md="2">
-        <v-btn @click="changeTemplate()">templates</v-btn>
+      <v-col cols="12" md="6">
+        <v-row justify="center">
+          <v-btn dark color="blue" @click="changeTemplate()">
+            change template
+            <v-icon right>mdi-auto-fix</v-icon>
+          </v-btn>
+        </v-row>
       </v-col>
     </v-row>
+
     <v-slide-group multiple show-arrows>
-      <v-slide-item v-for="n in screens" :key="n">
+      <v-slide-item v-for="n in screensQt" :key="n">
         <component :is="component"></component>
       </v-slide-item>
     </v-slide-group>
@@ -28,24 +32,29 @@
 </template>
 
 <script>
-import FullTemplate from '@/components/molecules/presentation_templates/FullTemplate'
-import SharingTemplate from '@/components/molecules/presentation_templates/SharingTemplate'
+import FullTemplate from "@/components/molecules/presentation_templates/FullTemplate";
+import SharingTemplate from "@/components/molecules/presentation_templates/SharingTemplate";
 
 export default {
   data: () => ({
     model: null,
-    screens: 5,
-    audio: [],
+    audio: null,
     slider: "",
-    max: 120000,
+    max: 300,
     component: "FullTemplate"
   }),
-  components:{
-    FullTemplate,SharingTemplate
+  components: {
+    FullTemplate,
+    SharingTemplate
   },
-  methods:{
-    changeTemplate(){
-      this.component = "SharingTemplate"
+  computed: {
+    screensQt() {
+      return this.$store.state.builderStore.screensQt;
+    }
+  },
+  methods: {
+    changeTemplate() {
+      this.component = "SharingTemplate";
     }
   }
 };
