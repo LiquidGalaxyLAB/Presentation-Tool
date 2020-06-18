@@ -29,13 +29,13 @@ module.exports = {
     },
     stop: function () {
         playing = false
-        exec(`${process.env.FILE_PATH}/api/parser/scripts/killPresentation.sh`, (err, stdout, stderr) =>{
-            if(err){
+        exec(`${process.env.FILE_PATH}/api/parser/scripts/killPresentation.sh`, (err, stdout, stderr) => {
+            if (err) {
                 console.log(err)
-                console.log('stdout',stderr)
+                console.log('stdout', stderr)
             }
-            else{
-                console.log('stdout',stdout)
+            else {
+                console.log('stdout', stdout)
             }
         })
     }
@@ -136,14 +136,14 @@ function openImage(media, screen) {
         file_path = `${process.env.SLAVE_STORAGE}/${media.storagepath}/${media.filename}`
     }
 
-    if(media.position == "middle"){
+    if (media.position == "middle") {
         runOpenScript('MidImage', screen, file_path, media.position)
     }
-    else{
+    else {
         runOpenScript('Image', screen, file_path, media.position)
     }
 
-    
+
 }
 
 function openVideo(media, screen) {
@@ -154,14 +154,14 @@ function openVideo(media, screen) {
     else {
         file_path = `${process.env.SLAVE_STORAGE}/${media.storagepath}/${media.filename}`
     }
-    if(media.position == "middle"){
+    if (media.position == "middle") {
         runOpenScript('MidVideo', screen, file_path, media.position)
     }
-    else{
+    else {
         runOpenScript('Video', screen, file_path, media.position)
     }
 
-    
+
 }
 
 function runOpenScript(type, screen, file_path, position) {
@@ -193,9 +193,25 @@ async function openSharedImage(media, screen) {
     else
         rightDest = `${process.env.FILE_PATH}/storage/${media.storagepath}/Right${media.filename}`
 
-    runOpenScript('Image', screen, leftDest, media.position)
-    runOpenScript('Image', media.partner, rightDest, media.position)
+    if (media.position == "middle") {
+        runOpenMidImageSharing(screen, media.partner, leftDest, rightDest)
+    } else {
+        runOpenScript('Image', screen, leftDest, media.position)
+        runOpenScript('Image', media.partner, rightDest, media.position)
+    }
 
+
+}
+
+function runOpenMidImageSharing(leftScreen, rightScreen, leftDest, rightDest) {
+    exec(`${process.env.FILE_PATH}/api/parser/scripts/openMidImageSharing.sh ${leftScreen} ${rightScreen} ${leftDest} ${rightDest}`, (err, stdout, stderr) =>{
+        if(err){
+            console.log('Err',err)
+        }
+        else{
+            console.log('stdout',stdout)
+        }
+    })
 }
 
 function openSharedVideo(media, screen) {
