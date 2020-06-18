@@ -135,7 +135,15 @@ function openImage(media, screen) {
     else {
         file_path = `${process.env.SLAVE_STORAGE}/${media.storagepath}/${media.filename}`
     }
-    runOpenScript('Image', screen, file_path, media.position)
+
+    if(media.position == "middle"){
+        runOpenScript('MidImage', screen, file_path, media.position)
+    }
+    else{
+        runOpenScript('Image', screen, file_path, media.position)
+    }
+
+    
 }
 
 function openVideo(media, screen) {
@@ -146,8 +154,14 @@ function openVideo(media, screen) {
     else {
         file_path = `${process.env.SLAVE_STORAGE}/${media.storagepath}/${media.filename}`
     }
+    if(media.position == "middle"){
+        runOpenScript('MidVideo', screen, file_path, media.position)
+    }
+    else{
+        runOpenScript('Video', screen, file_path, media.position)
+    }
 
-    runOpenScript('Video', screen, file_path, media.position)
+    
 }
 
 function runOpenScript(type, screen, file_path, position) {
