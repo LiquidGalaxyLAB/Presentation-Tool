@@ -18,11 +18,11 @@ router.get("/execute/:id", (req, res, next) => {
 
 router.get("/stop", (req, res, next) => {
     stopPresentation()
-        .then(() => {
-            res.json('200')
+        .then((response) => {
+            res.json(response)
         })
-        .catch((err) => {
-            res.json('500')
+        .catch((error) => {
+            res.json(error)
         })
 })
 

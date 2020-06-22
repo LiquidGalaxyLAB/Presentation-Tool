@@ -29,15 +29,24 @@ module.exports = {
     },
     stop: function () {
         playing = false
-        exec(`${process.env.FILE_PATH}/api/parser/scripts/killPresentation.sh`, (err, stdout, stderr) => {
-            if (err) {
-                console.log(err)
-                console.log('stdout', stderr)
-            }
-            else {
-                console.log('stdout', stdout)
-            }
+
+        return new Promise((resolve,reject) =>{
+            exec(`${process.env.FILE_PATH}/api/parser/scripts/killPresentation.sh`, (err, stdout, stderr) => {
+                if (err) {
+                    console.log('Error on executing killPresentation.sh',err)
+                    reject({status: 500, msg: `Internal Server Error. Error on stopping presentation. ${err}`})
+                }
+                if(stderr){
+                    console.log('Error on executing killPresentation.sh',stderr)
+                    reject({status: 500, msg: `Internal Server Error. Error on stopping presentation. ${stderr}`})
+                }
+                else {
+                    console.log('Stopped all current applications', stdout)
+                    resolve({status: 200, msg: `Success. Stopped current presentation execution`})
+                }
+            })
         })
+        
     }
 
 }

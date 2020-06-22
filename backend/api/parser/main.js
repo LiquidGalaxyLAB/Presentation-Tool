@@ -43,8 +43,8 @@ module.exports = {
     getAllPresentations: function () {
         return database.getAllPresentations()
     },
-    stopPresentation: function () {
-        execute.stop()
+    stopPresentation: async function () {
+        return await execute.stop()
     },
     cleanStorage: async function () {
         return await storage.cleanStorage()
