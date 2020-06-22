@@ -9,7 +9,7 @@ module.exports = {
         return new Promise ((resolve, reject) =>{
             p.save().then((doc) =>{
                 console.log('Document created with success: ', doc)
-                resolve({status: 200, msg: `Success. Document created with success ${doc._id}`})
+                resolve({status: 201, msg: `Success. Document created with success ${doc._id}`})
             })
             .catch((err) =>{
                 console.log('Error on creating document: ',err)

@@ -35,8 +35,8 @@ router.post("/upload", upload.array('media'), (req, res, next) => {
     console.log('PATH', storagePath)
 
     sendToStorage(media, storagePath)
-        .then(() => res.json('200'))
-        .catch(() => res.json('500'))
+        .then((response) => res.json(response))
+        .catch((error) => res.json(error))
 
 })
 

@@ -9,8 +9,8 @@ module.exports = {
             execute.execPresentation(p[0])
         }
     },
-    mediaStorage: function (media, path) {
-        storage.sendMediaToDefinedLG(media, path)
+    mediaStorage: async function (media, path) {
+        return await storage.sendMediaToDefinedLG(media, path)
     },
     createPresentation: async function (presentation) {
         return await database.createPresentation(presentation)        
