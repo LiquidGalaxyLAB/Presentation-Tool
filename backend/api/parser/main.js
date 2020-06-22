@@ -46,8 +46,8 @@ module.exports = {
     stopPresentation: function () {
         execute.stop()
     },
-    cleanStorage: function () {
-        storage.cleanStorage()
+    cleanStorage: async function () {
+        return await storage.cleanStorage()
     }
 
 }

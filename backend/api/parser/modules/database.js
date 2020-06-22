@@ -8,7 +8,7 @@ module.exports = {
 
         return new Promise ((resolve, reject) =>{
             p.save().then((doc) =>{
-                console.log('Document created with succes: ', doc)
+                console.log('Document created with success: ', doc)
                 resolve({status: 200, msg: `Success. Document created with success ${doc._id}`})
             })
             .catch((err) =>{

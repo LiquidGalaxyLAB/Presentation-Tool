@@ -43,8 +43,8 @@ router.post("/upload", upload.array('media'), (req, res, next) => {
 // this call cleans the whole local storage
 router.get('/clean', (req, res, next) => {
     cleanStorage()
-        .then(() => res.json('200'))
-        .catch(() => res.json('500'))
+        .then((response) => res.json(response))
+        .catch((error) => res.json(error))
 })
 
 module.exports = router

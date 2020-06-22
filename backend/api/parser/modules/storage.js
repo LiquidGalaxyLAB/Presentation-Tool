@@ -69,14 +69,21 @@ module.exports = {
 
     },
     cleanStorage: function () {
-        exec(`rm ${process.env.FILE_PATH}/storage/all/*`, (err, stdout, stderr) => {
-            if (err) {
-                console.log(err)
-            }
-            else {
-                console.log(stdout)
-            }
-        })
+        return new Promise((resolve, reject) =>{
+            exec(`rm ${process.env.FILE_PATH}/storage/all/*`, (err, stdout, stderr) => {
+                if (err) {
+                    console.log(err)
+                    reject({status:500, msg: `Internal Server Error. Error on cleaning storage: ${err}`})
+                }
+                if(stderr){
+                    console.log('stderr',stderr)
+                    reject({status:500, msg: `Internal Server Error. Error on cleaning storage: ${stderr}`})
+                }
+                else{
+                    resolve({status:200, msg: `Success. Cleanned up storage with success`})
+                }
+            })
+        })   
     },
     deleteMediaFromLG: function (presentationJson) {
         var storagepath = presentationJson.slides[0].screens[0].media[0].storagepath
