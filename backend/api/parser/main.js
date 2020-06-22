@@ -12,8 +12,8 @@ module.exports = {
     mediaStorage: function (media, path) {
         storage.sendMediaToDefinedLG(media, path)
     },
-    createPresentation: function (presentation) {
-        database.createPresentation(presentation)
+    createPresentation: async function (presentation) {
+        return await database.createPresentation(presentation)        
     },
     deletePresentation: async function (id) {
         var response

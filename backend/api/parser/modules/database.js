@@ -4,13 +4,19 @@ module.exports = {
     // Creates a new document into the presentations collection
     createPresentation: function(presentation){
         var p = new Presentation(presentation)
-        p.save().then((success) =>{
-            console.log('Document created with succes: ', success)
-        })
-        .catch((err) =>{
-            console.log('Error on creating document: ',err)
-        })
+        //var response
 
+        return new Promise ((resolve, reject) =>{
+            p.save().then((doc) =>{
+                console.log('Document created with succes: ', doc)
+                resolve({status: 200, msg: `Success. Document created with success ${doc._id}`})
+            })
+            .catch((err) =>{
+                console.log('Error on creating document: ',err)
+                resolve({status: 500, msg: `Internal Server Error. Error on creating document ${err}`})
+            })
+        })
+        
     },
     // Deletes a document into the presentations collection
     deletePresentation: async function(id){

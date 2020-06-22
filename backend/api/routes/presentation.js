@@ -42,13 +42,12 @@ router.get("/getall", (req, res, next) => {
 // receives the json with the info and calls the functions to save in the db
 router.post("/create", (req, res, next) => {
     var presentation = req.body
-    console.log('PRESENTATION JSON BODY', presentation)
     createPresentation(presentation)
-        .then(() => {
-            res.json('200')
+        .then((response) => {
+            res.json(response)
         })
-        .catch(() => {
-            res.json('500')
+        .catch((err) => {
+            res.json(err)
         })
 })
 
