@@ -16,20 +16,20 @@ router.get("/execute/:id", (req, res, next) => {
 
 })
 
-router.get("/stop", (req, res, next) =>{
+router.get("/stop", (req, res, next) => {
     stopPresentation()
-    .then(() =>{
-        res.json('200')
-    })
-    .catch((err) =>{
-        res.json('500')
-    })
+        .then(() => {
+            res.json('200')
+        })
+        .catch((err) => {
+            res.json('500')
+        })
 })
 
 // get all
 // gets all saved presentations from the database
 router.get("/getall", (req, res, next) => {
-   getAllPresentations().then((array) => {
+    getAllPresentations().then((array) => {
         console.log('array', array)
         res.send(array)
     })
@@ -55,22 +55,27 @@ router.post("/create", (req, res, next) => {
 // delete
 //receives presentation id, calls functions to delete from db and from all machines and storage
 router.delete("/delete/:id", (req, res, next) => {
-    console.log('REQ PARAMS', req.params)
     var id = req.params.id
-    deletePresentation(id).then(() => res.json('200')).catch(() => res.json('500'))
+    deletePresentation(id)
+        .then((response) => {
+            res.json(response)
+        })
+        .catch((err) => {
+            res.json(err)
+        })
 })
 
 // update
 // receives the fields of the doc that needs to be updated and the id of the presentation
-router.patch("/update", (req,res, next) =>{
+router.patch("/update", (req, res, next) => {
     var data = req.body
     updatePresentation(data)
-    .then(() =>{
-        res.json('200')
-    })
-    .catch(() => {
-        res.json('500')
-    })
+        .then(() => {
+            res.json('200')
+        })
+        .catch(() => {
+            res.json('500')
+        })
 })
 
 module.exports = router
@@ -88,7 +93,7 @@ async function deletePresentation(id) {
     return await parser.deletePresentation(id)
 }
 
-async function updatePresentation(data){
+async function updatePresentation(data) {
     return await parser.updatePresentation(data)
 }
 
@@ -96,6 +101,6 @@ async function getAllPresentations() {
     return await parser.getAllPresentations()
 }
 
-async function stopPresentation(){
+async function stopPresentation() {
     return await parser.stopPresentation()
 }

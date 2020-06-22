@@ -68,38 +68,47 @@ module.exports = {
         }
 
     },
-    cleanStorage: function(){
-        exec(`rm ${process.env.FILE_PATH}/storage/all/*`, (err, stdout, stderr) =>{
-            if(err){    
+    cleanStorage: function () {
+        exec(`rm ${process.env.FILE_PATH}/storage/all/*`, (err, stdout, stderr) => {
+            if (err) {
                 console.log(err)
             }
-            else{
+            else {
                 console.log(stdout)
             }
         })
     },
     deleteMediaFromLG: function (presentationJson) {
         var storagepath = presentationJson.slides[0].screens[0].media[0].storagepath
-        exec(`${process.env.FILE_PATH}/api/parser/scripts/deleteMedia.sh ${process.env.SLAVE_STORAGE}/${storagepath} ${process.env.FILE_PATH}/storage/${storagepath}`, (err, stdout, stderr) =>{
-            if(err){
-                console.log(err)
-            }
-            else{
-                console.log(stdout)
-            }
+
+        return new Promise((resolve, reject) => {
+            exec(`${process.env.FILE_PATH}/api/parser/scripts/deleteMedia.sh ${process.env.SLAVE_STORAGE}/${storagepath} ${process.env.FILE_PATH}/storage/${storagepath}`, (err, stdout, stderr) =>{
+                if(err){
+                    console.log('Error on executing deleteMedia.sh ',err)
+                    reject(err)
+                }
+                if(stderr){
+                    console.log('stderr',stderr)
+                    resolve(stderr)
+                }
+                else{
+                    resolve('ok')
+                }
+                
+            })
         })
-              
+        
     }
 }
 
 function cropImageInTwoAndSave(leftScreen, rightScreen, file_path, file_name) {
     var leftDest, rightDest
 
-    if (leftScreen != 1) 
+    if (leftScreen != 1)
         leftDest = `${process.env.SLAVE_STORAGE}/${file_path}`
     else
         leftDest = `${process.env.FILE_PATH}/storage/${file_path}`
-    if (rightScreen != 1) 
+    if (rightScreen != 1)
         rightDest = `${process.env.SLAVE_STORAGE}/${file_path}`
     else
         rightDest = `${process.env.FILE_PATH}/storage/${file_path}`
