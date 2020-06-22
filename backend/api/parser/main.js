@@ -37,8 +37,8 @@ module.exports = {
 
         return response
     },
-    updatePresentation: function (data) {
-        database.updatePresentation(data)
+    updatePresentation: async function (data) {
+        return await database.updatePresentation(data)
     },
     getAllPresentations: function () {
         return database.getAllPresentations()

@@ -38,14 +38,18 @@ module.exports = {
     },
     // Updates a document into the presentations collection
     updatePresentation: async function(obj){
-        Presentation.updateOne({_id: obj.id},{ $set : obj.data}, (err) =>{
-            if(!err){
-                console.log('Document updated with success')
-            }
-            else{
-                console.log('Unable to update document')
-            }
-        } )
+        return new Promise ((resolve,reject) =>{
+            Presentation.updateOne({_id: obj.id},{ $set : obj.data}, (err) =>{
+                if(!err){
+                    console.log('Document updated with success')
+                    resolve({status: 200, msg: `Success. Document updated with success`})
+                }
+                else{
+                    console.log('Unable to update document',err)
+                    reject({status: 500, msg: `Internal Server Error. Unable to update document ${err}`})
+                }
+            } )
+        })
     },
     // Gets a presentation by ID from the presentations collection 
     getPresentationById: async function(id){

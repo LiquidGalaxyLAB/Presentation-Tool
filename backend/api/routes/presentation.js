@@ -69,11 +69,11 @@ router.delete("/delete/:id", (req, res, next) => {
 router.patch("/update", (req, res, next) => {
     var data = req.body
     updatePresentation(data)
-        .then(() => {
-            res.json('200')
+        .then((response) => {
+            res.json(response)
         })
-        .catch(() => {
-            res.json('500')
+        .catch((error) => {
+            res.json(error)
         })
 })
 
