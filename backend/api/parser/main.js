@@ -4,16 +4,26 @@ const database = require('../parser/modules/database')
 
 module.exports = {
     executePresentation: async function (id) {
+        var response
         var p = await database.getPresentationById(id)
-        if (p.length != 0) {
-            execute.execPresentation(p[0])
+
+        if (p.status != undefined) {
+            response = p
         }
+        else {
+            if (p.length != 0) {
+                execute.execPresentation(p[0])
+                response = {status: 202, msg: 'Accepted. The request has being accepted to start proccessing. Executing presentation.'}
+            }
+        }
+
+        return response
     },
     mediaStorage: async function (media, path) {
         return await storage.sendMediaToDefinedLG(media, path)
     },
     createPresentation: async function (presentation) {
-        return await database.createPresentation(presentation)        
+        return await database.createPresentation(presentation)
     },
     deletePresentation: async function (id) {
         var response

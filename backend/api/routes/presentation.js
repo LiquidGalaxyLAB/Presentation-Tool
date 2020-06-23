@@ -7,11 +7,11 @@ const router = express.Router()
 router.get("/execute/:id", (req, res, next) => {
     var id = req.params.id
     executePresentation(id)
-        .then(() => {
-            res.json('200')
+        .then((response) => {
+            res.json(response)
         })
         .catch((err) => {
-            res.json('500')
+            res.json(err)
         })
 
 })

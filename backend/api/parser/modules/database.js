@@ -4,7 +4,6 @@ module.exports = {
     // Creates a new document into the presentations collection
     createPresentation: function(presentation){
         var p = new Presentation(presentation)
-        //var response
 
         return new Promise ((resolve, reject) =>{
             p.save().then((doc) =>{
@@ -53,8 +52,14 @@ module.exports = {
     },
     // Gets a presentation by ID from the presentations collection 
     getPresentationById: async function(id){
-        const document = await Presentation.find({_id:id})
+        var document
         var response
+        try{
+            document = await Presentation.find({_id:id})
+        }
+        catch {
+            return {status: 400, msg: `Bad Request. There is something wrong with your request`}
+        }
 
         if(document.length == 0){
             console.log('Document not found')
