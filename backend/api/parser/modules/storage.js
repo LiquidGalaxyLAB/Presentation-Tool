@@ -1,3 +1,5 @@
+// This file has all the functions related to managing the local storage in all screens
+
 const { exec } = require('child_process')
 
 module.exports = {

@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 
+//connects to the presentationDB database located in the localhost
 module.exports = mongoose.connect(`mongodb://localhost:27017/presentationsDB`,{
     useNewUrlParser: true,
     useUnifiedTopology: true
@@ -46,7 +47,7 @@ var PresentationSchema = new mongoose.Schema({
   }]
 })
 
-// Defining the collection
+// Defining the collection and exportin the model
 mongoose.model('presentations',PresentationSchema)
 var Presentation = mongoose.model('presentations')
 module.exports = Presentation

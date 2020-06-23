@@ -1,3 +1,5 @@
+// This file contains all CRUD interactions with the database
+
 var Presentation = require('../../../database/index')
 
 module.exports = {

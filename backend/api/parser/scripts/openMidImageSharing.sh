@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# This script opens a image in middle position in two selected liquid galaxy screens
+
 LEFTSCREEN=$1
 RIGHTSCREEN=$2
 LEFT_FILE_PATH=$3

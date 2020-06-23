@@ -1,3 +1,5 @@
+// This file is the heart of the parser, all possible functionalities are controlled by this main file
+
 const storage = require('../parser/modules/storage')
 const execute = require('../parser/modules/execute')
 const database = require('../parser/modules/database')

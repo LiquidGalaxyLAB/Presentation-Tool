@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# This is script opens an image in a selected liquid galaxy screen
+# This is script opens a video in a selected liquid galaxy screen
 
 LG_SCREEN=$1    # the first parameter is the lg screen
 FILE_PATH=$2    # the path where the video is located

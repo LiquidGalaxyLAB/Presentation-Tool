@@ -16,6 +16,8 @@ router.get("/execute/:id", (req, res, next) => {
 
 })
 
+// stop
+// this route stops all the current tasks used when running a presentation
 router.get("/stop", (req, res, next) => {
     stopPresentation()
         .then((response) => {
@@ -39,7 +41,7 @@ router.get("/getall", (req, res, next) => {
 })
 
 // create
-// receives the json with the info and calls the functions to save in the db
+// receives the json with the info and calls the functions to save a new presentation in the database
 router.post("/create", (req, res, next) => {
     var presentation = req.body
     createPresentation(presentation)
@@ -52,7 +54,7 @@ router.post("/create", (req, res, next) => {
 })
 
 // delete
-//receives presentation id, calls functions to delete from db and from all machines and storage
+// receives presentation id, calls functions to delete from db and from all machines and storage
 router.delete("/delete/:id", (req, res, next) => {
     var id = req.params.id
     deletePresentation(id)
@@ -65,7 +67,7 @@ router.delete("/delete/:id", (req, res, next) => {
 })
 
 // update
-// receives the fields of the doc that needs to be updated and the id of the presentation
+// receives the fields of the document that needs to be updated in the db and the id of the presentation
 router.patch("/update", (req, res, next) => {
     var data = req.body
     updatePresentation(data)

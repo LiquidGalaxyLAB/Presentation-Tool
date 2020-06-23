@@ -3,20 +3,20 @@ const express = require('express')
 const router = express.Router()
 var multer = require('multer')
 
-// configure localstorage for files
+// configure localstorage for files using multer
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
         //storage/all - both dirs need to be created before receiving a request
         cb(null, `${process.env.FILE_PATH}/storage/all`)
     },
     filename: function (req, file, cb) {
-        //const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
         cb(null, file.originalname)
     }
 })
 
 var upload = multer({ storage: storage })
 
+// ROUTES: the routes on this file are supposed to control all related functionalities to the local storage
 
 // upload media
 // receives an array of multipart content-type media + storagePath + array of screens
@@ -40,6 +40,7 @@ router.post("/upload", upload.array('media'), (req, res, next) => {
 
 })
 
+// clean storage
 // this call cleans the whole local storage
 router.get('/clean', (req, res, next) => {
     cleanStorage()

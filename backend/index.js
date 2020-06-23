@@ -2,7 +2,7 @@ const express = require('express')
 const app = express()
 const bodyParser = require('body-parser')
 
-app.use(bodyParser.urlencoded({extended: true})) //extends allows you to send big data
+app.use(bodyParser.urlencoded({extended: true})) //extended allows you to send big data
 app.use(bodyParser.json())
 
 // routes
@@ -32,7 +32,7 @@ app.use((req,res,next) =>{
     next(error)
 })
 
-// handles all errors from other places
+// handles all errors from other places that weren't treated
 app.use((error,req,res,next)=>{
     res.status(error.status || 500)
     res.json({

@@ -1,3 +1,5 @@
+// This file controls the execution of a presentation
+
 const { exec } = require('child_process')
 const fs = require('fs')
 
@@ -13,12 +15,10 @@ module.exports = {
         }
 
         // iterates the slides
-
         for (var i = 0; i < presentationJson.slides.length; i++) {
             if (playing) {
                 execSlide(presentationJson.slides[i])
                 await sleep(presentationJson.slides[i].duration).then(() => killSlide(presentationJson.slides[i]))
-                //await sleep(3600).then(() => killSlide(presentationJson.slides[i]))
 
                 // kills audio if it is the end of the presentation
                 if (i == presentationJson.slides.length - 1)
@@ -123,15 +123,14 @@ function execSlide(slide) {
 }
 function execAudio(audiopath) {
     exec(`${process.env.FILE_PATH}/api/parser/scripts/playAudio.sh ${process.env.FILE_PATH}/storage/"${audiopath}"`, (err, stdout, stderr) => {
-        // BUG = EXEC HAS A MAX BUFFER LIMIT, WHEN ACHIEVES IT, STOPS EXECUTION 
-        // putting on background doesn't work, possible solution: increase buffer size 
         if (err) {
-            //some err occurred
             console.error(err)
-        } else {
-            // the *entire* stdout and stderr (buffered)
-            console.log(`stdout: ${stdout}`);
+        } 
+        if(stderr){
             console.log(`stderr: ${stderr}`);
+        }
+        else {
+            console.log(`stdout: ${stdout}`);
         }
     })
 
@@ -175,15 +174,14 @@ function openVideo(media, screen) {
 
 function runOpenScript(type, screen, file_path, position) {
     exec(`${process.env.FILE_PATH}/api/parser/scripts/open${type}.sh ${screen} ${file_path} "${position}"`, (err, stdout, stderr) => {
-        // BUG = EXEC HAS A MAX BUFFER LIMIT, WHEN ACHIEVES IT, STOPS EXECUTION 
-        // putting on background doesn't work, possible solution: increase buffer size 
         if (err) {
-            //some err occurred
             console.error(err)
-        } else {
-            // the *entire* stdout and stderr (buffered)
-            console.log(`stdout: ${stdout}`);
+        } 
+        if(stderr){
             console.log(`stderr: ${stderr}`);
+        }
+        else {
+            console.log(`stdout: ${stdout}`);
         }
     })
 }
@@ -214,11 +212,14 @@ async function openSharedImage(media, screen) {
 
 function runOpenMidImageSharing(leftScreen, rightScreen, leftDest, rightDest) {
     exec(`${process.env.FILE_PATH}/api/parser/scripts/openMidImageSharing.sh ${leftScreen} ${rightScreen} ${leftDest} ${rightDest}`, (err, stdout, stderr) =>{
-        if(err){
-            console.log('Err',err)
+        if (err) {
+            console.error(err)
+        } 
+        if(stderr){
+            console.log(`stderr: ${stderr}`);
         }
-        else{
-            console.log('stdout',stdout)
+        else {
+            console.log(`stdout: ${stdout}`);
         }
     })
 }
