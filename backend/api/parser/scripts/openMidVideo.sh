@@ -38,6 +38,9 @@ fi
 SIZE="${WIDTH}x${HEIGHT}"
 echo "SIZE: $SIZE"
 
+POSITION="${XPOSITION}+${YPOSITION}"
+echo "POSITION: $POSITION"
+
 # check if lg screen exists
 if [[ $LG_SCREEN -gt 0 ]] && [[ $LG_SCREEN -le $LG_MAX ]] ; then
     echo "Screen is valid"
