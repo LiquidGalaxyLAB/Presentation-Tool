@@ -70,6 +70,7 @@ router.delete("/delete/:id", (req, res, next) => {
 // receives the fields of the document that needs to be updated in the db and the id of the presentation
 router.patch("/update", (req, res, next) => {
     var data = req.body
+
     updatePresentation(data)
         .then((response) => {
             res.json(response)
