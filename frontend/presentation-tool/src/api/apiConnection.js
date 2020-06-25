@@ -2,13 +2,18 @@ const axios = require('axios')
 
 export default {
     executePresentation: async (payload) =>{
-        axios.get(`${process.env.VUE_APP_API_URL}/presentation/execute/${payload}`)
-        .then((res) =>{
-            console.log('Success: ',res)
+        return new Promise((resolve, reject) =>{
+            axios.get(`http://${process.env.VUE_APP_LG_IP}:${process.env.VUE_APP_LG_PORT}/presentation/execute/${payload}`)
+            .then((res) =>{
+                console.log('Response: ',res.data)
+                resolve(res.data)
+            })
+            .catch((err) =>{
+                console.log('Error: ',err)
+                reject(err)
+            })
         })
-        .catch((err) =>{
-            console.log('Error: ',err)
-        })
+        
     },
     createPresentation: async (payload) =>{
         axios.post(`${process.env.VUE_APP_API_URL}/presentation/create`,payload)
@@ -67,12 +72,30 @@ export default {
         })
     },
     cleanStorage: async () =>{
-        axios.get(`${process.env.VUE_APP_API_URL}/storage/clean`)
-        .then((res) =>{
-            console.log('Success: ',res)
+        return new Promise((resolve,reject) =>{
+            axios.get(`http://${process.env.VUE_APP_LG_IP}:${process.env.VUE_APP_LG_PORT}/storage/clean`)
+            .then((res) =>{
+                console.log('Response: ',res.data)
+                resolve(res.data)
+            })
+            .catch((err) =>{
+                console.log('Error: ',err)
+                reject(err)
+            })
         })
-        .catch((err) =>{
-            console.log('Error: ',err)
+        
+    },
+    stopPresentation: async () => {
+        return new Promise((resolve,reject) =>{
+            axios.get(`http://${process.env.VUE_APP_LG_IP}:${process.env.VUE_APP_LG_PORT}/presentation/stop`)
+            .then((res) =>{
+                console.log('Response: ',res.data)
+                resolve(res.data)
+            })
+            .catch((err) =>{
+                console.log('Error: ',err)
+                reject(err)
+            })
         })
     }
 

@@ -13,6 +13,22 @@ export default {
         }
     },
     actions:{
+        async executePresentation({dispatch},payload){
+            var res = await api.executePresentation(payload)
+            if(res.status != 202){
+                dispatch('logResponse',res)
+                return false
+            }
+            return true 
+        },
+        async stopPresentation({dispatch}){
+            var res = await api.stopPresentation()
+            if(res.status != 200){
+                dispatch('logResponse',res)
+                return false
+            }
+            return true
+        },
         async getAllPresentations({commit}){
             var pres = await api.getAllPresentation()
             commit('setPresentations',pres)

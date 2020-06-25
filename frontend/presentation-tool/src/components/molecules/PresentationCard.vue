@@ -1,6 +1,6 @@
 <template>
   <v-hover v-slot:default="{hover}" open-delay="100">
-    <v-card :elevation="hover ? 16 : 2" @click.stop="openDialog=true">
+    <v-card :elevation="hover ? 16 : 2" @click.stop="viewPresentation(presentation._id)">
       <player :selectPresentation="presentation" v-model="openDialog"></player>
       <v-img height="150" src="https://image.freepik.com/free-vector/flat-design-geometric-shapes-background_23-2148366514.jpg">
         <v-expand-transition>
@@ -80,8 +80,10 @@ export default {
     };
   },
   methods: {
-    viewPresentation(id) {
-      this.$router.push(`/presentation/play/${id}`);
+    async viewPresentation(id) {
+      var valid = await this.$store.dispatch('executePresentation',id)
+      if(valid)
+        this.openDialog=true      
     },
     executeAction(action){
       if(action == 'editPresentation'){
