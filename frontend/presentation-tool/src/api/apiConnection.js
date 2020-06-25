@@ -39,16 +39,19 @@ export default {
     },
     getAllPresentation: async () =>{
         let results = []
-        axios.get(`${process.env.VUE_APP_API_URL}/presentation/getall`)
-        .then((res) =>{
-            console.log('Success: ',res)
-            results = res
-        })
-        .catch((err) =>{
-            console.log('Error: ',err)
-        })
 
-        return results
+        return new Promise((resolve, reject) =>{
+            axios.get(`http://${process.env.VUE_APP_LG_IP}:${process.env.VUE_APP_LG_PORT}/presentation/getall`, { crossdomain: true })
+            .then((res) =>{
+                console.log('Success: ',res)
+                results = res.data
+                resolve(results)
+            })
+            .catch((err) =>{
+                console.log('Error: ',err)
+                reject(err)
+            })
+        })
     },
     uploadMedia: async (payload) => {
         axios.post(`${process.env.VUE_APP_API_URL}/storage/upload`,payload)

@@ -2,7 +2,7 @@
   <div>
     <toolbar></toolbar>
     <v-container>
-      <group-cards></group-cards>
+      <group-cards :presentations="presentations"></group-cards>
     </v-container>
     <new-pres-button></new-pres-button>
   </div>
@@ -18,6 +18,15 @@ export default {
     Toolbar,
     GroupCards,
     NewPresButton
+  },
+  computed:{
+    presentations(){
+      return this.$store.state.presentationStore.presentations
+    }
+  },
+  created(){
+    this.$store.dispatch('getAllPresentations')
   }
+
 };
 </script>

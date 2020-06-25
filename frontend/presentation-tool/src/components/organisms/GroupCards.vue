@@ -23,10 +23,11 @@
 import PresentationCard from "@/components/molecules/PresentationCard";
 
 export default {
+  props: ["presentations"],
   data() {
     return {
       searchPresentation: "",
-      presentations: [
+      /*presentations: [
         {
           id: "001",
           name: "My presentation 01",
@@ -77,7 +78,7 @@ export default {
               "https://image.freepik.com/free-vector/flat-design-geometric-shapes-background_23-2148366514.jpg"
           }
         }
-      ],
+      ],*/
       sorted: false
     };
   },
@@ -85,10 +86,10 @@ export default {
     filterPresentations() {
       return this.presentations.filter(p => {
         return (
-          p.name
+          p.title
             .toLowerCase()
             .includes(this.searchPresentation.toLowerCase()) ||
-          p.category.name
+          p.category
             .toLowerCase()
             .includes(this.searchPresentation.toLowerCase())
         );

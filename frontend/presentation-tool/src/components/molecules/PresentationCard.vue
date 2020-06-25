@@ -2,7 +2,7 @@
   <v-hover v-slot:default="{hover}" open-delay="100">
     <v-card :elevation="hover ? 16 : 2" @click.stop="openDialog=true">
       <player :selectPresentation="presentation" v-model="openDialog"></player>
-      <v-img height="150" :src="presentation.category.img">
+      <v-img height="150" src="https://image.freepik.com/free-vector/flat-design-geometric-shapes-background_23-2148366514.jpg">
         <v-expand-transition>
           <div class="fade-transition green darken-2 v-card--reveal" style="height: 100%;">
             <v-container fluid fill-height>
@@ -17,7 +17,7 @@
       </v-img>
       <v-row align="start" class="pl-3 pr-3">
         <v-col>
-          <v-card-title class="pt-0 pb-0">{{presentation.name}}</v-card-title>
+          <v-card-title class="pt-0 pb-0">{{presentation.title}}</v-card-title>
         </v-col>
         <v-col cols="2" >
           <v-row justify="center">
@@ -43,7 +43,9 @@
           </v-row>
         </v-col>
       </v-row>
-      <v-card-text class="pl-8 pr-6 pt-0">{{presentation.description}}</v-card-text>
+      <div class="text ellipsis">
+      <v-card-text class="pl-7 pr-6 pt-0 desc-text">{{presentation.description}}</v-card-text>
+      </div>
     </v-card>
   </v-hover>
 </template>

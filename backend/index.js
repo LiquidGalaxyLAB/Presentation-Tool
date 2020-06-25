@@ -5,15 +5,6 @@ const bodyParser = require('body-parser')
 app.use(bodyParser.urlencoded({extended: true})) //extended allows you to send big data
 app.use(bodyParser.json())
 
-// routes
-const presentationRoutes = require('./api/routes/presentation')
-const storageRoutes = require('./api/routes/storage')
-app.use('/presentation',presentationRoutes)
-app.use('/storage',storageRoutes)
-
-app.get('/',(req,res,next)=>{res.json('Welcome to Liquid Galaxy Presentation Tool!')})
-
-
 // configuration of the response headers
 app.use((req,res,next) =>{
     res.header('Access-Control-Allow-Origin','*')
@@ -24,6 +15,15 @@ app.use((req,res,next) =>{
     }
     next()
 })
+
+// routes
+const presentationRoutes = require('./api/routes/presentation')
+const storageRoutes = require('./api/routes/storage')
+app.use('/presentation',presentationRoutes)
+app.use('/storage',storageRoutes)
+
+app.get('/',(req,res,next)=>{res.json('Welcome to Liquid Galaxy Presentation Tool!')})
+
 
 // couldn't find a route
 app.use((req,res,next) =>{
