@@ -8,7 +8,7 @@
           <div>
             <v-card-title class="headline pb-10" v-text="selectPresentation.title"></v-card-title>
             <v-card-subtitle v-text="selectPresentation.description"></v-card-subtitle>
-            <div class="pl-4">
+            <div class="pl-4 pb-5">
               <v-btn outlined color="red" @click="show = false;stopPresentation()">
                 Stop
                 <v-icon>mdi-stop</v-icon>

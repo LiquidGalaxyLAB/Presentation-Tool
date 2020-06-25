@@ -29,13 +29,17 @@ export default {
         })
     },
     deletePresentation: async (payload) =>{
-        axios.delete(`${process.env.VUE_APP_API_URL}/presentation/delete/${payload}`)
-        .then((res) =>{
-            console.log('Success: ',res)
-        })
-        .catch((err) =>{
-            console.log('Error: ',err)
-        })
+        return new Promise((resolve, reject) =>{
+            axios.delete(`http://${process.env.VUE_APP_LG_IP}:${process.env.VUE_APP_LG_PORT}/presentation/delete/${payload}`)
+            .then((res) =>{
+                console.log('Response: ',res.data)
+                resolve(res.data)
+            })
+            .catch((err) =>{
+                console.log('Error: ',err)
+                reject()
+            })
+        })    
     },
     getAllPresentation: async () =>{
         let results = []
@@ -43,7 +47,7 @@ export default {
         return new Promise((resolve, reject) =>{
             axios.get(`http://${process.env.VUE_APP_LG_IP}:${process.env.VUE_APP_LG_PORT}/presentation/getall`, { crossdomain: true })
             .then((res) =>{
-                console.log('Success: ',res)
+                console.log('Response: ',res.data)
                 results = res.data
                 resolve(results)
             })

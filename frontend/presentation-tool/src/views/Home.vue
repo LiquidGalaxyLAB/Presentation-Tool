@@ -2,6 +2,7 @@
   <div>
     <toolbar></toolbar>
     <v-container>
+      {{$store.state.logsStore.log}}
       <group-cards :presentations="presentations"></group-cards>
     </v-container>
     <new-pres-button></new-pres-button>

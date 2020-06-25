@@ -101,7 +101,7 @@ export default {
       console.log('edit')
     },
     deletePresentation(){
-      console.log('delete')
+      this.$store.dispatch('deleteById',this.presentation._id)
     }
   }
 };
