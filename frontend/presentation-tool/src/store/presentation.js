@@ -15,10 +15,9 @@ export default {
     actions:{
         async getAllPresentations({commit}){
             var pres = await api.getAllPresentation()
-            console.log('presentations',pres)
             commit('setPresentations',pres)
         },
-        async deleteById({commit,state},payload){
+        async deleteById({commit,state,dispatch},payload){
             var res = await api.deletePresentation(payload)
             if(res.status == 200){
                 state.presentations.forEach((p,index) => {
@@ -27,7 +26,7 @@ export default {
                     }
                 });
             }
-            commit('setLog', res)
+            dispatch('logResponse', res)
         }
     },
     getters:{

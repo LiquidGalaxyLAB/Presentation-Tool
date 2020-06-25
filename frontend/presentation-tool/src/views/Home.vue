@@ -1,6 +1,7 @@
 <template>
   <div>
     <toolbar></toolbar>
+    <alert/>
     <v-container>
       {{$store.state.logsStore.log}}
       <group-cards :presentations="presentations"></group-cards>
@@ -13,12 +14,14 @@
 import Toolbar from "@/components/atoms/Toolbar.vue";
 import GroupCards from "@/components/organisms/GroupCards.vue";
 import NewPresButton from "@/components/atoms/NewPresentationFloatButton.vue"
+import Alert from "@/components/atoms/Alert.vue"
 
 export default {
   components: {
     Toolbar,
     GroupCards,
-    NewPresButton
+    NewPresButton,
+    Alert
   },
   computed:{
     presentations(){
