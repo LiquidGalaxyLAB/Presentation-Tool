@@ -101,7 +101,7 @@ export default {
       console.log('edit')
     },
     deletePresentation(){
-      this.$store.dispatch('deleteById',this.presentation._id)
+      confirm("Are you sure you want to delete? This action can not be undone.") && this.$store.dispatch('deleteById',this.presentation._id)
     }
   }
 };
