@@ -7,29 +7,31 @@ const router = express.Router()
 router.get("/execute/:id", (req, res, next) => {
     var id = req.params.id
     executePresentation(id)
-        .then(() => {
-            res.json('200')
+        .then((response) => {
+            res.json(response)
         })
         .catch((err) => {
-            res.json('500')
+            res.json(err)
         })
 
 })
 
-router.get("/stop", (req, res, next) =>{
+// stop
+// this route stops all the current tasks used when running a presentation
+router.get("/stop", (req, res, next) => {
     stopPresentation()
-    .then(() =>{
-        res.json('200')
-    })
-    .catch((err) =>{
-        res.json('500')
-    })
+        .then((response) => {
+            res.json(response)
+        })
+        .catch((error) => {
+            res.json(error)
+        })
 })
 
 // get all
 // gets all saved presentations from the database
 router.get("/getall", (req, res, next) => {
-   getAllPresentations().then((array) => {
+    getAllPresentations().then((array) => {
         console.log('array', array)
         res.send(array)
     })
@@ -39,38 +41,43 @@ router.get("/getall", (req, res, next) => {
 })
 
 // create
-// receives the json with the info and calls the functions to save in the db
+// receives the json with the info and calls the functions to save a new presentation in the database
 router.post("/create", (req, res, next) => {
     var presentation = req.body
-    console.log('PRESENTATION JSON BODY', presentation)
     createPresentation(presentation)
-        .then(() => {
-            res.json('200')
+        .then((response) => {
+            res.json(response)
         })
-        .catch(() => {
-            res.json('500')
+        .catch((err) => {
+            res.json(err)
         })
 })
 
 // delete
-//receives presentation id, calls functions to delete from db and from all machines and storage
+// receives presentation id, calls functions to delete from db and from all machines and storage
 router.delete("/delete/:id", (req, res, next) => {
-    console.log('REQ PARAMS', req.params)
     var id = req.params.id
-    deletePresentation(id).then(() => res.json('200')).catch(() => res.json('500'))
+    deletePresentation(id)
+        .then((response) => {
+            res.json(response)
+        })
+        .catch((err) => {
+            res.json(err)
+        })
 })
 
 // update
-// receives the fields of the doc that needs to be updated and the id of the presentation
-router.patch("/update", (req,res, next) =>{
+// receives the fields of the document that needs to be updated in the db and the id of the presentation
+router.patch("/update", (req, res, next) => {
     var data = req.body
+
     updatePresentation(data)
-    .then(() =>{
-        res.json('200')
-    })
-    .catch(() => {
-        res.json('500')
-    })
+        .then((response) => {
+            res.json(response)
+        })
+        .catch((error) => {
+            res.json(error)
+        })
 })
 
 module.exports = router
@@ -88,7 +95,7 @@ async function deletePresentation(id) {
     return await parser.deletePresentation(id)
 }
 
-async function updatePresentation(data){
+async function updatePresentation(data) {
     return await parser.updatePresentation(data)
 }
 
@@ -96,6 +103,6 @@ async function getAllPresentations() {
     return await parser.getAllPresentations()
 }
 
-async function stopPresentation(){
+async function stopPresentation() {
     return await parser.stopPresentation()
 }

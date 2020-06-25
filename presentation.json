@@ -48,3 +48,9 @@
 	]
 	
 }
+
+"UPDATE FILES"
+{
+	"id":"",  "//the id of the document that needs to be updated"
+	"data":"", "//all the fields you want to update"
+}

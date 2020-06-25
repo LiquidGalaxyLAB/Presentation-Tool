@@ -1,3 +1,5 @@
+// This file controls the execution of a presentation
+
 const { exec } = require('child_process')
 const fs = require('fs')
 
@@ -13,12 +15,10 @@ module.exports = {
         }
 
         // iterates the slides
-
         for (var i = 0; i < presentationJson.slides.length; i++) {
             if (playing) {
                 execSlide(presentationJson.slides[i])
                 await sleep(presentationJson.slides[i].duration).then(() => killSlide(presentationJson.slides[i]))
-                //await sleep(3600).then(() => killSlide(presentationJson.slides[i]))
 
                 // kills audio if it is the end of the presentation
                 if (i == presentationJson.slides.length - 1)
@@ -29,15 +29,24 @@ module.exports = {
     },
     stop: function () {
         playing = false
-        exec(`${process.env.FILE_PATH}/api/parser/scripts/killPresentation.sh`, (err, stdout, stderr) =>{
-            if(err){
-                console.log(err)
-                console.log('stdout',stderr)
-            }
-            else{
-                console.log('stdout',stdout)
-            }
+
+        return new Promise((resolve,reject) =>{
+            exec(`${process.env.FILE_PATH}/api/parser/scripts/killPresentation.sh`, (err, stdout, stderr) => {
+                if (err) {
+                    console.log('Error on executing killPresentation.sh',err)
+                    reject({status: 500, msg: `Internal Server Error. Error on stopping presentation. ${err}`})
+                }
+                if(stderr){
+                    console.log('Error on executing killPresentation.sh',stderr)
+                    reject({status: 500, msg: `Internal Server Error. Error on stopping presentation. ${stderr}`})
+                }
+                else {
+                    console.log('Stopped all current applications', stdout)
+                    resolve({status: 200, msg: `Success. Stopped current presentation execution`})
+                }
+            })
         })
+        
     }
 
 }
@@ -114,15 +123,14 @@ function execSlide(slide) {
 }
 function execAudio(audiopath) {
     exec(`${process.env.FILE_PATH}/api/parser/scripts/playAudio.sh ${process.env.FILE_PATH}/storage/"${audiopath}"`, (err, stdout, stderr) => {
-        // BUG = EXEC HAS A MAX BUFFER LIMIT, WHEN ACHIEVES IT, STOPS EXECUTION 
-        // putting on background doesn't work, possible solution: increase buffer size 
         if (err) {
-            //some err occurred
             console.error(err)
-        } else {
-            // the *entire* stdout and stderr (buffered)
-            console.log(`stdout: ${stdout}`);
+        } 
+        if(stderr){
             console.log(`stderr: ${stderr}`);
+        }
+        else {
+            console.log(`stdout: ${stdout}`);
         }
     })
 
@@ -135,7 +143,15 @@ function openImage(media, screen) {
     else {
         file_path = `${process.env.SLAVE_STORAGE}/${media.storagepath}/${media.filename}`
     }
-    runOpenScript('Image', screen, file_path, media.position)
+
+    if (media.position == "middle") {
+        runOpenScript('MidImage', screen, file_path, media.position)
+    }
+    else {
+        runOpenScript('Image', screen, file_path, media.position)
+    }
+
+
 }
 
 function openVideo(media, screen) {
@@ -146,21 +162,26 @@ function openVideo(media, screen) {
     else {
         file_path = `${process.env.SLAVE_STORAGE}/${media.storagepath}/${media.filename}`
     }
+    if (media.position == "middle") {
+        runOpenScript('MidVideo', screen, file_path, media.position)
+    }
+    else {
+        runOpenScript('Video', screen, file_path, media.position)
+    }
 
-    runOpenScript('Video', screen, file_path, media.position)
+
 }
 
 function runOpenScript(type, screen, file_path, position) {
     exec(`${process.env.FILE_PATH}/api/parser/scripts/open${type}.sh ${screen} ${file_path} "${position}"`, (err, stdout, stderr) => {
-        // BUG = EXEC HAS A MAX BUFFER LIMIT, WHEN ACHIEVES IT, STOPS EXECUTION 
-        // putting on background doesn't work, possible solution: increase buffer size 
         if (err) {
-            //some err occurred
             console.error(err)
-        } else {
-            // the *entire* stdout and stderr (buffered)
-            console.log(`stdout: ${stdout}`);
+        } 
+        if(stderr){
             console.log(`stderr: ${stderr}`);
+        }
+        else {
+            console.log(`stdout: ${stdout}`);
         }
     })
 }
@@ -179,9 +200,28 @@ async function openSharedImage(media, screen) {
     else
         rightDest = `${process.env.FILE_PATH}/storage/${media.storagepath}/Right${media.filename}`
 
-    runOpenScript('Image', screen, leftDest, media.position)
-    runOpenScript('Image', media.partner, rightDest, media.position)
+    if (media.position == "middle") {
+        runOpenMidImageSharing(screen, media.partner, leftDest, rightDest)
+    } else {
+        runOpenScript('Image', screen, leftDest, media.position)
+        runOpenScript('Image', media.partner, rightDest, media.position)
+    }
 
+
+}
+
+function runOpenMidImageSharing(leftScreen, rightScreen, leftDest, rightDest) {
+    exec(`${process.env.FILE_PATH}/api/parser/scripts/openMidImageSharing.sh ${leftScreen} ${rightScreen} ${leftDest} ${rightDest}`, (err, stdout, stderr) =>{
+        if (err) {
+            console.error(err)
+        } 
+        if(stderr){
+            console.log(`stderr: ${stderr}`);
+        }
+        else {
+            console.log(`stdout: ${stdout}`);
+        }
+    })
 }
 
 function openSharedVideo(media, screen) {

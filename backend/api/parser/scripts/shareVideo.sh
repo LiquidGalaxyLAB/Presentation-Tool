@@ -1,5 +1,7 @@
 #!/bin/bash
 
+### DISCLAIMER: NOT IMPLEMENTED ###
+
 # This script opens a video in two selected screens at the same time
 
 LEFTSCREEN=$1

@@ -1,6 +1,8 @@
 #!/bin/bash
 . ${HOME}/etc/shell.conf
 
+# This script kills all current proccess used when running a presentation in all machines
+
 for lg in $LG_FRAMES ; do
    echo $lg:
    if [ $lg == "lg1" ]; then
