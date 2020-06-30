@@ -1,49 +1,48 @@
 <template>
-  <v-container>
-    <div class="pb-12">
-      <h1>Build the slides</h1>
+  <div>
+    <div class="pa-3">
+      <h2>Slides</h2>
       <v-divider></v-divider>
     </div>
-    <v-stepper v-model="step" vertical>
-      <div v-for="slideNumber in slidesQt" :key="slideNumber">
-        <v-stepper-step editable :complete="step > slideNumber" :step="slideNumber">Slide {{slideNumber}}</v-stepper-step>
-        <v-stepper-content :step="slideNumber">
-          <screen-cards></screen-cards>
-        </v-stepper-content>
-        <v-divider vertical></v-divider>
-      </div>
-        <v-col cols=12>
-          <v-row justify="space-between" class="pl-2">
-        <v-btn color="red" text class="mr-4" @click="$router.push('/')">Cancel</v-btn>
-        <v-btn  color="green" class="mr-4" dark @click="save()">Save and continue</v-btn>
-         </v-row>
+    <v-card class="center-button"  @click="dialog = true" flat>
+      <v-row justify="center">
+        <v-card-title class="pb-0">New slide</v-card-title>
+      </v-row>
+      <v-row justify="center">
+        <v-col cols="12" md="6">
+          <v-img src="@/assets/addMedia.png"></v-img>
         </v-col>
-     
-    </v-stepper>
-  </v-container>
+      </v-row>
+    </v-card>
+
+    <v-dialog v-model="dialog" max-width="50%">
+        <v-card>
+            <v-card-title>Slide creator</v-card-title>
+            <v-btn @click="dialog = false">close</v-btn>
+        </v-card>
+    </v-dialog>
+  </div>
 </template>
 
 <script>
-import ScreenCards from "@/components/molecules/ScreenCards.vue";
-
 export default {
-  data() {
-    return {
-      step: 0
-    };
-  },
-  components: {
-    ScreenCards
-  },
-  computed:{
-    slidesQt(){
-      return this.$store.state.builderStore.slidesQt
+    data(){
+        return{
+            dialog:false
+        }
     }
-  },
-  method:{
-    save(){
-      
-    }
-  }
-};
+}
 </script>
+
+<style>
+.center-button {
+  background-color: lightcoral;
+  width: 30%;
+  height: 30%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+}
+</style>

@@ -1,7 +1,7 @@
 <template>
   <v-container>
-    <div class="pb-12">
-      <h1>Fill up the basic information</h1>
+    <div class="pb-4">
+      <h2>Basic information</h2>
       <v-divider></v-divider>
     </div>
     <v-form ref="form" v-model="valid" lazy-validation>
@@ -10,7 +10,7 @@
         :counter="20"
         :rules="titleRules"
         label="Title *"
-        outlined
+        filled
         required
         hint="Choose an intuitive title with less than 20 characters"
         persistent-hint
@@ -18,7 +18,7 @@
       <v-textarea
         v-model="presentation.description"
         label="Description"
-        outlined
+        filled
         required
         hint="Describe what your presentation will be about"
         persistent-hint
@@ -30,53 +30,39 @@
             :items="categories"
             :rules="[v => !!v || 'Category is required']"
             label="Category *"
-            outlined
+            filled
             required
             hint="The category which your presentation best fits in"
             persistent-hint
           ></v-select>
         </v-col>
         <v-col cols="12" md="6">
-          <!--weird bug with value-->
-          <v-file-input
-            v-model="presentation.audio"
-            clearable
-            outlined
-            label="Audio"
-            hint="NOTE: this audio will play through the whole presentation. If you don't want that, don't upload here"
-            persistent-hint
-          ></v-file-input>
-        </v-col>
-      </v-row>
-      <v-row>
-        <v-col cols="12" md="6">
           <v-select
             v-model="screensqt"
             :items="screens"
             :rules="[v => !!v || 'Number of screens is required']"
             label="Screens *"
-            outlined
+            filled
             required
             hint="The number of screens in your Liquid Galaxy"
             persistent-hint
           ></v-select>
         </v-col>
-        <v-col cols="12" md="6">
-          <v-select
-            v-model="slidesqt"
-            :items="slides"
-            :rules="[v => !!v || 'Number of slides is required']"
-            label="Slides *"
-            outlined
-            required
-            hint="The quatity of slides you are going to need"
-            persistent-hint
-          ></v-select>
-        </v-col>
       </v-row>
-      <v-row justify="space-between" class="pl-2">
+      <v-switch v-model="audio" label="One audio for the whole presentation"></v-switch>
+      <v-file-input
+        v-if="audio"
+        :value="presentation.audio"
+        clearable
+        accept="audio/*"
+        filled
+        label="Audio"
+        hint="NOTE: this audio will play through the whole presentation. If you don't want that, don't upload here"
+        persistent-hint
+      ></v-file-input>
+      <v-row justify="space-between" class="pl-2 pt-10">
         <v-btn color="red" text class="mr-4" @click="$router.push('/')">Cancel</v-btn>
-        <v-btn color="green" class="mr-4" dark @click="validate">Save and continue</v-btn>
+        <v-btn color="green" class="mr-4" dark @click="validate()">Save</v-btn>
       </v-row>
     </v-form>
   </v-container>
@@ -84,13 +70,10 @@
 
 <script>
 export default {
-  props: {
-    value: String
-  },
-
   data: () => ({
     //models
     valid: true,
+    audio: false,
     presentation: {
       title: "",
       description: "",
@@ -98,7 +81,6 @@ export default {
       audio: null
     },
     screensqt: "",
-    slidesqt: "",
     //rules
     titleRules: [
       v => !!v || "Title is required",
@@ -106,44 +88,37 @@ export default {
     ],
     //selection data
     categories: ["Education", "Travel", "Nature", "Real State", "History"],
-    screens: ["1", "2", "3", "4", "5", "6", "7"],
-    slides: ["1", "2", "3", "4", "5"]
+    screens: ["1", "2", "3", "4", "5", "6", "7"]
   }),
 
   methods: {
     validate() {
       if (this.$refs.form.validate()) {
-        this.step = "2";
-        this.$store.dispatch(
+        alert('open popup with config to send to lg')
+        /*this.$store.dispatch(
           "generateStoragePathName",
           this.presentation.title
         );
-        this.$store.commit('setScreensQt',parseInt(this.screensqt))
-        this.$store.commit('setSlidesQt',parseInt(this.slidesqt))
-        var presentationObj = this.cleanObject(this.presentation)
-        this.$store.dispatch("addBasicInformation", presentationObj);
+        this.$store.commit("setScreensQt", parseInt(this.screensqt));
+        var presentationObj = this.cleanObject(this.presentation);
+        this.$store.dispatch("addBasicInformation", presentationObj);*/
       }
     },
     cleanObject(obj) {
       // this method removes all unused attributes defined on the presentation
       for (var propName in obj) {
-        if (obj[propName] === null || obj[propName] === undefined || obj[propName] === '') {
+        if (
+          obj[propName] === null ||
+          obj[propName] === undefined ||
+          obj[propName] === ""
+        ) {
           delete obj[propName];
         }
       }
 
-      return obj
+      return obj;
     }
   },
-  computed: {
-    step: {
-      get() {
-        return this.value;
-      },
-      set(value) {
-        this.$emit("input", value);
-      }
-    }
-  }
+  computed: {}
 };
 </script>
