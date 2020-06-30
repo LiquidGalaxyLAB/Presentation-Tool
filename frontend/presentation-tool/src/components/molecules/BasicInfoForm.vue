@@ -52,7 +52,7 @@
       <v-switch v-model="audio" label="One audio for the whole presentation"></v-switch>
       <v-file-input
         v-if="audio"
-        :value="presentation.audio"
+        v-model="presentation.audio"
         clearable
         accept="audio/*"
         filled
@@ -95,13 +95,12 @@ export default {
     validate() {
       if (this.$refs.form.validate()) {
         alert('open popup with config to send to lg')
-        /*this.$store.dispatch(
+        this.$store.dispatch(
           "generateStoragePathName",
           this.presentation.title
         );
-        this.$store.commit("setScreensQt", parseInt(this.screensqt));
         var presentationObj = this.cleanObject(this.presentation);
-        this.$store.dispatch("addBasicInformation", presentationObj);*/
+        this.$store.dispatch("addBasicInformation", presentationObj);
       }
     },
     cleanObject(obj) {

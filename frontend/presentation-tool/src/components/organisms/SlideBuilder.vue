@@ -1,10 +1,35 @@
 <template>
   <div>
     <div class="pa-3">
-      <h2>Slides</h2>
+      <h2>Create slides</h2>
       <v-divider></v-divider>
     </div>
-    <v-card class="center-button"  @click="dialog = true" flat>
+    <div class="pl-6 pr-6" v-if="slidesLength >= 1">
+     <v-row align="center" justify="space-between">
+         <v-card-title>Slides</v-card-title>
+         <v-btn dark color="blue" @click="dialog = true">
+          New slide
+          <v-icon right>mdi-plus</v-icon>
+        </v-btn>
+     </v-row>
+        
+      <v-data-table :headers="headers" :items="slides">
+        <template v-slot:item.actions="{ item }">
+          <v-row justify="end">
+            <v-btn small icon @click="previewSlide(item)">
+              <v-icon color="black">mdi-eye</v-icon>
+            </v-btn>
+            <v-btn small icon @click="editSlide(item)">
+              <v-icon color="black">mdi-pencil</v-icon>
+            </v-btn>
+            <v-btn small icon @click="deleteSlide(item)">
+              <v-icon color="red">mdi-delete</v-icon>
+            </v-btn>
+          </v-row>
+        </template>
+      </v-data-table>
+    </div>
+    <v-card class="center-button" @click="dialog = true" flat v-else>
       <v-row justify="center">
         <v-card-title class="pb-0">New slide</v-card-title>
       </v-row>
@@ -16,22 +41,51 @@
     </v-card>
 
     <v-dialog v-model="dialog" max-width="50%">
-        <v-card>
-            <v-card-title>Slide creator</v-card-title>
-            <v-btn @click="dialog = false">close</v-btn>
-        </v-card>
+      <v-card>
+        <v-card-title>Slide creator</v-card-title>
+        <v-btn @click="dialog = false">close</v-btn>
+      </v-card>
     </v-dialog>
   </div>
 </template>
 
 <script>
 export default {
-    data(){
-        return{
-            dialog:false
-        }
-    }
-}
+  data() {
+    return {
+      dialog: false,
+      headers: [
+        { text: "Slide order", value: "order", sortable: false },
+        { text: "Duration", value: "duration", sortable: false },
+        { text: "Actions", value: "actions", align: "end", sortable: false }
+      ],
+      slides: [
+        { order: "1", duration: "20 s" },
+        { order: "1", duration: "20 s" },
+        { order: "1", duration: "20 s" },
+        { order: "1", duration: "20 s" },
+        { order: "1", duration: "20 s" }
+      ]
+    };
+  },
+  computed: {
+    slidesLength() {
+      //return this.$store.getters.slidesLength
+      return 2;
+    },
+  },
+  methods:{
+      editSlide(slide){
+          console.log('edit',slide)
+      },
+      previewSlide(slide){
+          console.log('preview',slide)
+      },
+      deleteSlide(slide){
+          console.log('delete',slide)
+      }
+  }
+};
 </script>
 
 <style>

@@ -1,13 +1,14 @@
 export default {
     state: {
-        presentation: {},
+        presentation: {
+            slides:[]
+        },
         storagePath: "",
         mediaToUpload:{
             media: [],
             storagepath:"",
             screens:[]
         },
-        screensQt:"",
     },
     mutations: {
         setBasicInformation(state, payload) {
@@ -21,18 +22,18 @@ export default {
         setStoragePath(state, payload) {
             state.storagePath = payload
         },
-        setScreensQt(state,payload){
-            state.screensQt = payload
-        }
     },
     actions: {
         addBasicInformation({ commit, state }, payload) {
+            console.log(payload.audio)
             if (payload.audio != undefined) {
+                console.log('aoba',payload.audio)
                 commit('setMediaToUpload',{media: payload.audio, info:{screen:1, type:'audio'} })
                 payload.audio = `${state.storagePath}/${payload.audio.name}`
             }
 
             commit('setBasicInformation', payload)
+            console.log(state.mediaToUpload)
         },
         generateStoragePathName({ commit }, payload) {
             var pathName = payload
@@ -43,6 +44,8 @@ export default {
 
     },
     getters: {
-
+        slidesLenght(state){
+            return state.presentation.slides.length
+        }
     }
 }
