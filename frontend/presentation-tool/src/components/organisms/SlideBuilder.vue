@@ -40,16 +40,15 @@
       </v-row>
     </v-card>
 
-    <v-dialog v-model="dialog" max-width="50%">
-      <v-card>
-        <v-card-title>Slide creator</v-card-title>
-        <v-btn @click="dialog = false">close</v-btn>
-      </v-card>
+    <v-dialog v-model="dialog" max-width="80%">
+      <slide-creator v-model="dialog"></slide-creator>
     </v-dialog>
   </div>
 </template>
 
 <script>
+import SlideCreator from "@/components/molecules/SlideCreator.vue"
+
 export default {
   data() {
     return {
@@ -84,6 +83,9 @@ export default {
       deleteSlide(slide){
           console.log('delete',slide)
       }
+  },
+  components:{
+    SlideCreator
   }
 };
 </script>
