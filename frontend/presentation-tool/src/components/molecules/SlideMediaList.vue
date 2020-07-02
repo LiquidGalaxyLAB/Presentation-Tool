@@ -47,17 +47,17 @@
 
     <div v-if="textForm">
       <v-dialog v-model="textForm">
-        <text-form></text-form>
+        <text-form v-model="textForm"></text-form>
       </v-dialog>
     </div>
     <div v-else-if="imageForm">
-      <v-dialog v-model="imageForm">
-        <image-form></image-form>
+      <v-dialog v-model="imageForm" width="80%">
+        <image-form v-model="imageForm"></image-form>
       </v-dialog>
     </div>
     <div v-else-if="videoForm">
       <v-dialog v-model="videoForm">
-        <video-form></video-form>
+        <video-form v-model="videoForm"></video-form>
       </v-dialog>
     </div>
 
