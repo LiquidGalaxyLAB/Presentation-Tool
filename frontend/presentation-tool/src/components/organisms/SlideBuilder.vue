@@ -1,19 +1,20 @@
 <template>
   <div>
     <div class="pa-3">
-      <h2>Create slides</h2>
+      <h2>Slide creator</h2>
       <v-divider></v-divider>
     </div>
     <div class="pl-6 pr-6" v-if="slidesLength >= 1">
+      <div v-if="!newSlide">
      <v-row align="center" justify="space-between">
          <v-card-title>Slides</v-card-title>
-         <v-btn dark color="blue" @click="dialog = true">
+         <v-btn dark color="blue" @click="newSlide = true">
           New slide
           <v-icon right>mdi-plus</v-icon>
         </v-btn>
      </v-row>
         
-      <v-data-table :headers="headers" :items="slides">
+      <v-data-table :headers="headers" :items="slides" :items-per-page="itemPerPage">
         <template v-slot:item.actions="{ item }">
           <v-row justify="end">
             <v-btn small icon @click="previewSlide(item)">
@@ -28,8 +29,12 @@
           </v-row>
         </template>
       </v-data-table>
+      </div>
+      <div v-if="newSlide">
+        <slide-creator v-model="newSlide"></slide-creator>
+      </div>
     </div>
-    <v-card class="center-button" @click="dialog = true" flat v-else>
+    <v-card class="center-button" @click="newSlide = true" flat v-else>
       <v-row justify="center">
         <v-card-title class="pb-0">New slide</v-card-title>
       </v-row>
@@ -39,10 +44,6 @@
         </v-col>
       </v-row>
     </v-card>
-
-    <v-dialog v-model="dialog" max-width="80%">
-      <slide-creator v-model="dialog"></slide-creator>
-    </v-dialog>
   </div>
 </template>
 
@@ -52,7 +53,8 @@ import SlideCreator from "@/components/molecules/SlideCreator.vue"
 export default {
   data() {
     return {
-      dialog: false,
+      newSlide: false,
+      itemPerPage: 10,
       headers: [
         { text: "Slide order", value: "order", sortable: false },
         { text: "Duration", value: "duration", sortable: false },

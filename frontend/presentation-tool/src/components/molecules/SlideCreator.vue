@@ -1,8 +1,7 @@
 <template>
-  <v-card width="100%">
+  <v-card width="100%" flat >
     <div class="pa-6">
-      <h2>Slide creator</h2>
-      <v-divider></v-divider>
+      <h2>New slide</h2>
     </div>
     <v-row justify="center" class="mr-0">
       <v-col cols="12" md="6">
@@ -31,6 +30,11 @@
         <time-range-slider></time-range-slider>
       </v-col>
     </v-row>
+    <v-row justify="center">
+      <v-col cols="12">
+        <media-list></media-list>
+      </v-col>
+    </v-row>
     <v-row justify="space-between" class="mr-8 ml-6 pb-8">
       <v-btn color="red" text @click="show = false">Cancel</v-btn>
       <v-btn color="green" dark>Save</v-btn>
@@ -40,6 +44,7 @@
 
 <script>
 import TimeRangeSlider from "@/components/atoms/TimeRangeSlider.vue";
+import MediaList from "@/components/molecules/SlideMediaList.vue";
 
 export default {
   props: ["value"],
@@ -49,7 +54,8 @@ export default {
     };
   },
   components: {
-    TimeRangeSlider
+    TimeRangeSlider,
+    MediaList
   },
   computed: {
     show: {
