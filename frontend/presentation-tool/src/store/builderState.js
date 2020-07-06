@@ -3,6 +3,10 @@ export default {
         presentation: {
             slides:[]
         },
+        currentSlide:{
+            media:[]
+        },
+        maxScreens:5,
         storagePath: "",
         mediaToUpload:{
             media: [],
@@ -22,8 +26,22 @@ export default {
         setStoragePath(state, payload) {
             state.storagePath = payload
         },
+        addSlide(state,payload){
+            state.presentation.slides.push(payload)
+        },
+        addMedia(state,payload){
+            state.currentSlide.media.push(payload)
+        }
     },
     actions: {
+        newSlide({commit,state},payload){
+            payload = Object.assign(state.currentSlide, payload)
+            commit('addSlide',payload)
+        },
+        newMedia({commit},payload){
+            commit('setMediaToUpload', {media: payload.file, info:{screen: payload.mediaInfo.screen, type:payload.mediaInfo.type}})
+            commit('addMedia',payload.mediaInfo)
+        },
         addBasicInformation({ commit, state }, payload) {
             console.log(payload.audio)
             if (payload.audio != undefined) {
@@ -33,7 +51,7 @@ export default {
             }
 
             commit('setBasicInformation', payload)
-            console.log(state.mediaToUpload)
+            console.log('state',state.presentation)
         },
         generateStoragePathName({ commit }, payload) {
             var pathName = payload

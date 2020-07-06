@@ -61,8 +61,8 @@
         persistent-hint
       ></v-file-input>
       <v-row justify="space-between" class="pl-2 pt-10">
-        <v-btn color="red" text class="mr-4" @click="$router.push('/')">Cancel</v-btn>
-        <v-btn color="green" class="mr-4" dark @click="validate()">Save</v-btn>
+        <v-btn color="red" text class="mr-4" @click="$router.push('/')">Discard</v-btn>
+        <v-btn color="green" class="mr-4" dark @click="validate()">Save Presentation</v-btn>
       </v-row>
     </v-form>
   </v-container>

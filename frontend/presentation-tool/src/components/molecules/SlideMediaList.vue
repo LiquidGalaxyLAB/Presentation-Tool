@@ -70,10 +70,16 @@ import ImageForm from "@/components/molecules/ImageForm.vue"
 import VideoForm from "@/components/molecules/VideoForm.vue"
 
 export default {
+  props:["value"],
   components:{
     TextForm,
     ImageForm,
     VideoForm
+  },
+  computed:{
+    media(){
+      return this.$store.state.builderStore.currentSlide.media
+    }
   },
   data: () => ({
     itemPerPage: 5,
@@ -90,7 +96,7 @@ export default {
       { text: "Partner", value: "partner", sortable: false },
       { text: "", value: "actions", align: "end", sortable: false }
     ],
-    media: [
+    /*media: [
       {
         filename: "hahahah",
         type: "image",
@@ -123,7 +129,7 @@ export default {
         sharing: "false",
         partner: "-"
       }
-    ]
+    ]*/
   })
 };
 </script>

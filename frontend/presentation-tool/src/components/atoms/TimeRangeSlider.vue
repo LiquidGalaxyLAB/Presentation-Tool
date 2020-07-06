@@ -4,9 +4,9 @@
     <v-card-text>
       <v-row class="mb-4" justify="space-between">
         <v-col class="text-left">
-          <span class="display-3 font-weight-light" v-text="`${minutes}`"></span>
+          <span class="display-3 font-weight-light" v-text="`${newDuration.minutes}`"></span>
           <span class="subheading font-weight-light mr-1">min</span>
-          <span class="display-3 font-weight-light" v-text="`:${seconds}`"></span>
+          <span class="display-3 font-weight-light" v-text="`:${newDuration.seconds}`"></span>
           <span class="subheading font-weight-light mr-1">sec</span>
         </v-col>
       </v-row>
@@ -36,26 +36,35 @@
 
 <script>
 export default {
+  props: ["value"],
   data: () => ({
     minutes: 0,
     seconds: 0,
   }),
 
   computed: {
+     newDuration: {
+      get() {
+        return this.value;
+      },
+      set(value) {
+        this.$emit("input", value);
+      }
+    }
   },
 
   methods: {
     decrement(value) {
       if(value == 'minutes')
-        this.minutes--
+        this.newDuration.minutes--
       else
-        this.seconds--
+        this.newDuration.seconds--
     },
     increment(value) {
       if(value == 'minutes')
-        this.minutes++
+        this.newDuration.minutes++
       else
-        this.seconds++
+        this.newDuration.seconds++
     },
   }
 };
