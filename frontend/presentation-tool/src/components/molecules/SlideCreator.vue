@@ -65,9 +65,17 @@ export default {
   },
   methods: {
     createSlide() {
+      this.slide.duration = this.toMilliseconds(this.slide.duration.minutes,this.slide.duration.seconds)
       this.slide = this.cleanObject(this.slide)
       this.$store.dispatch("newSlide", this.slide);
       this.show = false
+    },
+    toMilliseconds(min,sec){
+      console.log(min,sec)
+      var milliseconds = min * 60
+      milliseconds += sec
+      milliseconds *= 1000
+      return milliseconds
     },
     discardChanges() {
       this.show = false;

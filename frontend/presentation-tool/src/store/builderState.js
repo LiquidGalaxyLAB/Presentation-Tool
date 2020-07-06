@@ -67,8 +67,19 @@ export default {
 
     },
     getters: {
-        slidesLenght(state){
-            return state.presentation.slides.length
+        slides(state){
+            var slides = []
+            state.presentation.slides.forEach(slide => {
+                var parsedDuration = {minutes: '',seconds:''}
+                var mili = slide.duration / 1000 //transform to seconds
+                parsedDuration.minutes = Math.floor(mili / 60) //transform to minutes
+                parsedDuration.seconds = mili - (parsedDuration.minutes * 60)
+                var s = Object.assign({},slide)
+                s.duration = parsedDuration
+                slides.push(s)
+            });
+
+            return slides
         }
     }
 }

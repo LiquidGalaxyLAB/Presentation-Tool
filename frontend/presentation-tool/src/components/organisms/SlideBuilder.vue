@@ -13,7 +13,6 @@
             <v-icon right>mdi-plus</v-icon>
           </v-btn>
         </v-row>
-
         <v-data-table :headers="headers" :items="slides" :items-per-page="itemPerPage">
           <template v-slot:item.duration="{ item }">
             <v-card-title>{{item.duration.minutes}}:{{item.duration.seconds}}</v-card-title>
@@ -73,7 +72,7 @@ export default {
   },
   computed: {
     slides() {
-      return this.$store.state.builderStore.presentation.slides;
+      return this.$store.getters.slides
     }
   },
   methods: {

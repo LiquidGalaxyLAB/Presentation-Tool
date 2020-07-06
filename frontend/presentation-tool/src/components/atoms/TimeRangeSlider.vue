@@ -11,7 +11,14 @@
         </v-col>
       </v-row>
       <span class="subheading font-weight-light mr-1">Minutes</span>
-      <v-slider v-model="minutes" color="green" track-color="grey" always-dirty min="0" max="59">
+      <v-slider
+        v-model="newDuration.minutes"
+        color="green"
+        track-color="grey"
+        always-dirty
+        min="0"
+        max="59"
+      >
         <template v-slot:prepend>
           <v-icon color="green" @click="decrement('minutes')">mdi-minus</v-icon>
         </template>
@@ -21,7 +28,14 @@
         </template>
       </v-slider>
       <span class="subheading font-weight-light mr-1">Seconds</span>
-      <v-slider v-model="seconds" color="pink" track-color="grey" always-dirty min="0" max="59">
+      <v-slider
+        v-model="newDuration.seconds"
+        color="pink"
+        track-color="grey"
+        always-dirty
+        min="0"
+        max="59"
+      >
         <template v-slot:prepend>
           <v-icon color="pink" @click="decrement('seconds')">mdi-minus</v-icon>
         </template>
@@ -37,13 +51,8 @@
 <script>
 export default {
   props: ["value"],
-  data: () => ({
-    minutes: 0,
-    seconds: 0,
-  }),
-
   computed: {
-     newDuration: {
+    newDuration: {
       get() {
         return this.value;
       },
@@ -55,17 +64,16 @@ export default {
 
   methods: {
     decrement(value) {
-      if(value == 'minutes')
-        this.newDuration.minutes--
-      else
-        this.newDuration.seconds--
+      if (value == "minutes") {
+        if (this.newDuration.minutes >= 0) this.newDuration.minutes--;
+      } else {
+        if (this.newDuration.seconds >= 0) this.newDuration.seconds--;
+      }
     },
     increment(value) {
-      if(value == 'minutes')
-        this.newDuration.minutes++
-      else
-        this.newDuration.seconds++
-    },
+      if (value == "minutes") this.newDuration.minutes++;
+      else this.newDuration.seconds++;
+    }
   }
 };
 </script>
