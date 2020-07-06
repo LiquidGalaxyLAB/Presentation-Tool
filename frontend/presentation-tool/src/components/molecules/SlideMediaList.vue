@@ -4,7 +4,7 @@
       <v-card-title class="pa-0">Medias</v-card-title>
       <v-speed-dial v-model="fab" direction="bottom" transition="slide-y-reverse-transition">
         <template v-slot:activator>
-          <v-btn v-model="fab" color="blue" dark>
+          <v-btn v-model="fab" color="purple" dark>
             <div v-if="fab">
               <v-icon>mdi-close</v-icon>
             </div>

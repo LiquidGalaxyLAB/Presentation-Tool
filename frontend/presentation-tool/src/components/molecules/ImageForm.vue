@@ -7,7 +7,7 @@
     <v-row class="pa-4 ma-0">
       <v-col cols="12" md="8">
         <v-file-input
-          v-model="media.file"
+          v-model="file"
           clearable
           accept="image/*"
           filled
@@ -51,8 +51,8 @@
 export default {
   data() {
     return {
+      file: null,
       media: {
-        file: null,
         filename: "",
         sharing: "",
         partner: "",
@@ -74,7 +74,7 @@ export default {
   },
   methods: {
     addImage() {
-      this.media.filename = this.media.file.name;
+      this.media.filename = this.file.name;
       if (
         this.media.position == "topsharing" ||
         this.media.position == "bottomsharing" ||
@@ -86,11 +86,26 @@ export default {
           this.media.partner = 1
         }
       }
-      this.$store.dispatch("newMedia", {mediaInfo: this.media, file: this.media.file});
+      this.media = this.cleanObject(this.media)
+      this.$store.dispatch("newMedia", {mediaInfo: this.media, file: this.file});
       this.show = false;
     },
     discard() {
       this.show = false;
+    },
+    cleanObject(obj) {
+      // this method removes all unused attributes defined on the presentation
+      for (var propName in obj) {
+        if (
+          obj[propName] === null ||
+          obj[propName] === undefined ||
+          obj[propName] === ""
+        ) {
+          delete obj[propName];
+        }
+      }
+
+      return obj;
     }
   },
   computed: {

@@ -52,7 +52,7 @@
       <v-switch v-model="audio" label="One audio for the whole presentation"></v-switch>
       <v-file-input
         v-if="audio"
-        v-model="presentation.audio"
+        v-model="presentation.audiopath"
         clearable
         accept="audio/*"
         filled
@@ -62,7 +62,7 @@
       ></v-file-input>
       <v-row justify="space-between" class="pl-2 pt-10">
         <v-btn color="red" text class="mr-4" @click="$router.push('/')">Discard</v-btn>
-        <v-btn color="green" class="mr-4" dark @click="validate()">Save Presentation</v-btn>
+        <v-btn color="blue" class="mr-4" dark @click="validate()">Save</v-btn>
       </v-row>
     </v-form>
   </v-container>
@@ -78,7 +78,7 @@ export default {
       title: "",
       description: "",
       category: "",
-      audio: null
+      audiopath: null
     },
     screensqt: "",
     //rules
@@ -94,7 +94,6 @@ export default {
   methods: {
     validate() {
       if (this.$refs.form.validate()) {
-        alert('open popup with config to send to lg')
         this.$store.dispatch(
           "generateStoragePathName",
           this.presentation.title

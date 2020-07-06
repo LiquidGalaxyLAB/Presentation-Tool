@@ -2,6 +2,20 @@
   <div>
     <toolbar></toolbar>
     <v-container>
+      <v-row justify="space-between" align="center" class="ma-0">
+        <h1>Presentation Builder</h1>
+        <v-row class="ma-0" justify="end">
+          <v-btn dark text color="red" @click="discardPresentation()">
+            Discard
+            <v-icon right>mdi-close</v-icon>
+          </v-btn>
+          <v-btn dark color="green" @click="savePresentation()">
+            Save Presentation
+            <v-icon right>mdi-content-save</v-icon>
+          </v-btn>
+        </v-row>
+      </v-row>
+
       <v-row>
         <v-col cols="12" md="4" sm="6" xs="12">
           <v-card width="100%">
@@ -28,6 +42,14 @@ export default {
     Toolbar,
     BasicInfoForm,
     SlideBuilder
+  },
+  methods:{
+    savePresentation(){
+      this.$store.dispatch('savePresentation')
+    },
+    discardPresentation(){
+      console.log('discard and clean the state of the store')
+    }
   }
 };
 </script>

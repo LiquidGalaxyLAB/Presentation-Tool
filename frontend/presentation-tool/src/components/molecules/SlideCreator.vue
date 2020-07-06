@@ -17,7 +17,7 @@
         <v-row class="pl-8">
           <v-switch v-model="audio" label="Audio for this slide"></v-switch>
           <v-file-input
-            v-model="slide.audio"
+            v-model="slide.audiopath"
             v-if="audio"
             clearable
             accept="audio/*"
@@ -39,7 +39,7 @@
     </v-row>
     <v-row justify="space-between" class="mr-8 ml-6 pb-8">
       <v-btn color="red" text @click="discardChanges()">Cancel</v-btn>
-      <v-btn color="green" dark @click="createSlide()">Save slide</v-btn>
+      <v-btn color="blue" dark @click="createSlide()">Save slide</v-btn>
     </v-row>
   </v-card>
 </template>
@@ -54,7 +54,7 @@ export default {
     return {
       audio: false,
       slide: {
-        audio: null,
+        audiopath: null,
         duration: {
           minutes: 0,
           seconds: 0

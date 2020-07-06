@@ -36,6 +36,10 @@ export default {
     actions: {
         newSlide({commit,state},payload){
             payload = Object.assign(state.currentSlide, payload)
+            if (payload.audiopath != undefined) {
+                commit('setMediaToUpload',{media: payload.audiopath, info:{screen:1, type:'audio'} })
+                payload.audiopath = `${state.storagePath}/${payload.audiopath.name}`
+            }
             commit('addSlide',payload)
         },
         newMedia({commit},payload){
@@ -43,11 +47,9 @@ export default {
             commit('addMedia',payload.mediaInfo)
         },
         addBasicInformation({ commit, state }, payload) {
-            console.log(payload.audio)
-            if (payload.audio != undefined) {
-                console.log('aoba',payload.audio)
-                commit('setMediaToUpload',{media: payload.audio, info:{screen:1, type:'audio'} })
-                payload.audio = `${state.storagePath}/${payload.audio.name}`
+            if (payload.audiopath != undefined) {
+                commit('setMediaToUpload',{media: payload.audiopath, info:{screen:1, type:'audio'} })
+                payload.audiopath = `${state.storagePath}/${payload.audiopath.name}`
             }
 
             commit('setBasicInformation', payload)
@@ -58,6 +60,9 @@ export default {
             pathName = pathName.toString().toLowerCase()
             pathName = pathName.replace(/\s+/g, '-')
             commit('setStoragePath', pathName)
+        },
+        savePresentation({state}){
+            console.log(state.presentation)
         }
 
     },
