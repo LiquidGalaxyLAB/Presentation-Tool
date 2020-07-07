@@ -8,6 +8,7 @@
       <v-row class="pa-4 ma-0">
         <v-col cols="12" md="8">
           <v-file-input
+            :rules="mediaRules"
             v-model="file"
             clearable
             accept="image/*"
@@ -36,6 +37,7 @@
             v-model="media.position"
             label="Position"
             :items="positions"
+            :rules="positionRules"
             filled
             hint="Choose a position to place this media"
             persistent-hint
@@ -66,6 +68,8 @@ export default {
         type: "image"
       },
       screenRules: [v => !!v || "Screen is required"],
+      mediaRules: [v => !!v || "Image is required"],
+      positionRules: [v => !!v || "Position is required"],
       positions: [
         { text: "Top", value: "top" },
         { text: "Center", value: "center" },

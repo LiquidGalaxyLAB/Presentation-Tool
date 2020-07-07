@@ -1,6 +1,6 @@
 <template>
   <v-card flat>
-    <v-card-title class="pt-0 mt-0 pb-0">Duration</v-card-title>
+    <v-card-title class="pt-0 mt-0 pb-0">Duration *</v-card-title>
     <v-card-text>
       <v-row class="mb-4" justify="space-between">
         <v-col class="text-left">

@@ -9,12 +9,12 @@
           <v-text-field
             label="Fly To"
             filled
-            hint="OPTIONAL. Choose a place to fly on google earth during this slide"
+            hint="Choose a place to fly on google earth during this slide"
             persistent-hint
             v-model="slide.flyto"
           ></v-text-field>
         </v-row>
-        <v-row class="pl-8">
+        <v-row class="pl-8 pr-8">
           <v-switch v-model="audio" label="Audio for this slide"></v-switch>
           <v-file-input
             v-model="slide.audiopath"
@@ -39,8 +39,18 @@
     </v-row>
     <v-row justify="space-between" class="mr-8 ml-6 pb-8">
       <v-btn color="red" text @click="discardChanges()">Cancel</v-btn>
-      <v-btn color="blue" dark @click="createSlide()">Save slide</v-btn>
+      <v-btn color="blue" dark @click="validate()">Save slide</v-btn>
     </v-row>
+    <v-dialog v-model="errorDialog" width="50%">
+      <v-card class="pa-6">
+        <v-row justify="center" class="ma-0">
+          <h2 style="color:red;text-align:center;">Required: {{error}}</h2>
+        </v-row>
+        <v-row justify="center" class="ma-0 pt-8">
+          <v-btn color="blue" dark @click="errorDialog = false;error=''">close</v-btn>
+        </v-row>
+      </v-card>
+    </v-dialog>
   </v-card>
 </template>
 
@@ -53,29 +63,45 @@ export default {
   data() {
     return {
       audio: false,
+      errorDialog: false,
+      error: "",
       slide: {
         audiopath: null,
         duration: {
           minutes: 0,
           seconds: 0
         },
-        flyto: "",
+        flyto: ""
       }
     };
   },
   methods: {
-    createSlide() {
-      this.slide.duration = this.toMilliseconds(this.slide.duration.minutes,this.slide.duration.seconds)
-      this.slide = this.cleanObject(this.slide)
-      this.$store.dispatch("newSlide", this.slide);
-      this.show = false
+    validate() {
+      if (
+        this.slide.duration.minutes == 0 &&
+        this.slide.duration.seconds == 0
+      ) {
+        this.errorDialog = true;
+        this.error = "Please assign a duration to this slide";
+      } else {
+        this.createSlide();
+      }
     },
-    toMilliseconds(min,sec){
-      console.log(min,sec)
-      var milliseconds = min * 60
-      milliseconds += sec
-      milliseconds *= 1000
-      return milliseconds
+    createSlide() {
+      this.slide.duration = this.toMilliseconds(
+        this.slide.duration.minutes,
+        this.slide.duration.seconds
+      );
+      this.slide = this.cleanObject(this.slide);
+      this.$store.dispatch("newSlide", this.slide);
+      this.show = false;
+    },
+    toMilliseconds(min, sec) {
+      console.log(min, sec);
+      var milliseconds = min * 60;
+      milliseconds += sec;
+      milliseconds *= 1000;
+      return milliseconds;
     },
     discardChanges() {
       this.show = false;
