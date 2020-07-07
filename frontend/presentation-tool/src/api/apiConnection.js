@@ -73,15 +73,11 @@ export default {
         })
     },
     uploadMedia: async (payload) => {
-        console.log('payload', payload)
         var bodyFormData = new FormData()
 
         payload.media.forEach(m => {
             bodyFormData.append(`media`, m);
         });
-        /*payload.screens.forEach(s =>{
-            bodyFormData.append(`screens`, s);
-        })*/
         bodyFormData.append(`screens`, JSON.stringify(payload.screens));
         bodyFormData.append('storagepath',payload.storagepath)
         
