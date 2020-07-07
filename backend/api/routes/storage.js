@@ -2,6 +2,7 @@ const parser = require('../parser/main')
 const express = require('express')
 const router = express.Router()
 var multer = require('multer')
+const { json } = require('express')
 
 // configure localstorage for files using multer
 var storage = multer.diskStorage({
@@ -21,20 +22,28 @@ var upload = multer({ storage: storage })
 // upload media
 // receives an array of multipart content-type media + storagePath + array of screens
 router.post("/upload", upload.array('media'), (req, res, next) => {
-
+    var screens
+    
+    if(typeof req.body.screens === 'string'){
+        screens = JSON.parse(req.body.screens)
+    }
+    else{
+        screens = req.body.screens
+    }
+    
     var media = []
     var storagePath = req.body.storagepath
     for (var i = 0; i < req.files.length; i++) {
-        if (req.body.screens[i].partner != undefined)
-            media.push(Object.assign({ filename: req.files[i].originalname, screen: req.body.screens[i].screen, partner: req.body.screens[i].partner, type: req.body.screens[i].type }))
+        if (screens[i].partner != undefined)
+            media.push(Object.assign({ filename: req.files[i].originalname, screen: screens[i].screen, partner: screens[i].partner, type: screens[i].type }))
         else
-            media.push(Object.assign({ filename: req.files[i].originalname, screen: req.body.screens[i].screen }))
+            media.push(Object.assign({ filename: req.files[i].originalname, screen: screens[i].screen }))
     }
 
     console.log('MEDIA', media)
     console.log('PATH', storagePath)
 
-    sendToStorage(media, storagePath)
+   sendToStorage(media, storagePath)
         .then((response) => res.json(response))
         .catch((error) => res.json(error))
 
