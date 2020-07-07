@@ -13,6 +13,19 @@ export default {
         }
     },
     actions:{
+        async createPresentation({dispatch},payload){
+            //call to upload media
+            var response = await api.uploadMedia(payload.storage)
+            if(response.status != 200){
+                dispatch('logResponse',response)
+            }
+            //call to save info in the db
+            //var res = await api.createPresentation(payload.dbinfo)
+            //if(res.status != 201){
+              //  dispatch('logResponse',res)
+            //}
+            
+        },
         async executePresentation({dispatch},payload){
             var res = await api.executePresentation(payload)
             if(res.status != 202){

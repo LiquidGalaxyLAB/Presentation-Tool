@@ -61,8 +61,10 @@ export default {
             pathName = pathName.replace(/\s+/g, '-')
             commit('setStoragePath', pathName)
         },
-        savePresentation({state}){
-            console.log(state.presentation)
+        savePresentation({state,dispatch}){
+            console.log('db',state.presentation)
+            console.log('storage',state.mediaToUpload)
+            dispatch('createPresentation',Object.assign({},{dbinfo:  state.presentation, storage: state.mediaToUpload }))
         }
 
     },

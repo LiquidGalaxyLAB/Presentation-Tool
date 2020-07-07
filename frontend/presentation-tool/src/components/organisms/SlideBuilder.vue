@@ -61,13 +61,6 @@ export default {
         { text: "Duration", value: "duration", sortable: false },
         { text: "Actions", value: "actions", align: "end", sortable: false }
       ]
-      /* slides: [
-        { order: "1", duration: "20 s" },
-        { order: "1", duration: "20 s" },
-        { order: "1", duration: "20 s" },
-        { order: "1", duration: "20 s" },
-        { order: "1", duration: "20 s" }
-      ]*/
     };
   },
   computed: {

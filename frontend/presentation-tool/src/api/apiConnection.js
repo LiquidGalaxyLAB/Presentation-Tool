@@ -16,22 +16,32 @@ export default {
         
     },
     createPresentation: async (payload) =>{
-        axios.post(`${process.env.VUE_APP_API_URL}/presentation/create`,payload)
-        .then((res) =>{
-            console.log('Success: ',res)
+        return new Promise ((resolve,reject) =>{
+            axios.post(`http://${process.env.VUE_APP_LG_IP}:${process.env.VUE_APP_LG_PORT}/presentation/create`,payload)
+            .then((res) =>{
+                console.log('Response: ',res.data)
+                resolve(res.data)
+            })
+            .catch((err) =>{
+                console.log('Error: ',err)
+                reject(err)
+            })
         })
-        .catch((err) =>{
-            console.log('Error: ',err)
-        })
+        
     },
     updatePresentation: async (payload) =>{
-        axios.patch(`${process.env.VUE_APP_API_URL}/presentation/update`,payload)
-        .then((res) =>{
-            console.log('Success: ',res)
+        return new Promise((resolve, reject) =>{
+            axios.patch(`http://${process.env.VUE_APP_LG_IP}:${process.env.VUE_APP_LG_PORT}/presentation/update`,payload)
+            .then((res) =>{
+                console.log('Response: ',res.data)
+                resolve(res.data)
+            })
+            .catch((err) =>{
+                console.log('Error: ',err)
+                reject(err)
+            })
         })
-        .catch((err) =>{
-            console.log('Error: ',err)
-        })
+        
     },
     deletePresentation: async (payload) =>{
         return new Promise((resolve, reject) =>{
@@ -63,12 +73,17 @@ export default {
         })
     },
     uploadMedia: async (payload) => {
-        axios.post(`${process.env.VUE_APP_API_URL}/storage/upload`,payload)
-        .then((res) =>{
-            console.log('Success: ',res)
-        })
-        .catch((err) =>{
-            console.log('Error: ',err)
+        console.log('payload',payload)
+        return new Promise((resolve,reject) =>{
+            axios.post(`http://${process.env.VUE_APP_LG_IP}:${process.env.VUE_APP_LG_PORT}/storage/upload`,payload)
+            .then((res) =>{
+                console.log('Response: ',res.data)
+                resolve(res.data)
+            })
+            .catch((err) =>{
+                console.log('Error: ',err)
+                reject(err)
+            })
         })
     },
     cleanStorage: async () =>{
