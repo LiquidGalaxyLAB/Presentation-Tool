@@ -6,7 +6,7 @@ export default {
         currentSlide:{
             media:[]
         },
-        maxScreens:5,
+        maxScreens:"",
         storagePath: "",
         mediaToUpload:{
             media: [],
@@ -26,8 +26,12 @@ export default {
         setStoragePath(state, payload) {
             state.storagePath = payload
         },
+        setMaxScreens(state,payload){
+            state.maxScreens =payload
+        },
         addSlide(state,payload){
             state.presentation.slides.push(payload)
+            state.currentSlide = {media:[]}
         },
         addMedia(state,payload){
             state.currentSlide.media.push(payload)

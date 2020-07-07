@@ -37,16 +37,16 @@
           ></v-select>
         </v-col>
         <v-col cols="12" md="6">
-          <v-select
+          <v-text-field
             v-model="screensqt"
-            :items="screens"
-            :rules="[v => !!v || 'Number of screens is required']"
+            :rules="screenRules"
+            type="number"
             label="Screens *"
             filled
             required
             hint="The number of screens in your Liquid Galaxy"
             persistent-hint
-          ></v-select>
+          ></v-text-field>
         </v-col>
       </v-row>
       <v-switch v-model="audio" label="One audio for the whole presentation"></v-switch>
@@ -86,9 +86,12 @@ export default {
       v => !!v || "Title is required",
       v => (v && v.length <= 20) || "Name must be less than 20 characters"
     ],
+    screenRules: [
+      v => !!v || "Screen is required",
+      v => v >= 1 || "Screens minor to 1 doesn't exist"
+    ],
     //selection data
-    categories: ["Education", "Travel", "Nature", "Real State", "History"],
-    screens: ["1", "2", "3", "4", "5", "6", "7"]
+    categories: ["Education", "Travel", "Nature", "Real State", "History"]
   }),
 
   methods: {
@@ -98,6 +101,7 @@ export default {
           "generateStoragePathName",
           this.presentation.title
         );
+        this.$store.commit("setMaxScreens", this.screensqt);
         var presentationObj = this.cleanObject(this.presentation);
         this.$store.dispatch("addBasicInformation", presentationObj);
       }

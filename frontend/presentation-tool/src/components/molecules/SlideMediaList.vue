@@ -96,40 +96,6 @@ export default {
       { text: "Partner", value: "partner", sortable: false },
       { text: "", value: "actions", align: "end", sortable: false }
     ],
-    /*media: [
-      {
-        filename: "hahahah",
-        type: "image",
-        screen: "5",
-        position: "top",
-        sharing: "false",
-        partner: "-"
-      },
-      {
-        filename: "hahahah",
-        type: "image",
-        screen: "5",
-        position: "top",
-        sharing: "false",
-        partner: "-"
-      },
-      {
-        filename: "hahahah",
-        type: "image",
-        screen: "5",
-        position: "top",
-        sharing: "false",
-        partner: "-"
-      },
-      {
-        filename: "hahahah",
-        type: "image",
-        screen: "5",
-        position: "top",
-        sharing: "false",
-        partner: "-"
-      }
-    ]*/
   })
 };
 </script>
