@@ -60,8 +60,7 @@
         hint="NOTE: this audio will play through the whole presentation. If you don't want that, don't upload here"
         persistent-hint
       ></v-file-input>
-      <v-row justify="space-between" class="pl-2 pt-10">
-        <v-btn color="red" text class="mr-4" @click="$router.push('/')">Discard</v-btn>
+      <v-row justify="center" class="pl-2 pt-5 pb-4">
         <v-btn color="blue" class="mr-4" dark @click="validate()">Save</v-btn>
       </v-row>
     </v-form>
@@ -119,7 +118,7 @@ export default {
       }
 
       return obj;
-    }
+    },
   },
   computed: {}
 };

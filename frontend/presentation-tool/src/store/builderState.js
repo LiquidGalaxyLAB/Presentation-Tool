@@ -35,6 +35,13 @@ export default {
         },
         addMedia(state,payload){
             state.currentSlide.media.push(payload)
+        },
+        cleanBuilderState(state){
+            state.presentation = {slides:[]}
+            state.currentSlide = {media:[]}
+            state.maxScreens = ""
+            state.storagepath = ""
+            state.mediaToUpload = {media: [],storagepath:"",screens:[]}
         }
     },
     actions: {
@@ -69,7 +76,7 @@ export default {
             console.log('db',state.presentation)
             console.log('storage',state.mediaToUpload)
             dispatch('createPresentation',Object.assign({},{dbinfo:  state.presentation, storage: state.mediaToUpload }))
-        }
+        },
 
     },
     getters: {

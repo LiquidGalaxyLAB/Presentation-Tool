@@ -5,7 +5,7 @@
       <v-row justify="space-between" align="center" class="ma-0">
         <h1>Presentation Builder</h1>
         <v-row class="ma-0" justify="end">
-          <v-btn dark text color="red" @click="discardPresentation()">
+          <v-btn dark text color="red" @click="discardDialog = true">
             Discard
             <v-icon right>mdi-close</v-icon>
           </v-btn>
@@ -29,6 +29,17 @@
         </v-col>
       </v-row>
     </v-container>
+    <v-dialog v-model="discardDialog" width="50%">
+      <v-card class="pa-6">
+        <h2
+          style="color:black;text-align:center;"
+        >This action will discard all your work and can't be undone. Are you sure?</h2>
+        <v-row justify="space-around" class="ma-0 pt-8">
+          <v-btn color="blue" dark @click="discardDialog = false">cancel</v-btn>
+          <v-btn color="blue darken-4" dark @click="discardPresentation()">Yes, I'm sure</v-btn>
+        </v-row>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
@@ -43,12 +54,33 @@ export default {
     BasicInfoForm,
     SlideBuilder
   },
-  methods:{
-    savePresentation(){
-      this.$store.dispatch('savePresentation')
+  data() {
+    return {
+      discardDialog: false
+    };
+  },
+  methods: {
+    savePresentation() {
+      this.$store.dispatch("savePresentation");
     },
-    discardPresentation(){
-      console.log('discard and clean the state of the store')
+    discardPresentation() {
+      this.$store.commit("cleanBuilderState");
+      this.$router.push("/");
+    }
+  },
+  beforeRouteLeave(to, from, next) {
+    if (!this.discardDialog) {
+      const answer = window.confirm(
+        "Do you really want to leave? This action will discard all your work and can't be undone!"
+      );
+      if (answer) {
+        next();
+      } else {
+        next(false);
+      }
+    }
+    else{
+      next()
     }
   }
 };
