@@ -102,7 +102,10 @@ export default {
         );
         this.$store.commit("setMaxScreens", this.screensqt);
         var presentationObj = this.cleanObject(this.presentation);
-        this.$store.dispatch("addBasicInformation", presentationObj);
+        this.$store.dispatch("addBasicInformation", {
+          presentation: presentationObj,
+          id: this.createID()
+        });
       }
     },
     cleanObject(obj) {
@@ -119,6 +122,18 @@ export default {
 
       return obj;
     },
+    createID() {
+      var dt = new Date().getTime();
+      var uuid = "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(
+        /[xy]/g,
+        function(c) {
+          var r = (dt + Math.random() * 16) % 16 | 0;
+          dt = Math.floor(dt / 16);
+          return (c == "x" ? r : (r & 0x3) | 0x8).toString(16);
+        }
+      )
+      return uuid;
+    }
   },
   computed: {}
 };

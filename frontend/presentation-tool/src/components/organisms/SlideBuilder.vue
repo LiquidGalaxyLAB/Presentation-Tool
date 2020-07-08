@@ -6,34 +6,36 @@
     </div>
     <div class="pl-6 pr-6" v-if="slides.length >= 1">
       <div v-if="!newSlide">
-        <v-row align="center" justify="space-between">
-          <v-card-title>Slides</v-card-title>
-          <v-btn dark color="blue" @click="newSlide = true">
+        <v-row align="center" justify="space-between" class="ma-2">
+          <v-card-title class="pa-0">Slides</v-card-title>
+          <v-btn dark color="blue" @click="createNewSlide()">
             New slide
             <v-icon right>mdi-plus</v-icon>
           </v-btn>
         </v-row>
-        <v-data-table :headers="headers" :items="slides" :items-per-page="itemPerPage">
-          <template v-slot:item.duration="{ item }">
-            <v-card-title>{{item.duration.minutes}}:{{item.duration.seconds}}</v-card-title>
-          </template>
-          <template v-slot:item.actions="{ item }">
-            <v-row justify="end">
-              <v-btn small icon @click="previewSlide(item)">
-                <v-icon color="black">mdi-eye</v-icon>
-              </v-btn>
-              <v-btn small icon @click="editSlide(item)">
-                <v-icon color="black">mdi-pencil</v-icon>
-              </v-btn>
-              <v-btn small icon @click="deleteSlide(item)">
-                <v-icon color="red">mdi-delete</v-icon>
-              </v-btn>
-            </v-row>
-          </template>
-        </v-data-table>
+        <v-row>
+          <v-col v-for="(slide,index) in slides" :key="index" cols="12" md="4">
+            <v-card height="100%">
+              <v-card-title>Slide {{index+1}}</v-card-title>
+              <v-card-subtitle>Duration: {{slide.duration.minutes}}min : {{slide.duration.seconds}}s</v-card-subtitle>
+              <v-card-actions>
+                <v-spacer/>
+                <v-btn small icon @click="previewSlide(slide,index)">
+                  <v-icon color="black">mdi-eye</v-icon>
+                </v-btn>
+                <v-btn small icon @click="editSlide(slide,index)">
+                  <v-icon color="black">mdi-pencil</v-icon>
+                </v-btn>
+                <v-btn small icon @click="deleteSlide(slide,index)">
+                  <v-icon color="red">mdi-delete</v-icon>
+                </v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-col>
+        </v-row>
       </div>
     </div>
-    <v-card class="center-button" @click="newSlide = true" flat v-else>
+    <v-card class="center-button" @click="createNewSlide()" flat v-else>
       <v-row justify="center">
         <v-card-title class="pb-0">New slide</v-card-title>
       </v-row>
@@ -65,19 +67,35 @@ export default {
   },
   computed: {
     slides() {
-      return this.$store.getters.slides
+      return this.$store.getters.slides;
     }
   },
   methods: {
+    createNewSlide(){
+      this.newSlide = true
+      this.$store.commit('setCurrentSlideID',this.createID())
+    },
     editSlide(slide) {
       console.log("edit", slide);
     },
     previewSlide(slide) {
       console.log("preview", slide);
     },
-    deleteSlide(slide) {
-      console.log("delete", slide);
-    }
+    deleteSlide(slide,index) {
+      this.$store.dispatch('deleteSlide',{slide: slide, index:index})
+    },
+    createID() {
+      var dt = new Date().getTime();
+      var uuid = "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(
+        /[xy]/g,
+        function(c) {
+          var r = (dt + Math.random() * 16) % 16 | 0;
+          dt = Math.floor(dt / 16);
+          return (c == "x" ? r : (r & 0x3) | 0x8).toString(16);
+        }
+      )
+      return uuid;
+    },
   },
   components: {
     SlideCreator

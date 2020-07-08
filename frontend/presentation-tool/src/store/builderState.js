@@ -4,6 +4,7 @@ export default {
             slides:[]
         },
         currentSlide:{
+            id: null,
             media:[]
         },
         maxScreens:"",
@@ -27,7 +28,10 @@ export default {
             state.storagePath = payload
         },
         setMaxScreens(state,payload){
-            state.maxScreens =payload
+            state.maxScreens = payload
+        },
+        setCurrentSlideID(state,payload){
+            state.currentSlide.id = payload
         },
         addSlide(state,payload){
             state.presentation.slides.push(payload)
@@ -42,28 +46,31 @@ export default {
             state.maxScreens = ""
             state.storagepath = ""
             state.mediaToUpload = {media: [],storagepath:"",screens:[]}
+        },
+        removeSlideFromPresentation(state,payload){
+            state.presentation.slides.splice(payload,1)
         }
     },
     actions: {
-        newSlide({commit,state},payload){
-            payload = Object.assign(state.currentSlide, payload)
+        newSlide({commit,state},payload){   
             if (payload.audiopath != undefined) {
-                commit('setMediaToUpload',{media: payload.audiopath, info:{screen:1, type:'audio'} })
+                commit('setMediaToUpload',{media: {file:payload.audiopath, slideID: payload.id}, info:{screen:1, type:'audio'} })
                 payload.audiopath = `${state.storagePath}/${payload.audiopath.name}`
             }
+            payload = Object.assign(state.currentSlide, payload)
             commit('addSlide',payload)
         },
         newMedia({commit},payload){
-            commit('setMediaToUpload', {media: payload.file, info:{screen: payload.mediaInfo.screen, type:payload.mediaInfo.type}})
+            commit('setMediaToUpload', {media: {file:payload.file, slideID: payload.slideID}, info:{screen: payload.mediaInfo.screen, type:payload.mediaInfo.type}})
             commit('addMedia',payload.mediaInfo)
         },
         addBasicInformation({ commit, state }, payload) {
-            if (payload.audiopath != undefined) {
-                commit('setMediaToUpload',{media: payload.audiopath, info:{screen:1, type:'audio'} })
-                payload.audiopath = `${state.storagePath}/${payload.audiopath.name}`
+            if (payload.presentation.audiopath != undefined) {
+                commit('setMediaToUpload',{media: {file:payload.presentation.audiopath, id:payload.id}, info:{screen:1, type:'audio'} })
+                payload.presentation.audiopath = `${state.storagePath}/${payload.presentation.audiopath.name}`
             }
 
-            commit('setBasicInformation', payload)
+            commit('setBasicInformation', payload.presentation)
             console.log('state',state.presentation)
         },
         generateStoragePathName({ commit }, payload) {
@@ -73,10 +80,24 @@ export default {
             commit('setStoragePath', pathName)
         },
         savePresentation({state,dispatch}){
+            var newArrayOfMedia = []
+            state.mediaToUpload.media.forEach((m) =>{
+                newArrayOfMedia.push(m.file)
+            })
+            var mediaToUpload = Object.assign({},state.mediaToUpload)
+            mediaToUpload.media = newArrayOfMedia
+
             console.log('db',state.presentation)
-            console.log('storage',state.mediaToUpload)
-            dispatch('createPresentation',Object.assign({},{dbinfo:  state.presentation, storage: state.mediaToUpload }))
+            console.log('storage',mediaToUpload)
+
+            dispatch('createPresentation',Object.assign({},{dbinfo:  state.presentation, storage: mediaToUpload }))
         },
+        deleteSlide({commit,state},payload){
+            //remove all slide media from mediaToUpload
+            console.log('statemedia',state.mediaToUpload )
+            //remove slide from presentation
+            commit('removeSlideFromPresentation',payload.index)
+        }
 
     },
     getters: {

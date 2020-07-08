@@ -2,6 +2,7 @@
   <v-card width="100%" flat>
     <div class="pa-6">
       <h2>New slide</h2>
+      {{$store.state.builderStore.currentSlide.id}}
     </div>
     <v-row justify="center" class="mr-0">
       <v-col cols="12" md="6">
@@ -66,6 +67,7 @@ export default {
       errorDialog: false,
       error: "",
       slide: {
+        id:"",
         audiopath: null,
         duration: {
           minutes: 0,
@@ -92,6 +94,7 @@ export default {
         this.slide.duration.minutes,
         this.slide.duration.seconds
       );
+      this.slide.id = this.$store.state.builderStore.currentSlide.id
       this.slide = this.cleanObject(this.slide);
       this.$store.dispatch("newSlide", this.slide);
       this.show = false;
@@ -103,6 +106,7 @@ export default {
       milliseconds *= 1000;
       return milliseconds;
     },
+    
     discardChanges() {
       this.show = false;
       console.log("discard");

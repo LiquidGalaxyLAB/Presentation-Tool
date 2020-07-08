@@ -85,6 +85,7 @@ export default {
   methods: {
     addImage() {
       this.media.filename = this.file.name;
+      this.media.slideId = this.$store.state.builderStore.currentSlide.id
       if (
         this.media.position == "topsharing" ||
         this.media.position == "bottomsharing" ||
