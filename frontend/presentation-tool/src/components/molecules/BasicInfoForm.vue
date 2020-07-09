@@ -52,7 +52,7 @@
       <v-switch v-model="audio" label="One audio for the whole presentation"></v-switch>
       <v-file-input
         v-if="audio"
-        v-model="presentation.audiopath"
+        v-model="presentation.file"
         clearable
         accept="audio/*"
         filled
@@ -77,7 +77,8 @@ export default {
       title: "",
       description: "",
       category: "",
-      audiopath: null
+      audiopath: "",
+      file: null
     },
     screensqt: "",
     //rules
@@ -96,44 +97,10 @@ export default {
   methods: {
     validate() {
       if (this.$refs.form.validate()) {
-        this.$store.dispatch(
-          "generateStoragePathName",
-          this.presentation.title
-        );
-        this.$store.commit("setMaxScreens", this.screensqt);
-        var presentationObj = this.cleanObject(this.presentation);
-        this.$store.dispatch("addBasicInformation", {
-          presentation: presentationObj,
-          id: this.createID()
-        });
+        this.$store.dispatch('presentationBasicInformation',this.presentation)
       }
     },
-    cleanObject(obj) {
-      // this method removes all unused attributes defined on the presentation
-      for (var propName in obj) {
-        if (
-          obj[propName] === null ||
-          obj[propName] === undefined ||
-          obj[propName] === ""
-        ) {
-          delete obj[propName];
-        }
-      }
-
-      return obj;
-    },
-    createID() {
-      var dt = new Date().getTime();
-      var uuid = "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(
-        /[xy]/g,
-        function(c) {
-          var r = (dt + Math.random() * 16) % 16 | 0;
-          dt = Math.floor(dt / 16);
-          return (c == "x" ? r : (r & 0x3) | 0x8).toString(16);
-        }
-      )
-      return uuid;
-    }
+   
   },
   computed: {}
 };
