@@ -89,12 +89,12 @@ export default {
   },
   methods:{
     editMedia(item){
-      console.log('edit',item)
       this.currentMedia = item
       this.imageForm = true
     },
     deleteMedia(item){
       console.log('delete',item)
+      this.$store.dispatch('deleteMedia',{slideID:this.slide.id, media: item})
     }
   },
   data: () => ({

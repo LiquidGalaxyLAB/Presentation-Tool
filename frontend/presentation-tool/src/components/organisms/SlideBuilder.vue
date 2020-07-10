@@ -64,7 +64,6 @@
 
 <script>
 import SlideCreator from "@/components/molecules/SlideCreator.vue";
-//import utils from "@/utils/utils.js"
 
 export default {
   data() {
@@ -91,11 +90,7 @@ export default {
       }
     },
     editSlide(slide) {
-      console.log("edit", slide);
       this.currentSlide = slide
-     /* this.currentSlide.duration = utils.fromMilliseconds(
-        this.currentSlide.duration
-      );*/
       this.newSlide = true
     },
     previewSlide(slide) {

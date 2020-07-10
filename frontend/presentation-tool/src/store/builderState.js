@@ -101,6 +101,23 @@ export default {
             })
 
             commit('setEditedMedia',{indexSlide: indexSlide, indexMedia: indexMedia, media: payload.media})
+        },
+        deleteMedia({commit,state},payload){
+            console.log('deleteMedia',payload)
+            var indexSlide
+            var indexMedia
+            state.presentation.slides.forEach((slide,slideIndex) =>{
+                if(payload.slideID == slide.id){
+                    indexSlide = slideIndex
+                    slide.media.forEach((media,index) =>{
+                        if(media.id == payload.media.id){
+                            indexMedia = index
+                        }
+                    })
+                }
+            })
+
+            commit('removeMedia', {slideIndex: indexSlide, mediaIndex:indexMedia})
         }
     },
     getters: {
