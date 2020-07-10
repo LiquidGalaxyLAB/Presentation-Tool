@@ -33,6 +33,9 @@ export default {
         addMediaToSlide(state,payload){
             state.presentation.slides[payload.index].media.push(payload.media)
         },
+        setEditedMedia(state,payload){
+            state.presentation.slides[payload.indexSlide].media[payload.indexMedia] = payload.media
+        },
         removeMedia(state, payload) {
             state.presentation.slides[payload.slideIndex].media.splice(payload.mediaIndex, 1)
         }
@@ -81,6 +84,23 @@ export default {
                 }
             })
             commit('addMediaToSlide',{index: index, media: payload.media})
+        },
+        editedMedia({commit,state},payload){
+            console.log('editedMedia',payload)
+            var indexSlide
+            var indexMedia
+            state.presentation.slides.forEach((slide,slideIndex) =>{
+                if(payload.slideID == slide.id){
+                    indexSlide = slideIndex
+                    slide.media.forEach((media,index) =>{
+                        if(media.id == payload.media.id){
+                            indexMedia = index
+                        }
+                    })
+                }
+            })
+
+            commit('setEditedMedia',{indexSlide: indexSlide, indexMedia: indexMedia, media: payload.media})
         }
     },
     getters: {

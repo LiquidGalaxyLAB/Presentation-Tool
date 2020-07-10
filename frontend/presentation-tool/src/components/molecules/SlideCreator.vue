@@ -29,7 +29,6 @@
           ></v-file-input>
         </v-row>
       </v-col>
-      <v-btn @click="validate()"></v-btn>
       <v-col cols="12" md="6">
         <time-range-slider v-model="slide.duration"></time-range-slider>
       </v-col>

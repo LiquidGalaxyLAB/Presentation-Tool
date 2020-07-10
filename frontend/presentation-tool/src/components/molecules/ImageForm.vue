@@ -55,11 +55,14 @@
 </template>
 
 <script>
+import utils from "@/utils/utils.js"
+
 export default {
-  props:["value","slideID"],
+  props:["value","slideID","currentMedia"],
   data() {
     return {
       media: {
+        id:"",
         filename: "",
         sharing: "",
         partner: "",
@@ -69,6 +72,7 @@ export default {
         storagepath:"",
         file: null,
       },
+      edit: false,
       screenRules: [v => !!v || "Screen is required"],
       mediaRules: [v => !!v || "Image is required"],
       positionRules: [v => !!v || "Position is required"],
@@ -101,8 +105,15 @@ export default {
           this.media.partner = parseInt(this.media.screen) + 1
         }
       }
-      
-      this.$store.dispatch('createNewMedia',{slideID: this.slideID, media:this.media})
+      else{
+        this.media.sharing = ""
+        this.media.partner = ""
+      }
+      if(!this.edit)
+        this.$store.dispatch('createNewMedia',{slideID: this.slideID, media:this.media})
+      else
+        this.$store.dispatch('editedMedia',{slideID: this.slideID, media:this.media})
+        console.log('editing putass',this.media)
 
       this.show = false;
     },
@@ -127,6 +138,17 @@ export default {
         this.$emit("input", value);
       }
     }
+  },
+  created(){
+    console.log('media',this.currentMedia)
+    if(this.currentMedia != null){
+      this.media = this.currentMedia
+      this.edit = true
+    }
+    else{
+      this.media.id = utils.createID()
+    }
+   
   }
 };
 </script>
