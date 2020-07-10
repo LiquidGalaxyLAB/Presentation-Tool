@@ -11,26 +11,6 @@ export default {
             file: null,
             slides: []
         },
-        media: {
-            filename: "",
-            type: "",
-            storagepath: "",
-            position: "",
-            sharing: "",
-            partner: "",
-            file: null
-        },
-        slide: {
-            duration: "",
-            flyto: "",
-            audiopath: "",
-            file: "",
-            screens: []
-        },
-        screen: {
-            screennumber: "",
-            media: []
-        }
     },
     mutations: {
         setPresentationBasicInformation(state, payload) {
@@ -43,46 +23,6 @@ export default {
         },
         addSlideToPresentation(state, payload) {
             state.presentation.slides.push(payload)
-            state.slide = {
-                duration: "",
-                flyto: "",
-                audiopath: "",
-                file: "",
-                screens: []
-            }
-        },
-        setSlideBasicInformation(state, payload) {
-            state.slide.duration = payload.duration
-            state.slide.flyto = payload.flyto
-            state.slide.audiopath = payload.audiopath
-            state.slide.file = payload.file
-        },
-        addScreenToSlide(state) {
-            state.slide.screens.push(state.screen)
-        },
-        setScreenNumber(state,payload){
-            state.screen.screennumber = payload
-        },
-        setSlideScreens(state){
-            state.presentation.maxscreens.forEach(() =>[
-                state.slide.push() //continue add more screens
-            ])
-        },
-        addMediaToScreen(state, payload) {
-            console.log('pualoa',state.slide)
-            state.slide.screens[payload.index].media.push(payload.media)
-            state.media = {
-                filename: "",
-                type: "",
-                storagepath: "",
-                position: "",
-                sharing: "",
-                partner: "",
-                file: null
-            }
-        },
-        setMedia(state, payload) {
-            state.media = payload
         },
         removeSlide(state, payload) {
             state.presentation.splice(payload, 1)
@@ -103,7 +43,6 @@ export default {
             if (payload.file != null) {
                 payload.audiopath = utils.generateStoragePathName(state.presentation.title, payload.file.name)
             }
-            commit('setBasicSlideInformation', payload)
             commit('addSlideToPresentation', payload)
         },
         createNewMedia({ commit,state }, payload) {

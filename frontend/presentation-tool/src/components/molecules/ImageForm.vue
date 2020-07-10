@@ -63,6 +63,7 @@ export default {
         sharing: "",
         partner: "",
         position: "",
+        screen:"",
         type: "image",
         storagepath:"",
         file: null,

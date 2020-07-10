@@ -6,11 +6,6 @@
     <v-row justify="center" class="ma-0 pb-4">
       <v-card-text>Choose a screen to add media</v-card-text>
     </v-row>
-    <v-tabs center-active background-color="teal darken-1" dark class="pl-4 pr-4" show-arrows>
-      <v-row justify="center">
-        <v-tab v-for="(screen) in maxScreens" :key="screen" @click="changeCurrentScreen(screen)">{{screen}}</v-tab>
-      </v-row>
-    </v-tabs>
     <v-row justify="space-between" class="pl-8 pr-8 pt-8">
       <v-card-title class="pa-0">Medias</v-card-title>
       <v-speed-dial v-model="fab" direction="bottom" transition="slide-y-reverse-transition">
@@ -55,7 +50,6 @@
         </template>
       </v-data-table>
     </div>
-{{$store.getters.currentScreenMedia.media}}
     <div v-if="textForm">
       <v-dialog v-model="textForm">
         <text-form v-model="textForm"></text-form>
@@ -100,9 +94,7 @@ export default {
     }
   },
   methods:{
-    changeCurrentScreen(screen){
-      this.$store.commit('setScreenNumber',screen)
-    }
+    
   },
   data: () => ({
     itemPerPage: 5,

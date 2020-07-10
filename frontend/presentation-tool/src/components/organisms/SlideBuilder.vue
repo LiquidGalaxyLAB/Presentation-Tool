@@ -47,7 +47,7 @@
       </v-row>
     </v-card>
     <div v-if="newSlide">
-      <slide-creator v-model="newSlide"></slide-creator>
+      <slide-creator v-model="newSlide" :currentslide="currentSlide"></slide-creator>
     </div>
     <v-dialog v-model="isNotCompleted" width="50%">
       <v-card class="pa-6">
@@ -69,7 +69,8 @@ export default {
   data() {
     return {
       newSlide: false,
-      isNotCompleted: false
+      isNotCompleted: false,
+      currentSlide: null
     };
   },
   computed: {
@@ -85,11 +86,12 @@ export default {
       else{
         this.isNotCompleted = false
         this.newSlide = true
-        this.$store.commit('setSlideScreens')
       }
     },
     editSlide(slide) {
       console.log("edit", slide);
+      this.currentSlide = slide
+      this.newSlide = true
     },
     previewSlide(slide) {
       console.log("preview", slide);

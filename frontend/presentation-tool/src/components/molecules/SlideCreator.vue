@@ -59,7 +59,7 @@ import TimeRangeSlider from "@/components/atoms/TimeRangeSlider.vue";
 import MediaList from "@/components/molecules/SlideMediaList.vue";
 
 export default {
-  props: ["value"],
+  props: ["value","currentslide"],
   data() {
     return {
       audio: false,
@@ -67,7 +67,7 @@ export default {
       error: "",
       slide: {
         audiopath: "",
-        file:"",
+        file:null,
         flyto: "",
         duration: {
           minutes: 0,
@@ -123,6 +123,15 @@ export default {
       },
       set(value) {
         this.$emit("input", value);
+      }
+    }
+  },
+  created(){
+    console.log('here',this.currentslide)
+    if(this.currentslide != null){
+      this.slide = this.currentslide
+      if(this.slide.file != null){
+        this.audio = true
       }
     }
   }
