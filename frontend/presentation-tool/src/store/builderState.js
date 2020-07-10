@@ -28,10 +28,10 @@ export default {
             state.presentation.slides[payload.index] = payload.slide
         },
         removeSlide(state, payload) {
-            state.presentation.splice(payload, 1)
+            state.presentation.slides.splice(payload, 1)
         },
         removeMedia(state, payload) {
-            state.presentation.slide[payload.slideIndex].media.splice(payload.mediaIndex, 1)
+            state.presentation.slides[payload.slideIndex].media.splice(payload.mediaIndex, 1)
         }
     },
     actions: {
@@ -57,6 +57,10 @@ export default {
                 }
             })
             commit('setEditedSlide',{index:index, payload})
+        },
+        deleteSlide({commit},payload){
+            console.log('payload',payload)
+            commit('removeSlide',payload.index)
         },
         createNewMedia({ commit,state }, payload) {
             console.log('createNewMedia', payload)
