@@ -2,6 +2,7 @@
   <v-card width="100%" flat>
     <div class="pa-6">
       <h2>New slide</h2>
+      {{slide}}
     </div>
     <v-row justify="center" class="mr-0">
       <v-col cols="12" md="6">
@@ -57,22 +58,25 @@
 <script>
 import TimeRangeSlider from "@/components/atoms/TimeRangeSlider.vue";
 import MediaList from "@/components/molecules/SlideMediaList.vue";
+import utils from "@/utils/utils";
 
 export default {
-  props: ["value","currentslide"],
+  props: ["value", "currentslide"],
   data() {
     return {
       audio: false,
       errorDialog: false,
       error: "",
+      edit: false,
       slide: {
+        id: "",
         audiopath: "",
-        file:null,
+        file: null,
         flyto: "",
         duration: {
           minutes: 0,
           seconds: 0
-        },
+        }
       }
     };
   },
@@ -89,28 +93,25 @@ export default {
       }
     },
     createSlide() {
-      this.slide.duration = this.toMilliseconds(
+      /*this.slide.duration = utils.toMilliseconds(
         this.slide.duration.minutes,
         this.slide.duration.seconds
-      );
+      );*/
 
-      this.$store.dispatch('createSlideToPresentation',this.slide)
-
+      if (!this.edit) {
+        this.slide.id = utils.createID();
+        this.$store.dispatch("createSlideToPresentation", this.slide);
+      } else {
+        console.log('editing')
+      }
       this.show = false;
     },
-    toMilliseconds(min, sec) {
-      console.log(min, sec);
-      var milliseconds = min * 60;
-      milliseconds += sec;
-      milliseconds *= 1000;
-      return milliseconds;
-    },
-    
+
     discardChanges() {
       this.show = false;
       console.log("discard");
       //implement to discard all changes on the slide
-    },
+    }
   },
   components: {
     TimeRangeSlider,
@@ -126,12 +127,13 @@ export default {
       }
     }
   },
-  created(){
-    console.log('here',this.currentslide)
-    if(this.currentslide != null){
-      this.slide = this.currentslide
-      if(this.slide.file != null){
-        this.audio = true
+  created() {
+    console.log("here", this.currentslide);
+    if (this.currentslide != null) {
+      this.slide = this.currentslide;
+      this.edit = true;
+      if (this.slide.file != null) {
+        this.audio = true;
       }
     }
   }

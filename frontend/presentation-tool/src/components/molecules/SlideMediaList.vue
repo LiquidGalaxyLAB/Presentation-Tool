@@ -37,7 +37,7 @@
       </v-speed-dial>
     </v-row>
     <div class="pa-4">
-      <v-data-table :headers="headers" :items="media" :items-per-page="itemPerPage">
+    <!--  <v-data-table :headers="headers" :items="media" :items-per-page="itemPerPage">
         <template v-slot:item.actions="{ item }">
           <v-row justify="start">
             <v-btn small icon @click="editMedia(item)">
@@ -48,7 +48,7 @@
             </v-btn>
           </v-row>
         </template>
-      </v-data-table>
+      </v-data-table>-->
     </div>
     <div v-if="textForm">
       <v-dialog v-model="textForm">

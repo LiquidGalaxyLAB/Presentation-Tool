@@ -64,6 +64,7 @@
 
 <script>
 import SlideCreator from "@/components/molecules/SlideCreator.vue";
+//import utils from "@/utils/utils.js"
 
 export default {
   data() {
@@ -75,7 +76,7 @@ export default {
   },
   computed: {
     slides() {
-      return this.$store.getters.slides;
+      return this.$store.state.builderStore.presentation.slides;
     }
   },
   methods: {
@@ -86,11 +87,15 @@ export default {
       else{
         this.isNotCompleted = false
         this.newSlide = true
+        this.currentSlide = null
       }
     },
     editSlide(slide) {
       console.log("edit", slide);
       this.currentSlide = slide
+     /* this.currentSlide.duration = utils.fromMilliseconds(
+        this.currentSlide.duration
+      );*/
       this.newSlide = true
     },
     previewSlide(slide) {

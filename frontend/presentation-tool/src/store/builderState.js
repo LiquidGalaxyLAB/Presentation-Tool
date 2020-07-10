@@ -24,6 +24,9 @@ export default {
         addSlideToPresentation(state, payload) {
             state.presentation.slides.push(payload)
         },
+        setEditedSlide(state,payload){
+            state.presentation.slides[payload.index] = payload.slide
+        },
         removeSlide(state, payload) {
             state.presentation.splice(payload, 1)
         },
@@ -44,6 +47,16 @@ export default {
                 payload.audiopath = utils.generateStoragePathName(state.presentation.title, payload.file.name)
             }
             commit('addSlideToPresentation', payload)
+        },
+        editSlideOnPresentation({commit,state},payload){
+            console.log('editedslide',payload)
+            var index
+            state.presentation.slides.forEach((slide,i) =>{
+                if(slide.id == payload.id){
+                    index = i
+                }
+            })
+            commit('setEditedSlide',{index:index, payload})
         },
         createNewMedia({ commit,state }, payload) {
             console.log('createNewMedia', payload)
