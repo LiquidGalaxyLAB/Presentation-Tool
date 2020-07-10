@@ -2,6 +2,7 @@
   <div>
     <div class="pa-3">
       <h2>Slide creator</h2>
+      {{$store.state.builderStore}}
       <v-divider></v-divider>
     </div>
     <div class="pl-6 pr-6" v-if="slides.length >= 1">
@@ -48,6 +49,16 @@
     <div v-if="newSlide">
       <slide-creator v-model="newSlide"></slide-creator>
     </div>
+    <v-dialog v-model="isNotCompleted" width="50%">
+      <v-card class="pa-6">
+        <v-row justify="center" class="ma-0">
+          <h2 style="color:red;text-align:center;">Complete with required basic information before proceding to slide creation</h2>
+        </v-row>
+        <v-row justify="center" class="ma-0 pt-8">
+          <v-btn color="blue" dark @click="isNotCompleted = false">Ok</v-btn>
+        </v-row>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
@@ -58,11 +69,7 @@ export default {
   data() {
     return {
       newSlide: false,
-      itemPerPage: 10,
-      headers: [
-        { text: "Duration", value: "duration", sortable: false },
-        { text: "Actions", value: "actions", align: "end", sortable: false }
-      ]
+      isNotCompleted: false
     };
   },
   computed: {
@@ -72,8 +79,14 @@ export default {
   },
   methods: {
     createNewSlide(){
-      this.newSlide = true
-      this.$store.commit('setCurrentSlideID',this.createID())
+      if(this.$store.state.builderStore.presentation.title == ""){
+        this.isNotCompleted = true
+      }
+      else{
+        this.isNotCompleted = false
+        this.newSlide = true
+        this.$store.commit('setSlideScreens')
+      }
     },
     editSlide(slide) {
       console.log("edit", slide);
@@ -83,18 +96,6 @@ export default {
     },
     deleteSlide(slide,index) {
       this.$store.dispatch('deleteSlide',{slide: slide, index:index})
-    },
-    createID() {
-      var dt = new Date().getTime();
-      var uuid = "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(
-        /[xy]/g,
-        function(c) {
-          var r = (dt + Math.random() * 16) % 16 | 0;
-          dt = Math.floor(dt / 16);
-          return (c == "x" ? r : (r & 0x3) | 0x8).toString(16);
-        }
-      )
-      return uuid;
     },
   },
   components: {

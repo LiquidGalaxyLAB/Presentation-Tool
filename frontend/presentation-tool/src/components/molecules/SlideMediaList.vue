@@ -1,6 +1,17 @@
 <template>
   <v-card flat>
-    <v-row justify="space-between" class="pl-8 pr-8">
+    <v-row justify="center" class="ma-0 pb-4">
+      <h2>Liquid Galaxy Screens</h2>
+    </v-row>
+    <v-row justify="center" class="ma-0 pb-4">
+      <v-card-text>Choose a screen to add media</v-card-text>
+    </v-row>
+    <v-tabs center-active background-color="teal darken-1" dark class="pl-4 pr-4" show-arrows>
+      <v-row justify="center">
+        <v-tab v-for="(screen) in maxScreens" :key="screen" @click="changeCurrentScreen(screen)">{{screen}}</v-tab>
+      </v-row>
+    </v-tabs>
+    <v-row justify="space-between" class="pl-8 pr-8 pt-8">
       <v-card-title class="pa-0">Medias</v-card-title>
       <v-speed-dial v-model="fab" direction="bottom" transition="slide-y-reverse-transition">
         <template v-slot:activator>
@@ -44,7 +55,7 @@
         </template>
       </v-data-table>
     </div>
-
+{{$store.getters.currentScreenMedia.media}}
     <div v-if="textForm">
       <v-dialog v-model="textForm">
         <text-form v-model="textForm"></text-form>
@@ -60,25 +71,37 @@
         <video-form v-model="videoForm"></video-form>
       </v-dialog>
     </div>
-
   </v-card>
 </template>
 
 <script>
-import TextForm from "@/components/molecules/TextForm.vue"
-import ImageForm from "@/components/molecules/ImageForm.vue"
-import VideoForm from "@/components/molecules/VideoForm.vue"
+import TextForm from "@/components/molecules/TextForm.vue";
+import ImageForm from "@/components/molecules/ImageForm.vue";
+import VideoForm from "@/components/molecules/VideoForm.vue";
 
 export default {
-  props:["value"],
-  components:{
+  props: ["value"],
+  components: {
     TextForm,
     ImageForm,
     VideoForm
   },
-  computed:{
-    media(){
-      return this.$store.state.builderStore.currentSlide.media
+  computed: {
+     media() {
+      return this.$store.getters.currentScreenMedia.media;
+    },
+    maxScreens() {
+      let max = this.$store.state.builderStore.presentation.maxscreens;
+      let arrayOfStrings = [];
+      for (var i = 1; i <= max; i++) {
+        arrayOfStrings.push(`${i}`);
+      }
+      return arrayOfStrings;
+    }
+  },
+  methods:{
+    changeCurrentScreen(screen){
+      this.$store.commit('setScreenNumber',screen)
     }
   },
   data: () => ({
@@ -90,12 +113,11 @@ export default {
     headers: [
       { text: "Filename", value: "filename", sortable: false },
       { text: "Type", value: "type", sortable: false },
-      { text: "Screen", value: "screen", sortable: false },
       { text: "Position", value: "position", sortable: false },
       { text: "Sharing", value: "sharing", sortable: false },
       { text: "Partner", value: "partner", sortable: false },
       { text: "", value: "actions", align: "end", sortable: false }
-    ],
+    ]
   })
 };
 </script>

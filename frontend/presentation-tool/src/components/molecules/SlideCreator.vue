@@ -2,7 +2,6 @@
   <v-card width="100%" flat>
     <div class="pa-6">
       <h2>New slide</h2>
-      {{$store.state.builderStore.currentSlide.id}}
     </div>
     <v-row justify="center" class="mr-0">
       <v-col cols="12" md="6">
@@ -18,7 +17,7 @@
         <v-row class="pl-8 pr-8">
           <v-switch v-model="audio" label="Audio for this slide"></v-switch>
           <v-file-input
-            v-model="slide.audiopath"
+            v-model="slide.file"
             v-if="audio"
             clearable
             accept="audio/*"
@@ -67,13 +66,13 @@ export default {
       errorDialog: false,
       error: "",
       slide: {
-        id:"",
-        audiopath: null,
+        audiopath: "",
+        file:"",
+        flyto: "",
         duration: {
           minutes: 0,
           seconds: 0
         },
-        flyto: ""
       }
     };
   },
@@ -94,9 +93,9 @@ export default {
         this.slide.duration.minutes,
         this.slide.duration.seconds
       );
-      this.slide.id = this.$store.state.builderStore.currentSlide.id
-      this.slide = this.cleanObject(this.slide);
-      this.$store.dispatch("newSlide", this.slide);
+
+      this.$store.dispatch('createSlideToPresentation',this.slide)
+
       this.show = false;
     },
     toMilliseconds(min, sec) {
@@ -112,20 +111,6 @@ export default {
       console.log("discard");
       //implement to discard all changes on the slide
     },
-    cleanObject(obj) {
-      // this method removes all unused attributes defined on the presentation
-      for (var propName in obj) {
-        if (
-          obj[propName] === null ||
-          obj[propName] === undefined ||
-          obj[propName] === ""
-        ) {
-          delete obj[propName];
-        }
-      }
-
-      return obj;
-    }
   },
   components: {
     TimeRangeSlider,

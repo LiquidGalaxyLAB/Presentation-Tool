@@ -9,7 +9,7 @@
         <v-col cols="12" md="8">
           <v-file-input
             :rules="mediaRules"
-            v-model="file"
+            v-model="media.file"
             clearable
             accept="image/*"
             filled
@@ -58,14 +58,14 @@
 export default {
   data() {
     return {
-      file: null,
       media: {
         filename: "",
         sharing: "",
         partner: "",
         position: "",
-        screen: "",
-        type: "image"
+        type: "image",
+        storagepath:"",
+        file: null,
       },
       screenRules: [v => !!v || "Screen is required"],
       mediaRules: [v => !!v || "Image is required"],
@@ -84,8 +84,7 @@ export default {
   },
   methods: {
     addImage() {
-      this.media.filename = this.file.name;
-      this.media.slideId = this.$store.state.builderStore.currentSlide.id
+      this.media.filename = this.media.file.name;
       if (
         this.media.position == "topsharing" ||
         this.media.position == "bottomsharing" ||
@@ -93,38 +92,29 @@ export default {
         this.media.position == "middlesharing"
       ) {
         this.media.sharing = true;
-        if (this.media.screen == this.maxScreens) {
+        if (this.currentScreen == this.maxScreens[this.maxScreens.length - 1]) {
           this.media.partner = 1;
         }
+        else{
+          this.media.partner = parseInt(this.currentScreen) + 1
+        }
       }
-      this.media = this.cleanObject(this.media);
-      this.$store.dispatch("newMedia", {
-        mediaInfo: this.media,
-        file: this.file
-      });
+      
+      console.log('MEDIA',this.media)
+      this.$store.dispatch('createNewMedia',this.media)
+
       this.show = false;
     },
     discard() {
       this.show = false;
     },
-    cleanObject(obj) {
-      // this method removes all unused attributes defined on the presentation
-      for (var propName in obj) {
-        if (
-          obj[propName] === null ||
-          obj[propName] === undefined ||
-          obj[propName] === ""
-        ) {
-          delete obj[propName];
-        }
-      }
-
-      return obj;
-    }
   },
   computed: {
+    currentScreen(){
+      return this.$store.state.builderStore.screen.screennumber
+    },
     maxScreens() {
-      let max = this.$store.state.builderStore.maxScreens;
+      let max = this.$store.state.builderStore.presentation.maxscreens;
       let arrayOfStrings = [];
       for (var i = 1; i <= max; i++) {
         arrayOfStrings.push(`${i}`);

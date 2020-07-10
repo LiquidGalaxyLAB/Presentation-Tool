@@ -38,7 +38,7 @@
         </v-col>
         <v-col cols="12" md="6">
           <v-text-field
-            v-model="screensqt"
+            v-model="presentation.maxscreens"
             :rules="screenRules"
             type="number"
             label="Screens *"
@@ -75,12 +75,12 @@ export default {
     audio: false,
     presentation: {
       title: "",
+      maxscreens:"",
       description: "",
       category: "",
       audiopath: "",
       file: null
     },
-    screensqt: "",
     //rules
     titleRules: [
       v => !!v || "Title is required",
