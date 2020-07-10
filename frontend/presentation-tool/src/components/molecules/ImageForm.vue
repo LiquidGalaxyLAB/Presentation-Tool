@@ -113,7 +113,6 @@ export default {
         this.$store.dispatch('createNewMedia',{slideID: this.slideID, media:this.media})
       else
         this.$store.dispatch('editedMedia',{slideID: this.slideID, media:this.media})
-        console.log('editing putass',this.media)
 
       this.show = false;
     },

@@ -70,9 +70,16 @@ export default {
             })
             commit('setSlideToPresentation',{index:index, payload})
         },
-        deleteSlide({commit},payload){
+        deleteSlide({commit,state},payload){
             console.log('payload',payload)
-            commit('removeSlide',payload.index)
+            var index
+            state.presentation.slides.forEach((slide,i) =>{
+                if(payload.id == slide.id){
+                    index = i
+                }
+            })
+
+            commit('removeSlide',index)
         },
         createNewMedia({ commit,state }, payload) {
             console.log('createNewMedia', payload)

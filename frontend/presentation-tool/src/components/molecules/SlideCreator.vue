@@ -105,7 +105,7 @@ export default {
     discardChanges() {
       this.show = false;
       console.log("discard");
-      //implement to discard all changes on the slide
+      this.$store.dispatch('deleteSlide',this.slide)
     }
   },
   components: {

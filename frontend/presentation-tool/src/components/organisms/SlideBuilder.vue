@@ -96,8 +96,8 @@ export default {
     previewSlide(slide) {
       console.log("preview", slide);
     },
-    deleteSlide(slide,index) {
-      this.$store.dispatch('deleteSlide',{slide: slide, index:index})
+    deleteSlide(slide) {
+      this.$store.dispatch('deleteSlide',slide)
     },
   },
   components: {
