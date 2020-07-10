@@ -104,7 +104,6 @@ export default {
 
     discardChanges() {
       this.show = false;
-      console.log("discard");
       this.$store.dispatch('deleteSlide',this.slide)
     }
   },

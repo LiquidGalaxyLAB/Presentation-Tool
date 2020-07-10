@@ -1,4 +1,5 @@
-import utils from "../utils/utils"
+import utils from "@/utils/utils"
+import parser from "@/utils/parser"
 
 export default {
     state: {
@@ -38,6 +39,17 @@ export default {
         },
         removeMedia(state, payload) {
             state.presentation.slides[payload.slideIndex].media.splice(payload.mediaIndex, 1)
+        },
+        cleanBuilderState(state){
+            state.presentation = {
+                title: "",
+                description: "",
+                category: "",
+                audiopath: "",
+                maxscreens: "",
+                file: null,
+                slides: []
+            }
         }
     },
     actions: {
@@ -125,6 +137,14 @@ export default {
             })
 
             commit('removeMedia', {slideIndex: indexSlide, mediaIndex:indexMedia})
+        },
+        savePresentation({state}){
+            console.log('presentation state',state.presentation)
+            var presentationJSON = parser.parseToPresentationJSON(state.presentation)
+            //var mediaToUploadJSON = parser.parseToUploadMediaJSON(state.presentation)
+
+            console.log('presentationJSON',presentationJSON)
+            //console.log('mediatouploadJSON',mediaToUploadJSON)
         }
     },
     getters: {
