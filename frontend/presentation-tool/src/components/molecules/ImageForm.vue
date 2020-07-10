@@ -56,6 +56,7 @@
 
 <script>
 export default {
+  props:["value","slideID"],
   data() {
     return {
       media: {
@@ -93,16 +94,15 @@ export default {
         this.media.position == "middlesharing"
       ) {
         this.media.sharing = true;
-        if (this.currentScreen == this.maxScreens[this.maxScreens.length - 1]) {
+        if (this.media.screen == this.maxScreens[this.maxScreens.length - 1]) {
           this.media.partner = 1;
         }
         else{
-          this.media.partner = parseInt(this.currentScreen) + 1
+          this.media.partner = parseInt(this.media.screen) + 1
         }
       }
       
-      console.log('MEDIA',this.media)
-      this.$store.dispatch('createNewMedia',this.media)
+      this.$store.dispatch('createNewMedia',{slideID: this.slideID, media:this.media})
 
       this.show = false;
     },
@@ -111,9 +111,6 @@ export default {
     },
   },
   computed: {
-    currentScreen(){
-      return this.$store.state.builderStore.screen.screennumber
-    },
     maxScreens() {
       let max = this.$store.state.builderStore.presentation.maxscreens;
       let arrayOfStrings = [];

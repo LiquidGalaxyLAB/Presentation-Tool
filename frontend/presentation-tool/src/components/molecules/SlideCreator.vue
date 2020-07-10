@@ -29,13 +29,14 @@
           ></v-file-input>
         </v-row>
       </v-col>
+      <v-btn @click="validate()"></v-btn>
       <v-col cols="12" md="6">
         <time-range-slider v-model="slide.duration"></time-range-slider>
       </v-col>
     </v-row>
     <v-row justify="center">
       <v-col cols="12">
-        <media-list></media-list>
+        <media-list :slide="slide"></media-list>
       </v-col>
     </v-row>
     <v-row justify="space-between" class="mr-8 ml-6 pb-8">
@@ -76,7 +77,8 @@ export default {
         duration: {
           minutes: 0,
           seconds: 0
-        }
+        },
+        media:[]
       }
     };
   },
@@ -93,13 +95,7 @@ export default {
       }
     },
     createSlide() {
-      /*this.slide.duration = utils.toMilliseconds(
-        this.slide.duration.minutes,
-        this.slide.duration.seconds
-      );*/
-
       if (!this.edit) {
-        this.slide.id = utils.createID();
         this.$store.dispatch("createSlideToPresentation", this.slide);
       } else {
         console.log('editing')
@@ -128,13 +124,16 @@ export default {
     }
   },
   created() {
-    console.log("here", this.currentslide);
     if (this.currentslide != null) {
       this.slide = this.currentslide;
       this.edit = true;
       if (this.slide.file != null) {
         this.audio = true;
       }
+    }
+    else{
+      this.slide.id = utils.createID()
+      this.$store.commit('newSlideIdOnly',this.slide)
     }
   }
 };

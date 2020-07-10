@@ -21,14 +21,17 @@ export default {
             state.presentation.file = payload.file
             state.presentation.maxscreens = payload.maxscreens
         },
-        addSlideToPresentation(state, payload) {
+        newSlideIdOnly(state,payload){
             state.presentation.slides.push(payload)
         },
-        setEditedSlide(state,payload){
+        setSlideToPresentation(state, payload) {
             state.presentation.slides[payload.index] = payload.slide
         },
         removeSlide(state, payload) {
             state.presentation.slides.splice(payload, 1)
+        },
+        addMediaToSlide(state,payload){
+            state.presentation.slides[payload.index].media.push(payload.media)
         },
         removeMedia(state, payload) {
             state.presentation.slides[payload.slideIndex].media.splice(payload.mediaIndex, 1)
@@ -46,7 +49,13 @@ export default {
             if (payload.file != null) {
                 payload.audiopath = utils.generateStoragePathName(state.presentation.title, payload.file.name)
             }
-            commit('addSlideToPresentation', payload)
+            var index
+            state.presentation.slides.forEach((slide,i) =>{
+                if(payload.id == slide.id){
+                    index = i
+                }
+            })
+            commit('setSlideToPresentation', {index: index, slide: payload})
         },
         editSlideOnPresentation({commit,state},payload){
             console.log('editedslide',payload)
@@ -56,7 +65,7 @@ export default {
                     index = i
                 }
             })
-            commit('setEditedSlide',{index:index, payload})
+            commit('setSlideToPresentation',{index:index, payload})
         },
         deleteSlide({commit},payload){
             console.log('payload',payload)
@@ -64,8 +73,14 @@ export default {
         },
         createNewMedia({ commit,state }, payload) {
             console.log('createNewMedia', payload)
-            commit('setMedia', payload)
-            commit('addMediaToScreen', {media:payload, index: state.screen.screennumber})
+            
+            var index
+            state.presentation.slides.forEach((slide,i) =>{
+                if(slide.id == payload.slideID){
+                    index = i
+                }
+            })
+            commit('addMediaToSlide',{index: index, media: payload.media})
         }
     },
     getters: {

@@ -1,11 +1,5 @@
 <template>
   <v-card flat>
-    <v-row justify="center" class="ma-0 pb-4">
-      <h2>Liquid Galaxy Screens</h2>
-    </v-row>
-    <v-row justify="center" class="ma-0 pb-4">
-      <v-card-text>Choose a screen to add media</v-card-text>
-    </v-row>
     <v-row justify="space-between" class="pl-8 pr-8 pt-8">
       <v-card-title class="pa-0">Medias</v-card-title>
       <v-speed-dial v-model="fab" direction="bottom" transition="slide-y-reverse-transition">
@@ -36,8 +30,8 @@
         </v-btn>
       </v-speed-dial>
     </v-row>
-    <div class="pa-4">
-    <!--  <v-data-table :headers="headers" :items="media" :items-per-page="itemPerPage">
+    <div class="pa-4">{{slide}}
+    <v-data-table :headers="headers" :items="media" :items-per-page="itemPerPage">
         <template v-slot:item.actions="{ item }">
           <v-row justify="start">
             <v-btn small icon @click="editMedia(item)">
@@ -48,7 +42,7 @@
             </v-btn>
           </v-row>
         </template>
-      </v-data-table>-->
+      </v-data-table>
     </div>
     <div v-if="textForm">
       <v-dialog v-model="textForm">
@@ -57,7 +51,7 @@
     </div>
     <div v-else-if="imageForm">
       <v-dialog v-model="imageForm" width="80%">
-        <image-form v-model="imageForm"></image-form>
+        <image-form v-model="imageForm" :slideID="slide.id"></image-form>
       </v-dialog>
     </div>
     <div v-else-if="videoForm">
@@ -74,15 +68,15 @@ import ImageForm from "@/components/molecules/ImageForm.vue";
 import VideoForm from "@/components/molecules/VideoForm.vue";
 
 export default {
-  props: ["value"],
+  props: ["value","slide"],
   components: {
     TextForm,
     ImageForm,
     VideoForm
   },
   computed: {
-     media() {
-      return this.$store.getters.currentScreenMedia.media;
+    media() {
+      return this.slide.media
     },
     maxScreens() {
       let max = this.$store.state.builderStore.presentation.maxscreens;
@@ -105,6 +99,7 @@ export default {
     headers: [
       { text: "Filename", value: "filename", sortable: false },
       { text: "Type", value: "type", sortable: false },
+      { text: "Screen", value: "screen", sortable: false },
       { text: "Position", value: "position", sortable: false },
       { text: "Sharing", value: "sharing", sortable: false },
       { text: "Partner", value: "partner", sortable: false },
