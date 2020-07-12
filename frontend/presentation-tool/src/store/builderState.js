@@ -138,13 +138,16 @@ export default {
 
             commit('removeMedia', {slideIndex: indexSlide, mediaIndex:indexMedia})
         },
-        savePresentation({state}){
+        async savePresentation({state}){
             console.log('presentation state',state.presentation)
+            var storagepath = utils.generateStoragePathName(state.presentation.title,'')
+            storagepath = storagepath.substring(0, storagepath.length - 1)
+            var mediaToUploadJSON = await parser.parseToUploadMediaJSON(state.presentation,storagepath)
             var presentationJSON = parser.parseToPresentationJSON(state.presentation)
-            //var mediaToUploadJSON = parser.parseToUploadMediaJSON(state.presentation)
 
+            console.log('mediatouploadJSON',mediaToUploadJSON)
             console.log('presentationJSON',presentationJSON)
-            //console.log('mediatouploadJSON',mediaToUploadJSON)
+            
         }
     },
     getters: {

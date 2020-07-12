@@ -68,15 +68,55 @@ export default {
             parsedResult.slides[e].media = null
             parsedResult.slides[e] = cleanObject(parsedResult.slides[e])
         }
-        
-        console.log('finalValue', parsedResult)
+
+        //remove screen field inside media
+        for(var c = 0; c < parsedResult.slides.length; c++){
+            for(var d = 0; d < parsedResult.slides[c].screens.length;d++){
+                for(var m = 0; m < parsedResult.slides[c].screens[d].media.length; m++){
+                    parsedResult.slides[c].screens[d].media[m].screen = null
+                    parsedResult.slides[c].screens[d].media[m] = cleanObject(parsedResult.slides[c].screens[d].media[m])
+                }
+            }
+        }
 
         return parsedResult
     },
-    parseToUploadMediaJSON: function (presentation) {
-        console.log('presentation here', presentation)
-        var json = 'churros media'
-        return json
+    parseToUploadMediaJSON: function (presentation,storagePath) {        
+        var mediaToUpload = {
+            storagepath: storagePath,
+            screens:[],
+            media:[]
+        }
+        
+        //check for audio on main base
+        if(presentation.file != null || presentation.file != undefined){
+            mediaToUpload.media.push(presentation.file)
+            mediaToUpload.screens.push({screen:1,type:'audio'})
+        }
+
+        //check for audio inside the slides
+        presentation.slides.forEach((slide) =>{
+            if(slide.file != null || slide.file != undefined){
+                mediaToUpload.media.push(slide.file)
+                mediaToUpload.screens.push({screen:1,type:'audio'})
+            }
+        })
+
+        //check for media inside screens
+        presentation.slides.forEach((slide) =>{
+            slide.media.forEach((m) =>{
+                mediaToUpload.media.push(m.file)
+                if(m.partner != null || m.partner != undefined){
+                    mediaToUpload.screens.push({screen: m.screen,type: m.type, partner: m.partner})
+                }
+                else{
+                    mediaToUpload.screens.push({screen: m.screen,type: m.type})
+                }
+                
+            })
+        })
+
+        return mediaToUpload
     }
 }
 
