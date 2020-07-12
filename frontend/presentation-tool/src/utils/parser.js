@@ -3,7 +3,8 @@ export default {
         //CLEAN UNUSED FIELDS
 
         //clean base of the object
-        var parsedResult = Object.assign({}, cleanObject(presentation))
+        var parsedResult = Object.assign({}, presentation)
+        parsedResult = cleanObject(parsedResult)
 
         //clean slides
         var cleanSlides = []
@@ -38,7 +39,6 @@ export default {
             }
         }
 
-
         //STORE MEDIA INSIDE SCREENS
         var screens = []
         var screennumber = 0
@@ -61,14 +61,14 @@ export default {
             screens = []
         })
 
-        //fix slide -> is becoming an object instead of an array, thats why I can't iterate on the for
         parsedResult.slides = newSlides
-        
-        for(var e = 0; e < parsedResult.slides.length; e++){
-            console.log('aq')
+
+        //remove the extra media field inside the slides
+        for(var e = 0 ; e < parsedResult.slides.length; e++){
             parsedResult.slides[e].media = null
-            parsedResult.slide[e] = cleanObject(parsedResult.slide[e])
+            parsedResult.slides[e] = cleanObject(parsedResult.slides[e])
         }
+        
         console.log('finalValue', parsedResult)
 
         return parsedResult
