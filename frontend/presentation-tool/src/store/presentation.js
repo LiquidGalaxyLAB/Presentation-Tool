@@ -22,7 +22,6 @@ export default {
             var res = await api.createPresentation(payload.dbinfo)
             dispatch('logResponse', res)
 
-
         },
         async executePresentation({ dispatch }, payload) {
             var res = await api.executePresentation(payload)

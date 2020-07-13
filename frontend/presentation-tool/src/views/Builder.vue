@@ -6,15 +6,16 @@
         <h1>Presentation Builder</h1>
         <v-row class="ma-0" justify="end">
           <div class="pr-2">
-          <v-btn dark color="red" @click="discardDialog = true">
-            Discard
-            <v-icon right>mdi-close</v-icon>
-          </v-btn>
+            <v-btn dark color="red" @click="discardDialog = true">
+              Discard
+              <v-icon right>mdi-close</v-icon>
+            </v-btn>
           </div>
           <div class="pr-2">
-          <v-btn @click="previewDialog = true" color="blue" dark>Preview
-            <v-icon right>mdi-eye</v-icon>
-          </v-btn>
+            <v-btn @click="previewDialog = true" color="blue" dark>
+              Preview
+              <v-icon right>mdi-eye</v-icon>
+            </v-btn>
           </div>
           <v-btn dark color="green" @click="saveDialog = true;previewDialog = true">
             Save Presentation
@@ -49,19 +50,17 @@
     </v-dialog>
     <v-dialog v-model="previewDialog" width="70%">
       <v-card width="100%" height="100%">
-      <preview-presentation></preview-presentation>
-      <v-row class="ma-0 pb-8" justify="space-around" v-if="saveDialog">
-        <v-btn color="blue" dark @click="saveDialog = false;previewDialog = false">Keep working</v-btn>
-        <v-btn color="green" dark @click="savePresentation()">Save and send to Liquid Galaxy</v-btn>
-      </v-row>
-      <v-row v-else justify="center" class="ma-0 pb-8">
-        <v-btn @click="previewDialog = false" color="blue" dark>keep working</v-btn>
-      </v-row>
+        <preview-presentation></preview-presentation>
+        <v-row class="ma-0 pb-8" justify="space-around" v-if="saveDialog">
+          <v-btn color="blue" dark @click="saveDialog = false;previewDialog = false">Keep working</v-btn>
+          <v-btn color="green" dark @click="savePresentation()">Save and send to Liquid Galaxy</v-btn>
+        </v-row>
+        <v-row v-else justify="center" class="ma-0 pb-8">
+          <v-btn @click="previewDialog = false" color="blue" dark>keep working</v-btn>
+        </v-row>
       </v-card>
     </v-dialog>
-    <v-dialog v-model="sendingToLG">
-
-    </v-dialog>
+    <overlay/>
   </div>
 </template>
 
@@ -69,29 +68,35 @@
 import Toolbar from "@/components/atoms/Toolbar.vue";
 import BasicInfoForm from "@/components/molecules/BasicInfoForm.vue";
 import SlideBuilder from "@/components/organisms/SlideBuilder.vue";
-import PreviewPresentation from "@/components/atoms/PreviewPresentation.vue"
+import PreviewPresentation from "@/components/atoms/PreviewPresentation.vue";
+import Overlay from "@/components/atoms/Overlay.vue"
 
 export default {
   components: {
     Toolbar,
     BasicInfoForm,
     SlideBuilder,
-    PreviewPresentation
+    PreviewPresentation,
+    Overlay
   },
   data() {
     return {
       discardDialog: false,
-      saveDialog:false,
-      sendingToLG: false,
-      previewDialog: false
+      saveDialog: false,
+      previewDialog: false,
+      saved:false
     };
   },
   methods: {
-    savePresentation() {
-      this.$store.dispatch("savePresentation");
-      this.saveDialog = false
-      this.previewDialog = false
-      //this.sendingToLG = true
+    async savePresentation() {
+      this.$store.commit('setOverlay',{value: true, text:'Saving and sending to Liquid Galaxy'})
+      await this.$store.dispatch("savePresentation")     
+      this.$store.commit('setOverlay',{value: false, text:''})
+      this.saveDialog = false;
+      this.previewDialog = false;
+      this.saved = true
+      this.$router.push("/");
+     
     },
     discardPresentation() {
       this.$store.commit("cleanBuilderState");
@@ -99,7 +104,7 @@ export default {
     }
   },
   beforeRouteLeave(to, from, next) {
-    if (!this.discardDialog) {
+    if (!this.discardDialog && !this.saved) {
       const answer = window.confirm(
         "Do you really want to leave? This action will discard all your work and can't be undone!"
       );
@@ -108,9 +113,8 @@ export default {
       } else {
         next(false);
       }
-    }
-    else{
-      next()
+    } else {
+      next();
     }
   }
 };

@@ -1,7 +1,11 @@
 export default {
     state:{
         log:null,
-        color:'blue'
+        color:'blue',
+        overlay: {
+            value:false,
+            text:""
+        }
     },
     mutations:{
         setLog(state,payload){
@@ -9,6 +13,9 @@ export default {
         },
         setColor(state,payload){
             state.color = payload
+        },
+        setOverlay(state,payload){
+            state.overlay = payload
         }
     },
     actions:{
