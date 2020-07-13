@@ -1,3 +1,5 @@
+import utils from "@/utils/utils"
+
 export default {
     parseToPresentationJSON: function (presentation) {
         //CLEAN UNUSED FIELDS
@@ -78,6 +80,11 @@ export default {
                 }
             }
         }
+
+        //parse duration to miliseconds
+        parsedResult.slides.forEach(slide =>{
+            slide.duration = utils.toMilliseconds(slide.duration.minutes,slide.duration.seconds)
+        })
 
         return parsedResult
     },

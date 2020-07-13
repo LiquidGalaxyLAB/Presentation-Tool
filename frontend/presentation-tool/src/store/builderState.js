@@ -138,7 +138,7 @@ export default {
 
             commit('removeMedia', {slideIndex: indexSlide, mediaIndex:indexMedia})
         },
-        async savePresentation({state}){
+        async savePresentation({state,dispatch}){
             console.log('presentation state',state.presentation)
             var storagepath = utils.generateStoragePathName(state.presentation.title,'')
             storagepath = storagepath.substring(0, storagepath.length - 1)
@@ -147,6 +147,8 @@ export default {
 
             console.log('mediatouploadJSON',mediaToUploadJSON)
             console.log('presentationJSON',presentationJSON)
+
+            dispatch('createPresentation',{storage: mediaToUploadJSON,dbinfo:presentationJSON})
             
         }
     },
