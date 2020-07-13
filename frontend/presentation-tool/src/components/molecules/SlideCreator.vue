@@ -2,7 +2,6 @@
   <v-card width="100%" flat>
     <div class="pa-6">
       <h2>New slide</h2>
-      {{slide}}
     </div>
     <v-row justify="center" class="mr-0">
       <v-col cols="12" md="6">

@@ -2,7 +2,6 @@
   <div>
     <div class="pa-3">
       <h2>Slide creator</h2>
-      {{$store.state.builderStore}}
       <v-divider></v-divider>
     </div>
     <div class="pl-6 pr-6" v-if="slides.length >= 1">
