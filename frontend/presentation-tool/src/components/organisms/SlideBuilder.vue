@@ -20,7 +20,7 @@
               <v-card-subtitle>Duration: {{slide.duration.minutes}}min : {{slide.duration.seconds}}s</v-card-subtitle>
               <v-card-actions>
                 <v-spacer/>
-                <v-btn small icon @click="previewSlide(slide,index)">
+                <v-btn small icon @click="previewSlide(slide)">
                   <v-icon color="black">mdi-eye</v-icon>
                 </v-btn>
                 <v-btn small icon @click="editSlide(slide,index)">
@@ -58,18 +58,29 @@
         </v-row>
       </v-card>
     </v-dialog>
+    <v-dialog v-model="preview">
+      <v-card>
+        <preview-slide :slide="slideToPreview"></preview-slide>
+        <v-row class="ma-0 pb-8" justify="center">        
+          <v-btn color="blue" dark @click="preview = false">keep working</v-btn>
+        </v-row>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
 <script>
 import SlideCreator from "@/components/molecules/SlideCreator.vue";
+import PreviewSlide from "@/components/atoms/PreviewSlide.vue"
 
 export default {
   data() {
     return {
       newSlide: false,
       isNotCompleted: false,
-      currentSlide: null
+      currentSlide: null,
+      preview: false,
+      slideToPreview: null
     };
   },
   computed: {
@@ -93,14 +104,16 @@ export default {
       this.newSlide = true
     },
     previewSlide(slide) {
-      console.log("preview", slide);
+      this.slideToPreview = slide
+      this.preview = true
     },
     deleteSlide(slide) {
       this.$store.dispatch('deleteSlide',slide)
     },
   },
   components: {
-    SlideCreator
+    SlideCreator,
+    PreviewSlide
   }
 };
 </script>

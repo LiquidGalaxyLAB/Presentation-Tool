@@ -1,7 +1,7 @@
 <template>
   <div class="pa-4">
     <div class="pa-3">
-      <h1>Review your work</h1>
+      <h2>Review your work</h2>
       <v-divider></v-divider>
     </div>
     <v-row justify="center" class="ma-0">

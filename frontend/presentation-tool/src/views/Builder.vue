@@ -47,7 +47,7 @@
         </v-row>
       </v-card>
     </v-dialog>
-    <v-dialog v-model="previewDialog" width="100%">
+    <v-dialog v-model="previewDialog" width="70%">
       <v-card width="100%" height="100%">
       <preview-presentation></preview-presentation>
       <v-row class="ma-0 pb-8" justify="space-around" v-if="saveDialog">
