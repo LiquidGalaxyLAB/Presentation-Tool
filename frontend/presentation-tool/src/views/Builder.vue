@@ -95,6 +95,7 @@ export default {
       this.saveDialog = false;
       this.previewDialog = false;
       this.saved = true
+      this.$store.commit("cleanBuilderState");
       this.$router.push("/");
      
     },
