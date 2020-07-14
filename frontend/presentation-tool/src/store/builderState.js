@@ -14,6 +14,9 @@ export default {
         },
     },
     mutations: {
+        setPresentation(state,payload){
+            state.presentation = payload
+        },
         setPresentationBasicInformation(state, payload) {
             state.presentation.title = payload.title
             state.presentation.description = payload.description
@@ -149,6 +152,10 @@ export default {
 
             dispatch('createPresentation',{storage: mediaToUploadJSON,dbinfo:presentationJSON})
             
+        },
+        editPresentation({commit},payload){
+            console.log('payload to edit',payload)
+            commit('setPresentation',payload)
         }
     },
     getters: {

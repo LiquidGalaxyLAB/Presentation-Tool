@@ -104,6 +104,10 @@ export default {
       this.$router.push("/");
     }
   },
+  created(){
+    var id = this.$route.params.id
+    console.log(id)
+  },
   beforeRouteLeave(to, from, next) {
     if (!this.discardDialog && !this.saved) {
       const answer = window.confirm(

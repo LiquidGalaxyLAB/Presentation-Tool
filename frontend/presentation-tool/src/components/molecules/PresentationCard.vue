@@ -44,7 +44,7 @@
         </v-col>
       </v-row>
       <div class="text ellipsis">
-      <v-card-text class="pl-7 pr-6 pt-0 desc-text">{{presentation.description}}</v-card-text>
+     <!-- <v-card-text class="pl-7 pr-6 pt-0 desc-text">{{presentation.description}}</v-card-text>-->
       </div>
     </v-card>
   </v-hover>
@@ -100,7 +100,8 @@ export default {
       console.log('export')
     },
     editPresentation(){
-      console.log('edit')
+      this.$router.push(`/presentation/${this.presentation._id}`)
+      this.$store.dispatch('editPresentation',this.presentation)
     },
     deletePresentation(){
       confirm("Are you sure you want to delete? This action can not be undone.") && this.$store.dispatch('deleteById',this.presentation._id)

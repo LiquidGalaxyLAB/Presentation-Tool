@@ -12,7 +12,7 @@
       </v-col>
     </v-row>
     <v-row>
-      <v-col v-for="(presentation,i) in filterPresentations" :key="i" cols="12" md="3" sm="6">
+      <v-col v-for="(presentation,i) in filterPresentations" :key="i" cols="12" md="4" sm="6">
         <presentation-card :presentation="presentation"></presentation-card>
       </v-col>
     </v-row>
@@ -27,58 +27,6 @@ export default {
   data() {
     return {
       searchPresentation: "",
-      /*presentations: [
-        {
-          id: "001",
-          name: "My presentation 01",
-          description: "Lorem ipsum",
-          category: {
-            name: "Education",
-            img:
-              "https://image.freepik.com/free-vector/flat-design-geometric-shapes-background_23-2148366514.jpg"
-          }
-        },
-        {
-          id: "002",
-          name: "My presentation 02",
-          description: "Lorem ipsum",
-          category: {
-            name: "Travel",
-            img:
-              "https://image.freepik.com/free-vector/flat-design-geometric-shapes-background_23-2148366514.jpg"
-          }
-        },
-        {
-          id: "003",
-          name: "My presentation 03",
-          description: "Lorem ipsum",
-          category: {
-            name: "Education",
-            img:
-              "https://image.freepik.com/free-vector/flat-design-geometric-shapes-background_23-2148366514.jpg"
-          }
-        },
-        {
-          id: "003",
-          name: "My presentation 03",
-          description: "Lorem ipsum",
-          category: {
-            name: "Education",
-            img:
-              "https://image.freepik.com/free-vector/flat-design-geometric-shapes-background_23-2148366514.jpg"
-          }
-        },
-        {
-          id: "003",
-          name: "My presentation 03",
-          description: "Lorem ipsum",
-          category: {
-            name: "Education",
-            img:
-              "https://image.freepik.com/free-vector/flat-design-geometric-shapes-background_23-2148366514.jpg"
-          }
-        }
-      ],*/
       sorted: false
     };
   },

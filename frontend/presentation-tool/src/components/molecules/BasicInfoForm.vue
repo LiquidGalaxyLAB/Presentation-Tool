@@ -114,6 +114,11 @@ export default {
     },
    
   },
-  computed: {}
+  computed: {},
+  created(){
+    if(this.$route.params.id != "new"){
+      this.presentation = this.$store.state.builderStore.presentation
+    }
+  }
 };
 </script>

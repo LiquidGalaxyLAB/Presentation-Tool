@@ -7,7 +7,7 @@
           <v-img src="@/assets/presentation-logo.png"></v-img>
         </v-avatar>
       </v-app-bar-nav-icon>
-      <v-toolbar-title class="white--text">Liquid Galaxy Presentation Tool</v-toolbar-title>
+      <v-toolbar-title class="white--text" style="cursor:pointer;" @click="$router.push('/')">Liquid Galaxy Presentation Tool</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-menu offset-y>
         <template v-slot:activator="{ on, attrs }">

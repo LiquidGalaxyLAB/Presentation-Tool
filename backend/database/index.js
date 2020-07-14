@@ -26,8 +26,10 @@ var PresentationSchema = new mongoose.Schema({
   description: {type: String},
   category: {type: String},
   audiopath: {type: String},
+  maxscreens:{type: Number},
   slides: [{
     _id:false,
+    id: {type: String, require:true},
     duration: {type: Number, require: true},
     audiopath: {type:String},
     flyto: {type: String},
@@ -36,6 +38,7 @@ var PresentationSchema = new mongoose.Schema({
       screennumber: {type: Number, require:true},
       media: [{
         _id:false,
+        id: {type: String, require:true},
         filename: {type: String, require:true},
         type: {type: String, require:true},
         storagepath: {type: String, require: true},
