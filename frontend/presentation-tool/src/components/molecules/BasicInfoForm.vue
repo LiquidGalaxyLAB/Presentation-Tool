@@ -74,11 +74,11 @@
         ></v-file-input>
       </div>
       <v-card class="mx-auto pa-2" v-else>
-          <p class="pl-3 pr-2 pt-4">{{presentation.file}}</p>
-          <v-btn text color="teal" @click="editingAudio = false; presentation.file = null">
-            change
-            <v-icon right>mdi-file-music</v-icon>
-          </v-btn>
+        <p class="pl-3 pr-2 pt-4">{{presentation.file}}</p>
+        <v-btn text color="teal" @click="editingAudio = false; presentation.file = null">
+          change
+          <v-icon right>mdi-file-music</v-icon>
+        </v-btn>
       </v-card>
       <v-row justify="center" class="pl-2 pt-5 pb-4" v-if="!edit">
         <v-btn color="blue" class="mr-4" dark @click="validate()">Save</v-btn>
@@ -128,8 +128,13 @@ export default {
   created() {
     if (this.$route.params.id != "new") {
       this.presentation = this.$store.state.builderStore.presentation;
-      this.audio = true;
-      this.editingAudio = true;
+      if (
+        this.presentation.file != null &&
+        this.presentation.audiopath != undefined
+      ) {
+        this.audio = true;
+        this.editingAudio = true;
+      }
     }
   }
 };

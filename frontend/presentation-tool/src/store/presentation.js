@@ -23,6 +23,7 @@ export default {
             dispatch('logResponse', res)
 
         },
+        async updatePresentation(){},
         async executePresentation({ dispatch }, payload) {
             var res = await api.executePresentation(payload)
             if (res.status != 202) {

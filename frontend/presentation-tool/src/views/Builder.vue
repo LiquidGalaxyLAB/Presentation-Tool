@@ -84,17 +84,25 @@ export default {
       discardDialog: false,
       saveDialog: false,
       previewDialog: false,
-      saved:false
+      saved:false,
+      edit: true
     };
   },
   methods: {
     async savePresentation() {
       this.$store.commit('setOverlay',{value: true, text:'Saving and sending to Liquid Galaxy'})
-      await this.$store.dispatch("savePresentation")     
+      if(this.edit){
+        await this.$store.dispatch("updatePresentation")
+      }
+      else{
+        await this.$store.dispatch("savePresentation")     
+      }
+      
       this.$store.commit('setOverlay',{value: false, text:''})
       this.saveDialog = false;
       this.previewDialog = false;
       this.saved = true
+      this.edit = false
       this.$store.commit("cleanBuilderState");
       this.$router.push("/");
      
@@ -105,8 +113,9 @@ export default {
     }
   },
   created(){
-    var id = this.$route.params.id
-    console.log(id)
+    if(this.$route.params.id != "new"){
+      this.edit = true
+    }
   },
   beforeRouteLeave(to, from, next) {
     if (!this.discardDialog && !this.saved) {

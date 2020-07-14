@@ -53,6 +53,7 @@ export default {
                 file: null,
                 slides: []
             }
+            state.edit = false
         }
     },
     actions: {
@@ -141,7 +142,7 @@ export default {
 
             commit('removeMedia', {slideIndex: indexSlide, mediaIndex:indexMedia})
         },
-        async savePresentation({state,dispatch}){
+        async savePresentation({state,dispatch},payload){
             var storagepath = utils.generateStoragePathName(state.presentation.title,'')
             storagepath = storagepath.substring(0, storagepath.length - 1)
             var mediaToUploadJSON = await parser.parseToUploadMediaJSON(state.presentation,storagepath)
@@ -150,14 +151,20 @@ export default {
             console.log('mediatouploadJSON',mediaToUploadJSON)
             console.log('presentationJSON',presentationJSON)
 
-            dispatch('createPresentation',{storage: mediaToUploadJSON,dbinfo:presentationJSON})
+            if(payload == "edit"){
+                dispatch('updatePresentation')
+            }
+            else{
+                dispatch('createPresentation',{storage: mediaToUploadJSON,dbinfo:presentationJSON})
+            }
+            
             
         },
         editPresentation({commit},payload){
             console.log('payload to edit',payload)
             var presentationToEdit = parser.parseFromJSON(payload)
             commit('setPresentation',presentationToEdit)
-        }
+        },
     },
     getters: {
         slides(state) {
