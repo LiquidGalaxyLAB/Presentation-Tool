@@ -5,7 +5,7 @@
       <v-divider></v-divider>
     </div>
     <v-form ref="form">
-      <v-row class="pa-4 ma-0">
+      <v-row class="pt-4 pl-4 pr-4 ma-0">
         <v-col cols="12" md="8">
           <v-file-input
             :rules="mediaRules"
@@ -31,7 +31,7 @@
           ></v-select>
         </v-col>
       </v-row>
-      <v-row class="pa-4 ma-0" align="center">
+      <v-row class="pl-4 pr-4 ma-0" align="center">
         <v-col cols="12" md="6">
           <v-select
             v-model="media.position"
@@ -43,7 +43,9 @@
             persistent-hint
           ></v-select>
         </v-col>
-        <v-col cols="12" md="6" class="pink">img will go here</v-col>
+        <v-col cols="12" md="6">
+          <v-img src="@/assets/one-screen-positions.png"></v-img>
+        </v-col>
       </v-row>
 
       <v-row justify="space-between" class="ma-0 pb-8 pl-8 pr-8">

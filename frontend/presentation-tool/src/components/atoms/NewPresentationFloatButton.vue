@@ -10,7 +10,7 @@
     <template v-slot:activator>
       <v-tooltip left>
         <template v-slot:activator="{ on }">
-          <v-btn v-model="fab" v-on="on" color="pink" dark fab>
+          <v-btn v-model="fab" v-on="on" color="teal" dark fab>
             <v-icon v-if="fab">mdi-close</v-icon>
             <v-icon v-else>mdi-plus</v-icon>
           </v-btn>

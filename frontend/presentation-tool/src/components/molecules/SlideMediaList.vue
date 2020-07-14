@@ -55,7 +55,7 @@
       </v-dialog>
     </div>
     <div v-else-if="videoForm">
-      <v-dialog v-model="videoForm" width="80%">>
+      <v-dialog v-model="videoForm" width="80%">
         <video-form v-model="videoForm" :slideID="slide.id" :currentMedia="currentMedia"></video-form>
       </v-dialog>
     </div>

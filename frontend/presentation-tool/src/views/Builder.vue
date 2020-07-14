@@ -110,11 +110,13 @@ export default {
         "Do you really want to leave? This action will discard all your work and can't be undone!"
       );
       if (answer) {
+        this.$store.commit("cleanBuilderState");
         next();
       } else {
         next(false);
       }
     } else {
+      this.$store.commit("cleanBuilderState");
       next();
     }
   }

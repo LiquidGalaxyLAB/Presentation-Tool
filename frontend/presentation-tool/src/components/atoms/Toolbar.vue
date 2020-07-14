@@ -1,10 +1,10 @@
 <template>
   <div>
     <alert/>
-    <v-toolbar color="green lighten-2">
+    <v-toolbar color="teal">
       <v-app-bar-nav-icon @click="$router.push('/')">
         <v-avatar>
-          <v-img src="@/assets/presentation192.png"></v-img>
+          <v-img src="@/assets/presentation-logo.png"></v-img>
         </v-avatar>
       </v-app-bar-nav-icon>
       <v-toolbar-title class="white--text">Liquid Galaxy Presentation Tool</v-toolbar-title>
@@ -18,6 +18,11 @@
         <v-list>
           <v-list-item v-for="(item, index) in items" :key="index" @click="execAction(item.action)">
             <v-list-item-title>{{ item.title }}</v-list-item-title>
+            <v-list-icon>
+              <v-icon right>
+              {{item.icon}}
+              </v-icon>
+              </v-list-icon>
           </v-list-item>
         </v-list>
       </v-menu>
@@ -33,7 +38,7 @@ export default {
     Alert
   },
   data: () => ({
-    items: [{ title: "Clean Storage" , action: 'clean-storage'}]
+    items: [{ title: "Clean Storage" ,icon: "mdi-delete", action: 'clean-storage'}]
   }),
   methods:{
     execAction(action){

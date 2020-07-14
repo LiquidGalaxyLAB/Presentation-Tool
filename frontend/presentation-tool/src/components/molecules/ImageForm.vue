@@ -1,49 +1,51 @@
 <template>
   <v-card>
-    <div class="pa-8">
+    <div class="pt-8 pl-6 pr-8">
       <h2>New Image</h2>
       <v-divider></v-divider>
     </div>
     <v-form ref="form">
-      <v-row class="pa-4 ma-0">
-        <v-col cols="12" md="8">
-          <v-file-input
-            :rules="mediaRules"
-            v-model="media.file"
-            clearable
-            accept="image/*"
-            filled
-            label="Image"
-            hint="Give preference to images with high resolution"
-            persistent-hint
-          ></v-file-input>
-        </v-col>
-        <v-col cols="12" md="4">
-          <v-select
-            :rules="screenRules"
-            type="number"
-            v-model="media.screen"
-            :items="maxScreens"
-            label="Screen"
-            filled
-            hint="Choose a screen to put this image. NOTE: if you want to use sharing screen, choose the screen on the left"
-            persistent-hint
-          ></v-select>
-        </v-col>
-      </v-row>
       <v-row class="pa-4 ma-0" align="center">
         <v-col cols="12" md="6">
-          <v-select
-            v-model="media.position"
-            label="Position"
-            :items="positions"
-            :rules="positionRules"
-            filled
-            hint="Choose a position to place this media"
-            persistent-hint
-          ></v-select>
+          <v-row>
+            <v-file-input
+              :rules="mediaRules"
+              v-model="media.file"
+              clearable
+              accept="image/*"
+              filled
+              label="Image"
+              hint="Give preference to images with high resolution"
+              persistent-hint
+            ></v-file-input>
+          </v-row>
+          <v-row>
+            <v-select
+              :rules="screenRules"
+              type="number"
+              v-model="media.screen"
+              :items="maxScreens"
+              label="Screen"
+              filled
+              hint="Choose a screen to put this image. NOTE: if you want to use sharing screen, choose the screen on the left"
+              persistent-hint
+            ></v-select>
+          </v-row>
+          <v-row>
+            <v-select
+              v-model="media.position"
+              label="Position"
+              :items="positions"
+              :rules="positionRules"
+              filled
+              hint="Choose a position to place this media"
+              persistent-hint
+            ></v-select>
+          </v-row>
         </v-col>
-        <v-col cols="12" md="6" class="pink">img will go here</v-col>
+        <v-col cols="12" md="6">
+          <v-img src="@/assets/sharing-one-screen.png"></v-img>
+        </v-col>
       </v-row>
 
       <v-row justify="space-between" class="ma-0 pb-8 pl-8 pr-8">
@@ -55,22 +57,22 @@
 </template>
 
 <script>
-import utils from "@/utils/utils.js"
+import utils from "@/utils/utils.js";
 
 export default {
-  props:["value","slideID","currentMedia"],
+  props: ["value", "slideID", "currentMedia"],
   data() {
     return {
       media: {
-        id:"",
+        id: "",
         filename: "",
         sharing: "",
         partner: "",
         position: "",
-        screen:"",
+        screen: "",
         type: "image",
-        storagepath:"",
-        file: null,
+        storagepath: "",
+        file: null
       },
       edit: false,
       screenRules: [v => !!v || "Screen is required"],
@@ -100,25 +102,29 @@ export default {
         this.media.sharing = true;
         if (this.media.screen == this.maxScreens[this.maxScreens.length - 1]) {
           this.media.partner = 1;
+        } else {
+          this.media.partner = parseInt(this.media.screen) + 1;
         }
-        else{
-          this.media.partner = parseInt(this.media.screen) + 1
-        }
+      } else {
+        this.media.sharing = "";
+        this.media.partner = "";
       }
-      else{
-        this.media.sharing = ""
-        this.media.partner = ""
-      }
-      if(!this.edit)
-        this.$store.dispatch('createNewMedia',{slideID: this.slideID, media:this.media})
+      if (!this.edit)
+        this.$store.dispatch("createNewMedia", {
+          slideID: this.slideID,
+          media: this.media
+        });
       else
-        this.$store.dispatch('editedMedia',{slideID: this.slideID, media:this.media})
+        this.$store.dispatch("editedMedia", {
+          slideID: this.slideID,
+          media: this.media
+        });
 
       this.show = false;
     },
     discard() {
       this.show = false;
-    },
+    }
   },
   computed: {
     maxScreens() {
@@ -138,16 +144,14 @@ export default {
       }
     }
   },
-  created(){
-    console.log('media',this.currentMedia)
-    if(this.currentMedia != null){
-      this.media = this.currentMedia
-      this.edit = true
+  created() {
+    console.log("media", this.currentMedia);
+    if (this.currentMedia != null) {
+      this.media = this.currentMedia;
+      this.edit = true;
+    } else {
+      this.media.id = utils.createID();
     }
-    else{
-      this.media.id = utils.createID()
-    }
-   
   }
 };
 </script>
