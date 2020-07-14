@@ -5,8 +5,9 @@
       <v-divider></v-divider>
     </div>
     <v-form ref="form" v-model="valid" lazy-validation>
-      <v-overlay :value="edit" :absolute="true" >
-        <v-btn dark @click="edit = false">edit
+      <v-overlay :value="edit" :absolute="true">
+        <v-btn dark @click="edit = false">
+          edit
           <v-icon right>mdi-pencil</v-icon>
         </v-btn>
       </v-overlay>
@@ -58,18 +59,27 @@
           ></v-text-field>
         </v-col>
       </v-row>
-      <v-switch v-model="audio" label="One audio for the whole presentation" :readonly="edit"></v-switch>
-      <v-file-input
-        v-if="audio"
-        v-model="presentation.file"
-        clearable
-        accept="audio/*"
-        filled
-        label="Audio"
-        hint="NOTE: this audio will play through the whole presentation. If you don't want that, don't upload here"
-        persistent-hint
-        :readonly="edit"
-      ></v-file-input>
+      <div v-if="!editingAudio">
+        <v-switch v-model="audio" label="One audio for the whole presentation" :readonly="edit"></v-switch>
+        <v-file-input
+          v-if="audio"
+          v-model="presentation.file"
+          clearable
+          accept="audio/*"
+          filled
+          label="Audio"
+          hint="NOTE: this audio will play through the whole presentation. If you don't want that, don't upload here"
+          persistent-hint
+          :readonly="edit"
+        ></v-file-input>
+      </div>
+      <v-card class="mx-auto pa-2" v-else>
+          <p class="pl-3 pr-2 pt-4">{{presentation.file}}</p>
+          <v-btn text color="teal" @click="editingAudio = false; presentation.file = null">
+            change
+            <v-icon right>mdi-file-music</v-icon>
+          </v-btn>
+      </v-card>
       <v-row justify="center" class="pl-2 pt-5 pb-4" v-if="!edit">
         <v-btn color="blue" class="mr-4" dark @click="validate()">Save</v-btn>
       </v-row>
@@ -83,10 +93,11 @@ export default {
     //models
     valid: true,
     audio: false,
-    edit:false,
+    edit: false,
+    editingAudio: false,
     presentation: {
       title: "",
-      maxscreens:"",
+      maxscreens: "",
       description: "",
       category: "",
       audiopath: "",
@@ -108,16 +119,17 @@ export default {
   methods: {
     validate() {
       if (this.$refs.form.validate()) {
-        this.$store.dispatch('presentationBasicInformation',this.presentation)
-        this.edit = true
+        this.$store.dispatch("presentationBasicInformation", this.presentation);
+        this.edit = true;
       }
-    },
-   
+    }
   },
   computed: {},
-  created(){
-    if(this.$route.params.id != "new"){
-      this.presentation = this.$store.state.builderStore.presentation
+  created() {
+    if (this.$route.params.id != "new") {
+      this.presentation = this.$store.state.builderStore.presentation;
+      this.audio = true;
+      this.editingAudio = true;
     }
   }
 };

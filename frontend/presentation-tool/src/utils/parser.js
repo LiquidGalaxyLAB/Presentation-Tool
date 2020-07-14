@@ -124,6 +124,46 @@ export default {
         })
 
         return mediaToUpload
+    },
+    parseFromJSON: function (pJSON){
+        //convert duration of slides from millisecons
+        var presentation = Object.assign({},pJSON)
+        presentation.slides.forEach((slide) =>{
+            slide.duration = utils.fromMilliseconds(slide.duration)
+        })
+
+        //store screen inside each media the screen number and create the media array
+        var media = []
+        presentation.slides.forEach((slide) =>{
+            slide.screens.forEach((screen) =>{
+                screen.media.forEach((m) =>{
+                    m.screen = `${screen.screennumber}`
+                    media.push(m)
+                })
+            })
+            slide.media = media
+            media = []
+        })
+
+        //kill array of screens
+        for(var i = 0 ; i < presentation.slides.length; i++){
+            presentation.slides[i].screen = null
+            presentation.slides[i] = cleanObject(presentation.slides[i])
+        }
+
+        //if audiopath exists, add property file with value null
+        if(presentation.audiopath != null && presentation.audiopath != undefined){
+            presentation.file = presentation.audiopath
+        }
+
+        //add file property to media fields with value null
+        presentation.slides.forEach((slide) =>{
+            slide.media.forEach((m) =>{
+                m.file = m.storagepath
+            })
+        })
+
+        return presentation
     }
 }
 

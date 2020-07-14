@@ -155,7 +155,8 @@ export default {
         },
         editPresentation({commit},payload){
             console.log('payload to edit',payload)
-            commit('setPresentation',payload)
+            var presentationToEdit = parser.parseFromJSON(payload)
+            commit('setPresentation',presentationToEdit)
         }
     },
     getters: {
