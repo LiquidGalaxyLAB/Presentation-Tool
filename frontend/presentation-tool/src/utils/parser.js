@@ -153,13 +153,13 @@ export default {
 
         //if audiopath exists, add property file with value null
         if(presentation.audiopath != null && presentation.audiopath != undefined){
-            presentation.file = presentation.audiopath
+            presentation.file = null
         }
 
         //add file property to media fields with value null
         presentation.slides.forEach((slide) =>{
             slide.media.forEach((m) =>{
-                m.file = m.storagepath
+                m.file = null
             })
         })
 

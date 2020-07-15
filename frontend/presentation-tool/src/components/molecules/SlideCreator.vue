@@ -103,7 +103,8 @@ export default {
 
     discardChanges() {
       this.show = false;
-      this.$store.dispatch('deleteSlide',this.slide)
+      if(!this.edit)
+        this.$store.dispatch('deleteSlide',this.slide)
     }
   },
   components: {

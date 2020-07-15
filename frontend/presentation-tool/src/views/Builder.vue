@@ -85,20 +85,19 @@ export default {
       saveDialog: false,
       previewDialog: false,
       saved:false,
-      edit: true
+      edit: false
     };
   },
   methods: {
     async savePresentation() {
       this.$store.commit('setOverlay',{value: true, text:'Saving and sending to Liquid Galaxy'})
       if(this.edit){
-        await this.$store.dispatch("updatePresentation")
+        await this.$store.dispatch("savePresentation","edit")
       }
       else{
-        await this.$store.dispatch("savePresentation")     
+        await this.$store.dispatch("savePresentation","create")     
       }
-      
-      this.$store.commit('setOverlay',{value: false, text:''})
+  
       this.saveDialog = false;
       this.previewDialog = false;
       this.saved = true
@@ -115,6 +114,9 @@ export default {
   created(){
     if(this.$route.params.id != "new"){
       this.edit = true
+    }
+    else{
+      this.$store.commit('setPresentationID',)
     }
   },
   beforeRouteLeave(to, from, next) {

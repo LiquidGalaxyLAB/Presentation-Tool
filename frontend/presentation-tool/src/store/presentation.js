@@ -13,17 +13,32 @@ export default {
         }
     },
     actions: {
-        async createPresentation({ dispatch }, payload) {
+        async createPresentation({ commit, dispatch }, payload) {
             //call to upload media
-            var response = await api.uploadMedia(payload.storage)
-            dispatch('logResponse', response)
+            if (payload.storage.media[0] != undefined && payload.storage.media[0] != null) {
+                var response = await api.uploadMedia(payload.storage)
+                dispatch('logResponse', response)
+            }
 
             //call to save info in the db
             var res = await api.createPresentation(payload.dbinfo)
             dispatch('logResponse', res)
 
+            commit('setOverlay', { value: false, text: '' })
+
         },
-        async updatePresentation(){},
+        async updatePresentation({ commit, dispatch }, payload) {
+            console.log('payload', payload)
+            if (payload.storage.media[0] != undefined) {
+                var res = await api.uploadMedia(payload.storage)
+                dispatch('logResponse', res)
+            }
+
+            var response = await api.updatePresentation(payload.dbinfo)
+            dispatch('logResponse', response)
+
+            commit('setOverlay', { value: false, text: '' })
+        },
         async executePresentation({ dispatch }, payload) {
             var res = await api.executePresentation(payload)
             if (res.status != 202) {

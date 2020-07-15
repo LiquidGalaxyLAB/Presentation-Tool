@@ -74,7 +74,7 @@
         ></v-file-input>
       </div>
       <v-card class="mx-auto pa-2" v-else>
-        <p class="pl-3 pr-2 pt-4">{{presentation.file}}</p>
+        <p class="pl-3 pr-2 pt-4">{{presentation.audiopath}}</p>
         <v-btn text color="teal" @click="editingAudio = false; presentation.file = null">
           change
           <v-icon right>mdi-file-music</v-icon>
@@ -88,6 +88,8 @@
 </template>
 
 <script>
+import utils from "@/utils/utils";
+
 export default {
   data: () => ({
     //models
@@ -96,6 +98,7 @@ export default {
     edit: false,
     editingAudio: false,
     presentation: {
+      id: "",
       title: "",
       maxscreens: "",
       description: "",
@@ -119,6 +122,7 @@ export default {
   methods: {
     validate() {
       if (this.$refs.form.validate()) {
+        this.presentation.id = utils.createID();
         this.$store.dispatch("presentationBasicInformation", this.presentation);
         this.edit = true;
       }
@@ -127,13 +131,14 @@ export default {
   computed: {},
   created() {
     if (this.$route.params.id != "new") {
-      this.presentation = this.$store.state.builderStore.presentation;
-      if (
-        this.presentation.file != null &&
-        this.presentation.audiopath != undefined
-      ) {
-        this.audio = true;
-        this.editingAudio = true;
+      if (this.$store.state.builderStore.presentation.title == "") {
+        this.$router.push("/")
+      } else {
+        this.presentation = this.$store.state.builderStore.presentation;
+        if (this.presentation.audiopath != undefined) {
+          this.audio = true;
+          this.editingAudio = true;
+        }
       }
     }
   }

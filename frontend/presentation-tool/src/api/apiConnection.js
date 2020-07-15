@@ -30,6 +30,7 @@ export default {
 
     },
     updatePresentation: async (payload) => {
+        console.log('pay',payload)
         return new Promise((resolve, reject) => {
             axios.patch(`http://${process.env.VUE_APP_LG_IP}:${process.env.VUE_APP_LG_PORT}/presentation/update`, payload)
                 .then((res) => {

@@ -4,6 +4,7 @@ import parser from "@/utils/parser"
 export default {
     state: {
         presentation: {
+            id:"",
             title: "",
             description: "",
             category: "",
@@ -18,6 +19,7 @@ export default {
             state.presentation = payload
         },
         setPresentationBasicInformation(state, payload) {
+            state.presentation.id = payload.id
             state.presentation.title = payload.title
             state.presentation.description = payload.description
             state.presentation.category = payload.category
@@ -57,16 +59,16 @@ export default {
         }
     },
     actions: {
-        presentationBasicInformation({ commit }, payload) {
+        presentationBasicInformation({ commit,state }, payload) {
             if (payload.file != null) {
-                payload.audiopath = utils.generateStoragePathName(payload.title, payload.file.name)
+                payload.audiopath = utils.generateStoragePathName(state.presentation.id, payload.file.name)
             }
             commit('setPresentationBasicInformation', payload)
         },
         createSlideToPresentation({ commit, state }, payload) {
             console.log('slideBasicInformation', payload)
             if (payload.file != null) {
-                payload.audiopath = utils.generateStoragePathName(state.presentation.title, payload.file.name)
+                payload.audiopath = utils.generateStoragePathName(state.presentation.id, payload.file.name)
             }
             var index
             state.presentation.slides.forEach((slide,i) =>{
@@ -143,7 +145,7 @@ export default {
             commit('removeMedia', {slideIndex: indexSlide, mediaIndex:indexMedia})
         },
         async savePresentation({state,dispatch},payload){
-            var storagepath = utils.generateStoragePathName(state.presentation.title,'')
+            var storagepath = utils.generateStoragePathName(state.presentation.id,'')
             storagepath = storagepath.substring(0, storagepath.length - 1)
             var mediaToUploadJSON = await parser.parseToUploadMediaJSON(state.presentation,storagepath)
             var presentationJSON = parser.parseToPresentationJSON(state.presentation)
@@ -152,7 +154,7 @@ export default {
             console.log('presentationJSON',presentationJSON)
 
             if(payload == "edit"){
-                dispatch('updatePresentation')
+                dispatch('updatePresentation',{storage: mediaToUploadJSON, dbinfo:{id: presentationJSON._id, data: presentationJSON}})
             }
             else{
                 dispatch('createPresentation',{storage: mediaToUploadJSON,dbinfo:presentationJSON})
