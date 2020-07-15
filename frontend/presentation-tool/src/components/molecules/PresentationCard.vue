@@ -97,7 +97,7 @@ export default {
       }
     },
     exportPresentation(){
-      console.log('export')
+      console.log('export',this.presentation)
     },
     editPresentation(){
       this.$router.push(`/presentation/${this.presentation._id}`)
