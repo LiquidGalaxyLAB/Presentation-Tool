@@ -18,7 +18,7 @@
 
           <v-avatar class="ma-3 pt-4" size="125" tile>
             <v-img
-              src="https://image.freepik.com/free-vector/flat-design-geometric-shapes-background_23-2148366514.jpg"
+              :src="category.img"
             ></v-img>
           </v-avatar>
         </div>
@@ -28,6 +28,8 @@
 </template>
 
 <script>
+import categories from '@/utils/categories.js'
+
 export default {
   props: ["value", "selectPresentation"],
   computed: {
@@ -38,6 +40,9 @@ export default {
       set(value) {
         this.$emit("input", value);
       }
+    },
+    category(){
+      return categories.getCategory(this.selectPresentation.category)
     }
   },
   methods: {

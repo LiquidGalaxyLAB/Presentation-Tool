@@ -1,30 +1,30 @@
 <template>
   <v-hover v-slot:default="{hover}" open-delay="100">
-    <v-card :elevation="hover ? 16 : 2" @click.stop="viewPresentation(presentation._id)">
+    <v-card :elevation="hover ? 16 : 2" @click.stop="viewPresentation(presentation._id)" height="100%">
       <player :selectPresentation="presentation" v-model="openDialog"></player>
-      <v-img height="150" src="https://image.freepik.com/free-vector/flat-design-geometric-shapes-background_23-2148366514.jpg">
+      <v-img height="150" :src="category.img">
         <v-expand-transition>
-          <div class="fade-transition green darken-2 v-card--reveal" style="height: 100%;">
+          <div class="fade-transition v-card--reveal" style="height: 100%;">
             <v-container fluid fill-height>
               <v-row justify="center" align="center">
-                <v-btn fab color="white">
-                  <v-icon color="green">mdi-play</v-icon>
+                <v-btn x-large fab color="black">
+                  <v-icon x-large color="white">mdi-play</v-icon>
                 </v-btn>
               </v-row>
             </v-container>
           </div>
         </v-expand-transition>
       </v-img>
-      <v-row align="start" class="pl-3 pr-3">
+      <v-row align="start" class="pl-0 pr-3">
         <v-col>
-          <v-card-title class="pt-0 pb-0">{{presentation.title}}</v-card-title>
+          <v-card-title class="pt-0 pb-0 pl-3">{{presentation.title}}</v-card-title>
         </v-col>
         <v-col cols="2" >
           <v-row justify="center">
           <v-menu offset-x>
               <template v-slot:activator="{ on }">
                 <v-btn icon v-on="on">
-                  <v-icon>mdi-dots-vertical</v-icon>
+                  <v-icon>mdi-cog</v-icon>
                 </v-btn>
               </template>
               <v-list>
@@ -63,6 +63,7 @@
 
 <script>
 import player from '@/components/atoms/PresentationPlayer.vue'
+import categories from '@/utils/categories.js'
 
 export default {
   components:{
@@ -78,6 +79,11 @@ export default {
         { name: "Delete", action: "deletePresentation" , icon:"mdi-delete", color:"red"}
       ]
     };
+  },
+  computed:{
+    category(){
+      return categories.getCategory(this.presentation.category)
+    }
   },
   methods: {
     async viewPresentation(id) {
