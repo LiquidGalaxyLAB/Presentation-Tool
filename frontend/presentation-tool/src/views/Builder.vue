@@ -70,6 +70,7 @@ import BasicInfoForm from "@/components/molecules/BasicInfoForm.vue";
 import SlideBuilder from "@/components/organisms/SlideBuilder.vue";
 import PreviewPresentation from "@/components/atoms/PreviewPresentation.vue";
 import Overlay from "@/components/atoms/Overlay.vue"
+import utils from "@/utils/utils";
 
 export default {
   components: {
@@ -116,7 +117,7 @@ export default {
       this.edit = true
     }
     else{
-      this.$store.commit('setPresentationID',)
+      this.$store.commit('setPresentationID', utils.createID())
     }
   },
   beforeRouteLeave(to, from, next) {

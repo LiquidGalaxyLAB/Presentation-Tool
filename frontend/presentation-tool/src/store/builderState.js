@@ -18,8 +18,10 @@ export default {
         setPresentation(state,payload){
             state.presentation = payload
         },
+        setPresentationID(state,payload){
+            state.presentation.id = payload
+        },
         setPresentationBasicInformation(state, payload) {
-            state.presentation.id = payload.id
             state.presentation.title = payload.title
             state.presentation.description = payload.description
             state.presentation.category = payload.category

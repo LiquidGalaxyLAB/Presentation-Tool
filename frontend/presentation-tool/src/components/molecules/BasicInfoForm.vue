@@ -29,7 +29,7 @@
         required
         hint="Describe what your presentation will be about"
         persistent-hint
-        :readonly="edit"
+        :disabled="edit"
       ></v-textarea>
       <v-row>
         <v-col cols="12" md="6">
@@ -88,7 +88,6 @@
 </template>
 
 <script>
-import utils from "@/utils/utils";
 
 export default {
   data: () => ({
@@ -98,7 +97,6 @@ export default {
     edit: false,
     editingAudio: false,
     presentation: {
-      id: "",
       title: "",
       maxscreens: "",
       description: "",
@@ -122,7 +120,6 @@ export default {
   methods: {
     validate() {
       if (this.$refs.form.validate()) {
-        this.presentation.id = utils.createID();
         this.$store.dispatch("presentationBasicInformation", this.presentation);
         this.edit = true;
       }
