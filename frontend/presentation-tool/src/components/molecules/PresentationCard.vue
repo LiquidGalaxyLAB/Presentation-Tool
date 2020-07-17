@@ -104,6 +104,7 @@ export default {
     },
     exportPresentation(){
       console.log('export',this.presentation)
+      this.$store.dispatch('exportPresentation',{id:this.presentation._id, title:this.presentation.title})
     },
     editPresentation(){
       this.$router.push(`/presentation/${this.presentation._id}`)

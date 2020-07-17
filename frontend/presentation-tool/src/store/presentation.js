@@ -69,6 +69,10 @@ export default {
                 });
             }
             dispatch('logResponse', res)
+        },
+        async exportPresentation({dispatch},payload){
+            var res = await api.exportPresentation(payload)
+            dispatch('logResponse', res)
         }
     },
     getters: {

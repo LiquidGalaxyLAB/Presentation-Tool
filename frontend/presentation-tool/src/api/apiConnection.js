@@ -30,7 +30,7 @@ export default {
 
     },
     updatePresentation: async (payload) => {
-        console.log('pay',payload)
+        console.log('pay', payload)
         return new Promise((resolve, reject) => {
             axios.patch(`http://${process.env.VUE_APP_LG_IP}:${process.env.VUE_APP_LG_PORT}/presentation/update`, payload)
                 .then((res) => {
@@ -80,8 +80,8 @@ export default {
             bodyFormData.append(`media`, m);
         });
         bodyFormData.append(`screens`, JSON.stringify(payload.screens));
-        bodyFormData.append('storagepath',payload.storagepath)
-        
+        bodyFormData.append('storagepath', payload.storagepath)
+
         return new Promise((resolve, reject) => {
             axios.post(`http://${process.env.VUE_APP_LG_IP}:${process.env.VUE_APP_LG_PORT}/storage/upload/`, bodyFormData,
                 {
@@ -119,6 +119,30 @@ export default {
                 .then((res) => {
                     console.log('Response: ', res.data)
                     resolve(res.data)
+                })
+                .catch((err) => {
+                    console.log('Error: ', err)
+                    reject(err)
+                })
+        })
+    },
+    exportPresentation: async (payload) => {
+        return new Promise((resolve, reject) => {
+            axios.get(`http://${process.env.VUE_APP_LG_IP}:${process.env.VUE_APP_LG_PORT}/share/export/${payload.id}`,
+            {
+                responseType: 'arraybuffer',
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                }
+            })
+                .then((res) => {
+                    console.log('Response: ', res.headers)
+                    var blob = new Blob([res.data], { type: 'application/zip' });
+                    var link = document.createElement('a');
+                    link.href = window.URL.createObjectURL(blob);
+                    link.download = `${payload.title}`;
+                    link.click();
+                    resolve({status: 200, msg: 'Presentation exported with success!'})
                 })
                 .catch((err) => {
                     console.log('Error: ', err)
