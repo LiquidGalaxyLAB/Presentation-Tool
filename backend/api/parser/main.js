@@ -3,6 +3,7 @@
 const storage = require('../parser/modules/storage')
 const execute = require('../parser/modules/execute')
 const database = require('../parser/modules/database')
+const share = require('../parser/modules/share')
 
 module.exports = {
     executePresentation: async function (id) {
@@ -60,6 +61,12 @@ module.exports = {
     },
     cleanStorage: async function () {
         return await storage.cleanStorage()
+    },
+    exportPresentation: async function (id){
+        return await share.exportPresentation(id)
+    },
+    importPresentation: async function (){
+        return await share.importPresentation()
     }
 
 }

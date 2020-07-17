@@ -19,8 +19,10 @@ app.use((req,res,next) =>{
 // routes
 const presentationRoutes = require('./api/routes/presentation')
 const storageRoutes = require('./api/routes/storage')
+const shareRoutes = require('./api/routes/share')
 app.use('/presentation',presentationRoutes)
 app.use('/storage',storageRoutes)
+app.use('/share',shareRoutes)
 
 app.get('/',(req,res,next)=>{res.json('Welcome to Liquid Galaxy Presentation Tool!')})
 
