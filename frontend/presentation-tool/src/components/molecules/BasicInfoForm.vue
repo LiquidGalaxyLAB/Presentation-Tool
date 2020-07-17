@@ -88,6 +88,7 @@
 </template>
 
 <script>
+import {CategoriesNames} from "@/utils/categories.js"
 
 export default {
   data: () => ({
@@ -114,7 +115,7 @@ export default {
       v => v >= 1 || "Screens minor to 1 doesn't exist"
     ],
     //selection data
-    categories: ["Education", "Travel", "Nature", "Real State", "History"]
+    categories: CategoriesNames
   }),
 
   methods: {

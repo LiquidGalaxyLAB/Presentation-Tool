@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-dialog v-model="show" scrollable max-width="600px">
-      <v-card class="pa-2">
+      <v-card class="pa-2" height="100%">
         <v-card-title class="headline pl-4">Now Playing</v-card-title>
         <v-divider></v-divider>
         <div class="d-flex flex-no-wrap justify-space-between">
@@ -18,7 +18,7 @@
 
           <v-avatar class="ma-3 pt-4" size="125" tile>
             <v-img
-              src="https://image.freepik.com/free-vector/flat-design-geometric-shapes-background_23-2148366514.jpg"
+              :src="category.img"
             ></v-img>
           </v-avatar>
         </div>
@@ -28,6 +28,8 @@
 </template>
 
 <script>
+import categories from '@/utils/categories.js'
+
 export default {
   props: ["value", "selectPresentation"],
   computed: {
@@ -38,6 +40,9 @@ export default {
       set(value) {
         this.$emit("input", value);
       }
+    },
+    category(){
+      return categories.getCategory(this.selectPresentation.category)
     }
   },
   methods: {

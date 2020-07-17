@@ -26,7 +26,7 @@ export default {
   },
   created(){
     this.$store.dispatch('getAllPresentations')
-  }
+  },
 
 };
 </script>
