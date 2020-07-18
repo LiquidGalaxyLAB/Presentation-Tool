@@ -27,8 +27,6 @@ module.exports = {
             });
 
             // This event is fired when the data source is drained no matter what was the data source.
-            // It is not part of this library but rather from the NodeJS Stream API.
-            // @see: https://nodejs.org/api/stream.html#stream_event_end
             output.on('end', function () {
                 console.log('Data has been drained');
             });
@@ -58,11 +56,12 @@ module.exports = {
             // append files from a sub-directory and naming it `screen n` within the archive
             //for lg1
             archive.directory(`${process.env.FILE_PATH}/storage/${p[0].id}`, 'lg1-media')
+            
+            //TODO
             //for other screens
             //make a copy of all lgs storage folders inside a temp folder and then save all folders to the zip
             //the folders have to already have the name changed for lgN-media
-
-
+            
             // finalize the archive (ie we are done appending files but streams have to finish yet)
             // 'close', 'end' or 'finish' may be fired right after calling this method so register to them beforehand
             archive.finalize();
@@ -71,9 +70,10 @@ module.exports = {
     importPresentation: function (filename) {
         console.log('FILENAME',filename)
 
-        //unzip received presentation
+        //create temporary folder to store the the unzipped files
         exec(`mkdir ${process.env.FILE_PATH}/storage/all/tmp`)
 
+        //unzip received presentation
         exec(`unzip ${process.env.FILE_PATH}/storage/all/${filename} -d ${process.env.FILE_PATH}/storage/all/tmp`, (err, stdout, stderr) =>{
             if(err){
                 console.log('err',err)
@@ -84,7 +84,14 @@ module.exports = {
             }
         })
 
-        //
+        //TODO
+        //read presentation.json and save its info to the db
+
+        //get the media information from each screen and save on the correct places
+
+        //delete the tmp folder and its contents 
+
+        //delete the .zip inside the storage/all/
 
 
         return { status: 200, msg: "Presentation imported with success!" }
