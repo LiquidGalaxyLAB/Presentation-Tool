@@ -1,6 +1,7 @@
 const database = require('./database')
 const archiver = require('archiver')
 var fs = require('fs')
+const { exec } = require('child_process')
 
 module.exports = {
     exportPresentation: async function (id) {
@@ -58,14 +59,34 @@ module.exports = {
             //for lg1
             archive.directory(`${process.env.FILE_PATH}/storage/${p[0].id}`, 'lg1-media')
             //for other screens
-            //TO DO
+            //make a copy of all lgs storage folders inside a temp folder and then save all folders to the zip
+            //the folders have to already have the name changed for lgN-media
+
 
             // finalize the archive (ie we are done appending files but streams have to finish yet)
             // 'close', 'end' or 'finish' may be fired right after calling this method so register to them beforehand
             archive.finalize();
         })
     },
-    importPresentation: function () {
-        return { status: 200, msg: "Import" }
+    importPresentation: function (filename) {
+        console.log('FILENAME',filename)
+
+        //unzip received presentation
+        exec(`mkdir ${process.env.FILE_PATH}/storage/all/tmp`)
+
+        exec(`unzip ${process.env.FILE_PATH}/storage/all/${filename} -d ${process.env.FILE_PATH}/storage/all/tmp`, (err, stdout, stderr) =>{
+            if(err){
+                console.log('err',err)
+                console.log('stderr',stderr)
+            }                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
+            else{
+                console.log('stodout',stdout)
+            }
+        })
+
+        //
+
+
+        return { status: 200, msg: "Presentation imported with success!" }
     }
 }

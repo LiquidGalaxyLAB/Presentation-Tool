@@ -73,6 +73,12 @@ export default {
         async exportPresentation({dispatch},payload){
             var res = await api.exportPresentation(payload)
             dispatch('logResponse', res)
+        },
+        async importPresentation({dispatch,commit},payload){
+            console.log('zip file',payload)
+            var res = await api.importPresentation(payload)
+            commit('setOverlay',{value: false, text:''})
+            dispatch('logResponse',res)
         }
     },
     getters: {

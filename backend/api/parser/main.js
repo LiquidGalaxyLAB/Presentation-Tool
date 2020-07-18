@@ -65,8 +65,8 @@ module.exports = {
     exportPresentation: async function (id){
         return await share.exportPresentation(id)
     },
-    importPresentation: async function (){
-        return await share.importPresentation()
+    importPresentation: async function (filename){
+        return await share.importPresentation(filename)
     }
 
 }

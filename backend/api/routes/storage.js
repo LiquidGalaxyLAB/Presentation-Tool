@@ -2,7 +2,6 @@ const parser = require('../parser/main')
 const express = require('express')
 const router = express.Router()
 var multer = require('multer')
-const { json } = require('express')
 
 // configure localstorage for files using multer
 var storage = multer.diskStorage({

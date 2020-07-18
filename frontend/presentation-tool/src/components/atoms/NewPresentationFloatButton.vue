@@ -21,7 +21,7 @@
     </template>
     <v-tooltip left>
       <template v-slot:activator="{ on }">
-        <v-btn fab dark small color="blue darken-2" v-on="on">
+        <v-btn fab dark small color="blue darken-2" v-on="on" @click="importPresentation()">
           <v-icon>mdi-file-upload</v-icon>
         </v-btn>
       </template>
@@ -40,16 +40,26 @@
 
 <script>
 export default {
+  props: ["value"],
   data: () => ({
     fab: false
   }),
+  computed:{
+    show: {
+      get() {
+        return this.value;
+      },
+      set(value) {
+        this.$emit("input", value);
+      }
+    },
+  },
   methods:{
       newPresentation(){
           this.$router.push("/presentation/new")
       },
       importPresentation(){
-          //import json
-          console.log('implement import')
+         this.show = true
       }
   }
 }

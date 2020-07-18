@@ -149,6 +149,27 @@ export default {
                     reject(err)
                 })
         })
+    },
+    importPresentation: async (payload) =>{
+        var bodyFormData = new FormData()
+        bodyFormData.append('presentationzip',payload)
+
+        return new Promise((resolve,reject) =>{
+            axios.post(`http://${process.env.VUE_APP_LG_IP}:${process.env.VUE_APP_LG_PORT}/share/import/`, bodyFormData,
+                {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                    }
+                })
+                .then((res) => {
+                    console.log('Response: ', res.data)
+                    resolve(res.data)
+                })
+                .catch((err) => {
+                    console.log('Error: ', err)
+                    reject(err)
+                })
+        })
     }
 
 }
