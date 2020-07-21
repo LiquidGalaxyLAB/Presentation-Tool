@@ -47,13 +47,10 @@ export default {
             }
             return true
         },
-        async stopPresentation({ dispatch }) {
-            var res = await api.stopPresentation()
-            if (res.status != 200) {
+        async stopPresentation({ commit,dispatch },payload) {
+            var res = await api.stopPresentation(payload)
+                commit('setOverlay',{value: false, text:''})
                 dispatch('logResponse', res)
-                return false
-            }
-            return true
         },
         async getAllPresentations({ commit }) {
             var pres = await api.getAllPresentation()

@@ -17,7 +17,7 @@ module.exports = {
         // iterates the slides
         for (var i = 0; i < presentationJson.slides.length; i++) {
             if (playing) {
-                console.log('SLIDE',presentationJson.slides[i])
+                console.log('SLIDE', presentationJson.slides[i])
                 execSlide(presentationJson.slides[i])
                 await sleep(presentationJson.slides[i].duration).then(() => killSlide(presentationJson.slides[i]))
 
@@ -31,23 +31,13 @@ module.exports = {
     stop: function () {
         playing = false
 
-        return new Promise((resolve,reject) =>{
+        return new Promise((resolve, reject) => {
             exec(`${process.env.FILE_PATH}/api/parser/scripts/killPresentation.sh`, (err, stdout, stderr) => {
-                if (err) {
-                    console.log('Error on executing killPresentation.sh',err)
-                    reject({status: 500, msg: `Internal Server Error. Error on stopping presentation. ${err}`})
-                }
-                if(stderr){
-                    console.log('Error on executing killPresentation.sh',stderr)
-                    reject({status: 500, msg: `Internal Server Error. Error on stopping presentation. ${stderr}`})
-                }
-                else {
-                    console.log('Stopped all current applications', stdout)
-                    resolve({status: 200, msg: `Success. Stopped current presentation execution`})
-                }
+                console.log('Stopped all current applications', stdout)
+                resolve({ status: 200, msg: `Success. Stopped current presentation execution` })
             })
         })
-        
+
     }
 
 }
@@ -126,8 +116,8 @@ function execAudio(audiopath) {
     exec(`${process.env.FILE_PATH}/api/parser/scripts/playAudio.sh ${process.env.FILE_PATH}/storage/"${audiopath}"`, (err, stdout, stderr) => {
         if (err) {
             console.error(err)
-        } 
-        if(stderr){
+        }
+        if (stderr) {
             console.log(`stderr: ${stderr}`);
         }
         else {
@@ -163,7 +153,7 @@ function openVideo(media, screen) {
     else {
         file_path = `${process.env.SLAVE_STORAGE}/${media.storagepath}/${media.filename}`
     }
-    console.log('MEDIA',media)
+    console.log('MEDIA', media)
     if (media.position == "middle") {
         runOpenScript('MidVideo', screen, file_path, media.position)
     }
@@ -178,8 +168,8 @@ function runOpenScript(type, screen, file_path, position) {
     exec(`${process.env.FILE_PATH}/api/parser/scripts/open${type}.sh ${screen} ${file_path} "${position}"`, (err, stdout, stderr) => {
         if (err) {
             console.error(err)
-        } 
-        if(stderr){
+        }
+        if (stderr) {
             console.log(`stderr: ${stderr}`);
         }
         else {
@@ -213,11 +203,11 @@ async function openSharedImage(media, screen) {
 }
 
 function runOpenMidImageSharing(leftScreen, rightScreen, leftDest, rightDest) {
-    exec(`${process.env.FILE_PATH}/api/parser/scripts/openMidImageSharing.sh ${leftScreen} ${rightScreen} ${leftDest} ${rightDest}`, (err, stdout, stderr) =>{
+    exec(`${process.env.FILE_PATH}/api/parser/scripts/openMidImageSharing.sh ${leftScreen} ${rightScreen} ${leftDest} ${rightDest}`, (err, stdout, stderr) => {
         if (err) {
             console.error(err)
-        } 
-        if(stderr){
+        }
+        if (stderr) {
             console.log(`stderr: ${stderr}`);
         }
         else {
