@@ -92,7 +92,7 @@ export default {
   },
   methods: {
     addImage() {
-      this.media.filename = this.media.file.name;
+      this.media.filename = this.media.file.name
       if (
         this.media.position == "topsharing" ||
         this.media.position == "bottomsharing" ||

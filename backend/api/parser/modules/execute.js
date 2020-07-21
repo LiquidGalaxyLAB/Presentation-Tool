@@ -17,6 +17,7 @@ module.exports = {
         // iterates the slides
         for (var i = 0; i < presentationJson.slides.length; i++) {
             if (playing) {
+                console.log('SLIDE',presentationJson.slides[i])
                 execSlide(presentationJson.slides[i])
                 await sleep(presentationJson.slides[i].duration).then(() => killSlide(presentationJson.slides[i]))
 
@@ -162,6 +163,7 @@ function openVideo(media, screen) {
     else {
         file_path = `${process.env.SLAVE_STORAGE}/${media.storagepath}/${media.filename}`
     }
+    console.log('MEDIA',media)
     if (media.position == "middle") {
         runOpenScript('MidVideo', screen, file_path, media.position)
     }
