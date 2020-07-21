@@ -60,7 +60,7 @@
         </v-row>
       </v-card>
     </v-dialog>
-    <overlay/>
+    
   </div>
 </template>
 
@@ -69,7 +69,6 @@ import Toolbar from "@/components/atoms/Toolbar.vue";
 import BasicInfoForm from "@/components/molecules/BasicInfoForm.vue";
 import SlideBuilder from "@/components/organisms/SlideBuilder.vue";
 import PreviewPresentation from "@/components/atoms/PreviewPresentation.vue";
-import Overlay from "@/components/atoms/Overlay.vue"
 import utils from "@/utils/utils";
 
 export default {
@@ -78,7 +77,6 @@ export default {
     BasicInfoForm,
     SlideBuilder,
     PreviewPresentation,
-    Overlay
   },
   data() {
     return {
