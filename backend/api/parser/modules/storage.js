@@ -11,18 +11,11 @@ module.exports = {
                 if (media[i].partner != undefined) {
                     if (media[i].type == 'image') {
                         var res = cropImageInTwoAndSave(media[i].screen, media[i].partner, path, media[i].filename)
-                        res.then(() => {
-                            response = { status: 200, msg: `Success. Images cropped and uploaded with success` }
-                            resolve(response)
-                        })
-                        res.catch((error) => {
-                            response = error
-                            reject(response)
-                        })
+                        resolve(res)
                     }
                     else {
                         console.log('Video Sharing Not Implemented')
-                        resolve({status: 501, msg: `Not implemented. This functionality is still not implemented by the API`})
+                        resolve({ status: 501, msg: `Not implemented. This functionality is still not implemented by the API` })
                     }
                 }
                 else {
@@ -167,7 +160,7 @@ module.exports = {
 }
 
 function cropImageInTwoAndSave(leftScreen, rightScreen, file_path, file_name) {
-    var leftDest, rightDest
+    var leftDest, rightDest, response
 
     if (leftScreen != 1)
         leftDest = `${process.env.SLAVE_STORAGE}/${file_path}`
@@ -178,7 +171,69 @@ function cropImageInTwoAndSave(leftScreen, rightScreen, file_path, file_name) {
     else
         rightDest = `${process.env.FILE_PATH}/storage/${file_path}`
 
-    var leftDir = new Promise((resolve, reject) => {
+
+    return new Promise((resolve, reject) => {
+        var leftDir = new Promise((resolve, reject) => {
+            exec(`ssh lg${leftScreen} "if [ ! -d ${leftDest} ]; then 
+            mkdir ${leftDest}
+            fi"`, (err, stdout, stderr) => {
+                if (err) {
+                    console.error('Error on creating storage directory on leftScreen', err)
+                    reject({ status: 500, msg: `Internal Server Error. Error on creating storage directory on leftScreen ${err}` })
+                }
+                if (stderr) {
+                    console.error('Error on creating storage directory on leftScreen', stderr)
+                    reject({ status: 500, msg: `Internal Server Error. Error on creating storage directory on leftScreen ${stderr}` })
+                }
+                else {
+                    console.log('Success on creating storage directory on leftScreen', stdout)
+                    resolve()
+                }
+            })
+        })
+
+        var rightDir = new Promise((resolve, reject) => {
+            exec(`ssh lg${rightScreen} "if [ ! -d ${rightDest} ]; then 
+            mkdir ${rightDest}
+            fi"`, (err, stdout, stderr) => {
+                if (err) {
+                    console.error('Error on creating storage directory on rightScreen', err)
+                    reject({ status: 500, msg: `Internal Server Error. Error on creating storage directory on rightScreen ${err}` })
+                }
+                if (stderr) {
+                    console.error('Error on creating storage directory on rightScreen', stderr)
+                    reject({ status: 500, msg: `Internal Server Error. Error on creating storage directory on rightScreen ${stderr}` })
+                }
+                else {
+                    console.log('Success on creating storage directory on rightScreen', stdout)
+                    resolve()
+                }
+            })
+        })
+
+        return Promise.all([leftDir, rightDir])
+            .then(() => {
+                //crop image and send to created storage
+                exec(`${process.env.FILE_PATH}/api/parser/scripts/cropImage2.sh "${leftScreen}" "${rightScreen}" "${process.env.FILE_PATH}/storage/all/${file_name}" "${file_name}" "${leftDest}" "${rightDest}"`, (err, stdout, stderr) => {
+                    if (err) {
+                        console.error('Error on cropping image and sending to screen storage', err)
+                        reject({ status: 500, msg: `Internal Server Error. Error on cropping image and sending to screen storage ${err}` })
+                    }
+                    if (stderr) {
+                        console.error('Error on cropping image and sending to screen storage', stderr)
+                        reject({ status: 500, msg: `Internal Server Error. Error on cropping image and sending to screen storage ${stderr}` })
+                    }
+                    else {
+                        console.log('Success on cropping image and sending to screen storage', stdout)
+                        resolve({ status: 200, msg: `Success. Images cropped and uploaded with success` })
+                    }
+                })
+            })
+            .catch((err) => {
+                reject(err)
+            })
+    })
+    /*var leftDir = new Promise((resolve, reject) => {
         exec(`ssh lg${leftScreen} "if [ ! -d ${leftDest} ]; then 
         mkdir ${leftDest}
         fi"`, (err, stdout, stderr) => {
@@ -217,8 +272,10 @@ function cropImageInTwoAndSave(leftScreen, rightScreen, file_path, file_name) {
     })
 
     var cropAndSend = new Promise((resolve, reject) => {
+        console.log(`AAAAAAAAAAAAAAA   ${process.env.FILE_PATH}/api/parser/scripts/cropImage2.sh "${leftScreen}" "${rightScreen}" "${process.env.FILE_PATH}/storage/all/${file_name}" "${file_name}" "${leftDest}" "${rightDest}"` )
+
         //crop image and send to created storage
-        exec(`${process.env.FILE_PATH}/api/parser/scripts/cropImage2.sh ${leftScreen} ${rightScreen} ${process.env.FILE_PATH}/storage/all/${file_name} ${file_name} ${leftDest} ${rightDest}`, (err, stdout, stderr) => {
+        exec(`${process.env.FILE_PATH}/api/parser/scripts/cropImage2.sh "${leftScreen}" "${rightScreen}" "${process.env.FILE_PATH}/storage/all/${file_name}" "${file_name}" "${leftDest}" "${rightDest}"`, (err, stdout, stderr) => {
             if (err) {
                 console.error('Error on cropping image and sending to screen storage', err)
                 reject({ status: 500, msg: `Internal Server Error. Error on cropping image and sending to screen storage ${err}` })
@@ -234,5 +291,6 @@ function cropImageInTwoAndSave(leftScreen, rightScreen, file_path, file_name) {
         })
     })
 
-    return Promise.all([leftDir, rightDir, cropAndSend])
+    return Promise.all([leftDir, rightDir, cropAndSend])*/
+
 }

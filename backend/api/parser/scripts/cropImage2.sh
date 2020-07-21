@@ -11,6 +11,8 @@ echo "Left Screen $LEFTSCREEN"
 echo "Right Screen $RIGHTSCREEN"
 echo "Image path $IMAGEPATH"
 echo "Image name $IMAGENAME"
+echo "Left destination $LEFTDESTINATION"
+echo "Right destination $RIGHTDESTINATION"
 
 # find out the size of the image
 IMAGEWIDTH=$(identify -format "%w" $IMAGEPATH)
@@ -36,17 +38,20 @@ magick "${IMAGEPATH}" -crop $SIZETOCROP+$IMAGECROPX+0 "${HOME}/Right${IMAGENAME}
 # send cropped images to storage in the correct slaves
 
 if [ $LEFTSCREEN != "1" ]; then
-	scp ${HOME}/Left${IMAGENAME} lg$LEFTSCREEN:${LEFTDESTINATION}/
+	scp ${HOME}/Left${IMAGENAME} lg${LEFTSCREEN}:${LEFTDESTINATION}/
 	rm ${HOME}/Left${IMAGENAME}
 else
-	mv ${HOME}/Left${IMAGENAME} ${LEFTDESTINATION}/
+	#cp /home/lg/cat.jpg /home/lg/Documents
+	cp ${HOME}/"Left${IMAGENAME}" $LEFTDESTINATION/
+	#rm ${HOME}/Left${IMAGENAME}
 fi
 
 if [ $RIGHTSCREEN != "1" ]; then
-	scp ${HOME}/Right${IMAGENAME} lg$RIGHTSCREEN:${RIGHTDESTINATION}/
+	scp ${HOME}/Right${IMAGENAME} lg${RIGHTSCREEN}:${RIGHTDESTINATION}/
 	rm ${HOME}/Right${IMAGENAME}
 else
-	mv ${HOME}/Right${IMAGENAME} ${RIGHTDESTINATION}/
+	"cp ${HOME}/Right${IMAGENAME}" "$RIGHTDESTINATION/"
+	rm ${HOME}/Right${IMAGENAME}
 fi
 	
 
