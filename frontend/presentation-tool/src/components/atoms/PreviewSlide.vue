@@ -4,7 +4,7 @@
       <h2>Slide preview</h2>
       <v-divider></v-divider>
     </div>
-    <v-card-title class="pl-3 pb-0">Slide {{i}}</v-card-title>
+    <v-card-title class="pl-3 pb-0">Slide</v-card-title>
     <v-row class="ma-0" justify="center">
       <v-col cols="12" md="6">
         <v-subheader class="pl-0">DURATION</v-subheader>
@@ -32,6 +32,18 @@
 
 <script>
 export default {
-  props: ["slide"]
+  props: ["slide"],
+  data() {
+    return {
+      headers: [
+        { text: "Filename", value: "filename", sortable: false },
+        { text: "Type", value: "type", sortable: false },
+        { text: "Screen", value: "screen", sortable: false },
+        { text: "Position", value: "position", sortable: false },
+        { text: "Sharing", value: "sharing", sortable: false },
+        { text: "Partner", value: "partner", sortable: false },
+      ]
+    };
+  },
 };
 </script>
