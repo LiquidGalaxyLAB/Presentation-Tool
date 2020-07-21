@@ -70,7 +70,7 @@
           label="Audio"
           hint="NOTE: this audio will play through the whole presentation. If you don't want that, don't upload here"
           persistent-hint
-          :readonly="edit"
+          :disabled="edit"
         ></v-file-input>
       </div>
       <v-card class="mx-auto pa-2" v-else>
