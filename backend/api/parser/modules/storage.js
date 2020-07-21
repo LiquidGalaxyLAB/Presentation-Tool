@@ -137,10 +137,12 @@ module.exports = {
         })
     },
     deleteMediaFromLG: function (presentationJson) {
-        var storagepath = presentationJson.slides[0].screens[0].media[0].storagepath
+        console.log('JSON',presentationJson)
+        var storagepath = `${presentationJson.id}`
 
         return new Promise((resolve, reject) => {
-            exec(`${process.env.FILE_PATH}/api/parser/scripts/deleteMedia.sh ${process.env.SLAVE_STORAGE}/${storagepath} ${process.env.FILE_PATH}/storage/${storagepath}`, (err, stdout, stderr) => {
+            console.log(`${process.env.FILE_PATH}/api/parser/scripts/deleteMedia.sh ${process.env.SLAVE_STORAGE}/${storagepath} ${process.env.FILE_PATH}/storage/${storagepath} ${presentationJson.maxscreens}`)
+            exec(`${process.env.FILE_PATH}/api/parser/scripts/deleteMedia.sh ${process.env.SLAVE_STORAGE}/${storagepath} ${process.env.FILE_PATH}/storage/${storagepath} ${presentationJson.maxscreens}`, (err, stdout, stderr) => {
                 if (err) {
                     console.log('Error on executing deleteMedia.sh ', err)
                     reject(err)
