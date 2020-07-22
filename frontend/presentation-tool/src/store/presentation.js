@@ -1,4 +1,5 @@
 import api from "../api/apiConnection"
+import utils from "@/utils/utils"
 
 export default {
     state: {
@@ -10,10 +11,13 @@ export default {
         },
         removePresentationFromList(state, payload) {
             state.presentations.splice(payload, 1)
+        },
+        pushToPresentationsList(state,payload){
+            state.presentations.push(payload)
         }
     },
     actions: {
-        async createPresentation({ commit, dispatch }, payload) {
+        async createPresentation({ commit, dispatch}, payload) {
             //call to upload media
             if (payload.storage.media[0] != undefined && payload.storage.media[0] != null) {
                 var response = await api.uploadMedia(payload.storage)
@@ -23,13 +27,14 @@ export default {
             //call to save info in the db
             var res = await api.createPresentation(payload.dbinfo)
             dispatch('logResponse', res)
-
+            //commit('pushToPresentationsList',payload.dbinfo)
             commit('setOverlay', { value: false, text: '' })
 
         },
         async updatePresentation({ commit, dispatch }, payload) {
             console.log('payload', payload)
-            if (payload.storage.media[0] != undefined) {
+            if (!payload.storage.media.every((val) => val === null)) {
+                payload.storage = utils.removeNullFields(payload.storage)
                 var res = await api.uploadMedia(payload.storage)
                 dispatch('logResponse', res)
             }
@@ -47,13 +52,10 @@ export default {
             }
             return true
         },
-        async stopPresentation({ dispatch }) {
-            var res = await api.stopPresentation()
-            if (res.status != 200) {
+        async stopPresentation({ commit,dispatch },payload) {
+            var res = await api.stopPresentation(payload)
+                commit('setOverlay',{value: false, text:''})
                 dispatch('logResponse', res)
-                return false
-            }
-            return true
         },
         async getAllPresentations({ commit }) {
             var pres = await api.getAllPresentation()

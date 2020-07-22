@@ -92,7 +92,7 @@ export default {
   },
   methods: {
     addImage() {
-      this.media.filename = this.media.file.name;
+      this.media.filename = this.media.file.name
       if (
         this.media.position == "topsharing" ||
         this.media.position == "bottomsharing" ||
@@ -106,8 +106,8 @@ export default {
           this.media.partner = parseInt(this.media.screen) + 1;
         }
       } else {
-        this.media.sharing = "";
-        this.media.partner = "";
+        this.media.sharing = null;
+        this.media.partner = null;
       }
       if (!this.edit)
         this.$store.dispatch("createNewMedia", {

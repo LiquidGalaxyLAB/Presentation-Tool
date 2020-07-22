@@ -17,9 +17,7 @@
           </div>
 
           <v-avatar class="ma-3 pt-4" size="125" tile>
-            <v-img
-              :src="category.img"
-            ></v-img>
+            <v-img :src="category.img"></v-img>
           </v-avatar>
         </div>
       </v-card>
@@ -28,7 +26,7 @@
 </template>
 
 <script>
-import categories from '@/utils/categories.js'
+import categories from "@/utils/categories.js";
 
 export default {
   props: ["value", "selectPresentation"],
@@ -41,15 +39,20 @@ export default {
         this.$emit("input", value);
       }
     },
-    category(){
-      return categories.getCategory(this.selectPresentation.category)
+    category() {
+      return categories.getCategory(this.selectPresentation.category);
     }
   },
   methods: {
     async stopPresentation() {
-      var valid = await this.$store.dispatch('stopPresentation')
-      if(valid)
-        this.show = false
+      this.$store.commit("setOverlay", {
+        value: true,
+        text: "Stoping presentation on Liquid Galaxy"
+      });
+      this.show = false;
+      await this.$store.dispatch("stopPresentation");
+
+     
     }
   }
 };

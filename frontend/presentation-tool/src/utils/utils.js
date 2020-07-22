@@ -31,6 +31,16 @@ export default {
         parsedDuration.seconds = mili - (parsedDuration.minutes * 60)
 
         return parsedDuration
+      },
+      removeNullFields: function(storage){
+        for(var i = 0; i < storage.media.length; i++){
+          if(storage.media[i] == null){
+            storage.media.splice(i,1)
+            storage.screens.splice(i,1)
+          }
+        }
+
+        return storage
       }
 }
 

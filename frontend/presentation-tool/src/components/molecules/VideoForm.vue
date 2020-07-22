@@ -50,7 +50,7 @@
 
       <v-row justify="space-between" class="ma-0 pb-8 pl-8 pr-8">
         <v-btn color="red" text @click="discard()">Cancel</v-btn>
-        <v-btn dark color="green" @click="addImage()">Save</v-btn>
+        <v-btn dark color="green" @click="addVideo()">Save</v-btn>
       </v-row>
     </v-form>
   </v-card>
@@ -67,7 +67,7 @@ export default {
         id:"",
         filename: "",
         sharing: "",
-        partner: "",
+        partner: null,
         position: "",
         screen:"",
         type: "video",
@@ -87,7 +87,7 @@ export default {
     };
   },
   methods: {
-    addImage() {
+    addVideo() {
       this.media.filename = this.media.file.name;
       if(!this.edit)
         this.$store.dispatch('createNewMedia',{slideID: this.slideID, media:this.media})

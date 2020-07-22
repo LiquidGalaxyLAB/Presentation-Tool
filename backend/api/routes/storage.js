@@ -29,7 +29,7 @@ router.post("/upload", upload.array('media'), (req, res, next) => {
     else{
         screens = req.body.screens
     }
-    
+    console.log('screens',screens)
     var media = []
     var storagePath = req.body.storagepath
     for (var i = 0; i < req.files.length; i++) {

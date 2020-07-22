@@ -103,7 +103,7 @@ export default {
         },
         createNewMedia({ commit,state }, payload) {
             console.log('createNewMedia', payload)
-            
+            payload.media.storagepath = `${state.presentation.id}`
             var index
             state.presentation.slides.forEach((slide,i) =>{
                 if(slide.id == payload.slideID){

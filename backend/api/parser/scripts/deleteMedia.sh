@@ -4,15 +4,15 @@
 
 SLAVEDELETEPATH=$1
 MASTERDELETEPATH=$2
-. ${HOME}/etc/shell.conf
+MAXSCREENS=$3
 
-for lg in $LG_FRAMES ; do
-   echo $lg:
-   if [ $lg == "lg1" ]; then
+for screen in $(seq 1 $MAXSCREENS) ; do
+   echo $screen
+   if [ $screen == "1" ]; then
        echo "Master"
 	   rm -rf $MASTERDELETEPATH
    else
        echo "Slave"
-       ssh $lg "rm -rf $SLAVEDELETEPATH"
+       ssh lg$screen "rm -rf $SLAVEDELETEPATH"
    fi
 done

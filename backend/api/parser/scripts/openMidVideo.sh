@@ -51,7 +51,7 @@ else
 fi
 
 # check if media file exists
-ssh lg@lg$LG_SCREEN [[ -f $FILE_PATH ]] && echo "File exists.. Continue" || exit 1;
+#ssh lg@lg$LG_SCREEN [[ -f $FILE_PATH ]] && echo "File exists.. Continue" || exit 1;
 
 
 # connect via ssh and execute the action
