@@ -10,10 +10,13 @@ export default {
         },
         removePresentationFromList(state, payload) {
             state.presentations.splice(payload, 1)
+        },
+        pushToPresentationsList(state,payload){
+            state.presentations.push(payload)
         }
     },
     actions: {
-        async createPresentation({ commit, dispatch }, payload) {
+        async createPresentation({ commit, dispatch}, payload) {
             //call to upload media
             if (payload.storage.media[0] != undefined && payload.storage.media[0] != null) {
                 var response = await api.uploadMedia(payload.storage)
@@ -23,7 +26,7 @@ export default {
             //call to save info in the db
             var res = await api.createPresentation(payload.dbinfo)
             dispatch('logResponse', res)
-
+            //commit('pushToPresentationsList',payload.dbinfo)
             commit('setOverlay', { value: false, text: '' })
 
         },

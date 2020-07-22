@@ -3,121 +3,32 @@
 const { exec } = require('child_process')
 
 module.exports = {
-    sendMediaToDefinedLG: function (media, path) {
+    sendMediaToDefinedLG: async function (media, path) {
+        console.log('MEDIA-path', media, path)
         var response
-
-        return new Promise((resolve, reject) => {
-            for (var i = 0; i < media.length; i++) {
-                if (media[i].partner != undefined) {
-                    if (media[i].type == 'image') {
-                        var res = cropImageInTwoAndSave(media[i].screen, media[i].partner, path, media[i].filename)
-                        resolve(res)
-                    }
-                    else {
-                        console.log('Video Sharing Not Implemented')
-                        resolve({ status: 501, msg: `Not implemented. This functionality is still not implemented by the API` })
-                    }
-                }
-                else {
-                    if (media[i].screen == 1) {
-
-                        var createDir = new Promise((resolve, reject) => {
-                            exec(`if [ ! -d ${process.env.FILE_PATH}/storage/${path} ]; then 
-                        mkdir ${process.env.FILE_PATH}/storage/${path}
-                        fi
-                        `, (err, stdout, stderr) => {
-                                if (err) {
-                                    console.error('Error on creating storage directory to specific screen', err)
-                                    reject({ status: 500, msg: `Error on copying from global storage to specific screen ${err}` })
-                                }
-                                if (stderr) {
-                                    console.log('Error on creating storage directory to specific screen', stderr)
-                                    reject({ status: 500, msg: `Error on copying from global storage to specific screen ${stderr}` })
-                                }
-                                else {
-                                    console.log('Success on creating storage directory to specific screen'), stdout
-                                    resolve()
-                                }
-                            })
-                        })
-
-                        var cpStorage = new Promise((resolve, reject) => {
-                            exec(`cp ${process.env.FILE_PATH}/storage/all/"${media[i].filename}" ${process.env.FILE_PATH}/storage/${path}/`, (err, stdout, stderr) => {
-                                if (err) {
-                                    console.error('Error on copying from global storage to specific screen', err)
-                                    reject({ status: 500, msg: `Error on copying from global storage to specific screen ${err}` })
-                                }
-                                if (stderr) {
-                                    console.log('Error on copying from global storage to specific screen', stderr)
-                                    reject({ status: 500, msg: `Error on copying from global storage to specific screen ${stderr}` })
-                                }
-                                else {
-                                    console.log('Copied media from global storage to specific screen', stdout)
-                                    resolve()
-                                }
-                            })
-                        })
-
-                        Promise.all([createDir, cpStorage])
-                            .then(() => {
-                                response = { status: 200, msg: `Media uploaded and stored with success` }
-                                resolve(response)
-                            })
-                            .catch((errors) => {
-                                response = errors
-                                reject(response)
-                            })
-                    }
-                    else {
-                        var createDir = new Promise((resolve, reject) => {
-                            exec(`ssh lg${media[i].screen} "if [ ! -d ${process.env.SLAVE_STORAGE}/${path} ]; then 
-                            mkdir ${process.env.SLAVE_STORAGE}/${path}
-                            fi"`, (err, stdout, stderr) => {
-                                if (err) {
-                                    console.error('Error on creating storage directory to specific screen', err)
-                                    reject({ status: 500, msg: `Error on copying from global storage to specific screen ${err}` })
-                                }
-                                if (stderr) {
-                                    console.log('Error on creating storage directory to specific screen', stderr)
-                                    reject({ status: 500, msg: `Error on copying from global storage to specific screen ${stderr}` })
-                                }
-                                else {
-                                    console.log('Success on creating storage directory to specific screen'), stdout
-                                    resolve()
-                                }
-                            })
-                        })
-
-                        var cpStorage = new Promise((resolve, reject) => {
-                            exec(`scp ${process.env.FILE_PATH}/storage/all/"${media[i].filename}" lg${media[i].screen}:${process.env.SLAVE_STORAGE}/${path}/`, (err, stdout, stderr) => {
-                                if (err) {
-                                    console.error('Error on copying from global storage to specific screen', err)
-                                    reject({ status: 500, msg: `Error on copying from global storage to specific screen ${err}` })
-                                }
-                                if (stderr) {
-                                    console.log('Error on copying from global storage to specific screen', stderr)
-                                    reject({ status: 500, msg: `Error on copying from global storage to specific screen ${stderr}` })
-                                }
-                                else {
-                                    console.log('Copied media from global storage to specific screen', stdout)
-                                    resolve()
-                                }
-                            })
-                        })
-
-                        Promise.all([createDir, cpStorage])
-                            .then(() => {
-                                response = { status: 200, msg: `Media uploaded and stored with success` }
-                                resolve(response)
-                            })
-                            .catch((errors) => {
-                                response = errors
-                                reject(response)
-                            })
-                    }
-                }
+        for (var i = 0; i < media.length; i++) {
+            if (media[i].partner != undefined) {
+                var res = cropImageInTwoAndSave(media[i].screen, media[i].partner, path,media[i].filename)
+                response = res
             }
-        })
+            else {
+                var destpath
+
+                if (media[i].screen != 1)
+                    destpath = `${process.env.SLAVE_STORAGE}`
+                else
+                    destpath = `${process.env.FILE_PATH}/storage`
+
+                await createStoragePathSingleScreen(media[i].filename, media[i].screen, `${process.env.FILE_PATH}/storage/all`, `${destpath}/${path}`).then((res) => {
+                    response = res
+                }).catch((err) =>
+                    response = err)
+            }
+
+        }
+
+        return response
+
     },
     cleanStorage: function () {
         return new Promise((resolve, reject) => {
@@ -137,7 +48,7 @@ module.exports = {
         })
     },
     deleteMediaFromLG: function (presentationJson) {
-        console.log('JSON',presentationJson)
+        console.log('JSON', presentationJson)
         var storagepath = `${presentationJson.id}`
 
         return new Promise((resolve, reject) => {
@@ -160,9 +71,24 @@ module.exports = {
 
     }
 }
+function createStoragePathSingleScreen(filename, screen, currentpath, destinationpath) {
+    return new Promise((resolve, reject) => {
+        exec(`${process.env.FILE_PATH}/api/parser/scripts/createStoragePath.sh ${filename} ${screen} "${currentpath}" "${destinationpath}"`, (err, stderr, stdout) => {
+            if (err) {
+                console.log(`Unable to create storage path and copy to specific storage directory ${err}`)
+                reject({status: 500, msg:`Internal Server Error. Unable to create storage path and copy to specific storage directory ${err}`})
+            }
+            else {
+                console.log('Success', stdout)
+                resolve({status: 200, msg: `Sucessfully created storage path and copied media to specific screen`})
+            }
+        })
+    })
+}
 
 function cropImageInTwoAndSave(leftScreen, rightScreen, file_path, file_name) {
-    var leftDest, rightDest, response
+    console.log('crop in two and save start')
+    var leftDest, rightDest
 
     if (leftScreen != 1)
         leftDest = `${process.env.SLAVE_STORAGE}/${file_path}`
@@ -235,64 +161,4 @@ function cropImageInTwoAndSave(leftScreen, rightScreen, file_path, file_name) {
                 reject(err)
             })
     })
-    /*var leftDir = new Promise((resolve, reject) => {
-        exec(`ssh lg${leftScreen} "if [ ! -d ${leftDest} ]; then 
-        mkdir ${leftDest}
-        fi"`, (err, stdout, stderr) => {
-            if (err) {
-                console.error('Error on creating storage directory on leftScreen', err)
-                reject({ status: 500, msg: `Internal Server Error. Error on creating storage directory on leftScreen ${err}` })
-            }
-            if (stderr) {
-                console.error('Error on creating storage directory on leftScreen', stderr)
-                reject({ status: 500, msg: `Internal Server Error. Error on creating storage directory on leftScreen ${stderr}` })
-            }
-            else {
-                console.log('Success on creating storage directory on leftScreen', stdout)
-                resolve()
-            }
-        })
-    })
-
-    var rightDir = new Promise((resolve, reject) => {
-        exec(`ssh lg${rightScreen} "if [ ! -d ${rightDest} ]; then 
-        mkdir ${rightDest}
-        fi"`, (err, stdout, stderr) => {
-            if (err) {
-                console.error('Error on creating storage directory on rightScreen', err)
-                reject({ status: 500, msg: `Internal Server Error. Error on creating storage directory on rightScreen ${err}` })
-            }
-            if (stderr) {
-                console.error('Error on creating storage directory on rightScreen', stderr)
-                reject({ status: 500, msg: `Internal Server Error. Error on creating storage directory on rightScreen ${stderr}` })
-            }
-            else {
-                console.log('Success on creating storage directory on rightScreen', stdout)
-                resolve()
-            }
-        })
-    })
-
-    var cropAndSend = new Promise((resolve, reject) => {
-        console.log(`AAAAAAAAAAAAAAA   ${process.env.FILE_PATH}/api/parser/scripts/cropImage2.sh "${leftScreen}" "${rightScreen}" "${process.env.FILE_PATH}/storage/all/${file_name}" "${file_name}" "${leftDest}" "${rightDest}"` )
-
-        //crop image and send to created storage
-        exec(`${process.env.FILE_PATH}/api/parser/scripts/cropImage2.sh "${leftScreen}" "${rightScreen}" "${process.env.FILE_PATH}/storage/all/${file_name}" "${file_name}" "${leftDest}" "${rightDest}"`, (err, stdout, stderr) => {
-            if (err) {
-                console.error('Error on cropping image and sending to screen storage', err)
-                reject({ status: 500, msg: `Internal Server Error. Error on cropping image and sending to screen storage ${err}` })
-            }
-            if (stderr) {
-                console.error('Error on cropping image and sending to screen storage', stderr)
-                reject({ status: 500, msg: `Internal Server Error. Error on cropping image and sending to screen storage ${stderr}` })
-            }
-            else {
-                console.log('Success on cropping image and sending to screen storage', stdout)
-                resolve()
-            }
-        })
-    })
-
-    return Promise.all([leftDir, rightDir, cropAndSend])*/
-
 }

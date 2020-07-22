@@ -99,6 +99,7 @@ export default {
         this.media.position == "centersharing" ||
         this.media.position == "middlesharing"
       ) {
+        this.media.position = this.media.position.replace('sharing','')
         this.media.sharing = true;
         if (this.media.screen == this.maxScreens[this.maxScreens.length - 1]) {
           this.media.partner = 1;
