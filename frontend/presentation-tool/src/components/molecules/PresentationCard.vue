@@ -104,6 +104,7 @@ export default {
     },
     exportPresentation(){
       console.log('export',this.presentation)
+      this.$store.commit('setOverlay',{value: true, text: 'Exporting presentation from Liquid Galaxy'})
       this.$store.dispatch('exportPresentation',{id:this.presentation._id, title:this.presentation.title})
     },
     editPresentation(){

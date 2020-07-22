@@ -5,10 +5,8 @@ const { exec } = require('child_process')
 
 module.exports = {
     exportPresentation: async function (id) {
-        console.log('oi')
         var p = await database.getPresentationById(id)
         var presentationJSON = JSON.stringify(p[0])
-        console.log('presentation', presentationJSON)
 
         return new Promise((resolve, reject) => {
             return new Promise((resolve, reject) => {
@@ -17,7 +15,7 @@ module.exports = {
                 // get all folders from the slaves and store temporarily 
                 exec(`${process.env.FILE_PATH}/api/parser/scripts/exportMediaFromSlaves.sh ${p[0].maxscreens} "${process.env.SLAVE_STORAGE}/${p[0].id}" "${process.env.FILE_PATH}/storage/all" `, (err, stderr, stdout) => {
                     if (err) {
-                        console.log("EERRRORR", err)
+                        console.log("Error on retriving media from slaves", err)
                         reject()
                     }
                     else {
@@ -75,9 +73,7 @@ module.exports = {
 
                     //for other screens
                     for (var i = 1; i <= p[0].maxscreens; i++) {
-                        console.log('AQUIIII')
                         if (i != 1) {
-                            console.log('AQUEEEEEEEE')
                             archive.directory(`${process.env.FILE_PATH}/storage/all/${i}-media`, `lg${i}-media`)
                         }
                     }
