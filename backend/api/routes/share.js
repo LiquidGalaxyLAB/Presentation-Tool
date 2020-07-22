@@ -3,6 +3,7 @@ const router = express.Router()
 const parser = require('../parser/main')
 const { exec } = require('child_process')
 var multer = require('multer')
+const share = require('../parser/modules/share')
 
 // configure localstorage for files using multer
 var storage = multer.diskStorage({
@@ -18,17 +19,17 @@ var storage = multer.diskStorage({
 var upload = multer({ storage: storage })
 
 router.get("/export/:id", (req, res, next) => {
-    console.log('req.body', req.params)
     exportPresentation(req.params.id)
         .then((response) => {
             var fileName = response.path
+            var maxscreens = response.maxscreen
             console.log('FILENAME', fileName)
             res.sendFile(fileName, function (err) {
                 if (err) {
                     next(err)
                 } else {
                     console.log('Sent:', fileName)
-                    deleteExportedTempZip(fileName)
+                    deleteExportedTempZip(fileName,maxscreens)
                 }
             })
         })
@@ -60,13 +61,6 @@ async function importPresentation(filename) {
     return await parser.importPresentation(filename)
 }
 
-function deleteExportedTempZip(pathToZip) {
-    exec(`rm '${pathToZip}'`, (err, stdout, stderr) => {
-        if (err) {
-            console.log('stderr', stderr, err)
-        }
-        else{
-            console.log('stdout',stdout)
-        }
-    })
+function deleteExportedTempZip(pathToZip, maxscreens) {
+    return share.deleteTempExportedFiles(pathToZip, maxscreens)
 }
