@@ -15,10 +15,11 @@ export default {
         });
         parsedResult.slides = cleanSlides
 
-        //clean media inside slides
+        //clean media inside slides and remove sharing string from position
         for (var i = 0; i < parsedResult.slides.length; i++) {
             for (var j = 0; j < parsedResult.slides[i].media.length; j++) {
                 parsedResult.slides[i].media[j] = cleanObject(parsedResult.slides[i].media[j])
+                parsedResult.slides[i].media[j].position = parsedResult.slides[i].media[j].position.replace('sharing','')
             }
         }
 
@@ -160,6 +161,7 @@ export default {
         presentation.slides.forEach((slide) =>{
             slide.media.forEach((m) =>{
                 m.file = null
+                m.position = `${m.position}sharing`
             })
         })
 
