@@ -48,11 +48,10 @@ module.exports = {
         })
     },
     deleteMediaFromLG: function (presentationJson) {
-        console.log('JSON', presentationJson)
         var storagepath = `${presentationJson.id}`
 
         return new Promise((resolve, reject) => {
-            console.log(`${process.env.FILE_PATH}/api/parser/scripts/deleteMedia.sh ${process.env.SLAVE_STORAGE}/${storagepath} ${process.env.FILE_PATH}/storage/${storagepath} ${presentationJson.maxscreens}`)
+            
             exec(`${process.env.FILE_PATH}/api/parser/scripts/deleteMedia.sh ${process.env.SLAVE_STORAGE}/${storagepath} ${process.env.FILE_PATH}/storage/${storagepath} ${presentationJson.maxscreens}`, (err, stdout, stderr) => {
                 if (err) {
                     console.log('Error on executing deleteMedia.sh ', err)
@@ -60,7 +59,7 @@ module.exports = {
                 }
                 if (stderr) {
                     console.log('stderr', stderr)
-                    resolve(stderr)
+                    reject(stderr)
                 }
                 else {
                     resolve('ok')

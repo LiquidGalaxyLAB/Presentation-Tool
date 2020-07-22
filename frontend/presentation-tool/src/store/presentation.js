@@ -1,4 +1,5 @@
 import api from "../api/apiConnection"
+import utils from "@/utils/utils"
 
 export default {
     state: {
@@ -32,7 +33,8 @@ export default {
         },
         async updatePresentation({ commit, dispatch }, payload) {
             console.log('payload', payload)
-            if (payload.storage.media[0] != undefined) {
+            if (!payload.storage.media.every((val) => val === null)) {
+                payload.storage = utils.removeNullFields(payload.storage)
                 var res = await api.uploadMedia(payload.storage)
                 dispatch('logResponse', res)
             }
