@@ -19,7 +19,8 @@ export default {
         for (var i = 0; i < parsedResult.slides.length; i++) {
             for (var j = 0; j < parsedResult.slides[i].media.length; j++) {
                 parsedResult.slides[i].media[j] = cleanObject(parsedResult.slides[i].media[j])
-                parsedResult.slides[i].media[j].position = parsedResult.slides[i].media[j].position.replace('sharing','')
+                if(parsedResult.slides[i].media[j].sharing)
+                    parsedResult.slides[i].media[j].position = parsedResult.slides[i].media[j].position.replace('sharing','')
             }
         }
 
@@ -161,7 +162,8 @@ export default {
         presentation.slides.forEach((slide) =>{
             slide.media.forEach((m) =>{
                 m.file = null
-                m.position = `${m.position}sharing`
+                if(m.sharing == "true")
+                    m.position = `${m.position}sharing`
             })
         })
 
