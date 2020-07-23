@@ -24,10 +24,6 @@
           Video
           <v-icon right>mdi-video</v-icon>
         </v-btn>
-        <v-btn dark color="deep-purple lighten-3" @click="textForm = true;currentMedia = null">
-          Text
-          <v-icon right>mdi-format-text</v-icon>
-        </v-btn>
       </v-speed-dial>
     </v-row>
     <div class="pa-4">
@@ -44,12 +40,7 @@
         </template>
       </v-data-table>
     </div>
-    <div v-if="textForm">
-      <v-dialog v-model="textForm">
-        <text-form v-model="textForm"></text-form>
-      </v-dialog>
-    </div>
-    <div v-else-if="imageForm">
+    <div v-if="imageForm">
       <v-dialog v-model="imageForm" width="80%">
         <image-form v-model="imageForm" :slideID="slide.id" :currentMedia="currentMedia"></image-form>
       </v-dialog>
@@ -63,14 +54,12 @@
 </template>
 
 <script>
-import TextForm from "@/components/molecules/TextForm.vue";
 import ImageForm from "@/components/molecules/ImageForm.vue";
 import VideoForm from "@/components/molecules/VideoForm.vue";
 
 export default {
   props: ["value","slide"],
   components: {
-    TextForm,
     ImageForm,
     VideoForm
   },
