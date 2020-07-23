@@ -2,6 +2,7 @@ const database = require('./database')
 const archiver = require('archiver')
 var fs = require('fs')
 const { exec } = require('child_process')
+const extract = require('extract-zip')
 
 module.exports = {
     exportPresentation: async function (id) {
@@ -87,55 +88,126 @@ module.exports = {
                 })
         })
     },
-    importPresentation: function (filename) {
+    importPresentation: async function (filename) {
         console.log('FILENAME', filename)
+        var presentation = null
 
-        //create temporary folder to store the the unzipped files
-        exec(`mkdir ${process.env.FILE_PATH}/storage/all/tmp`)
-
-        //unzip received presentation
-        exec(`unzip ${process.env.FILE_PATH}/storage/all/${filename} -d ${process.env.FILE_PATH}/storage/all/tmp`, (err, stdout, stderr) => {
-            if (err) {
-                console.log('err', err)
-                console.log('stderr', stderr)
-            }
-            else {
-                console.log('stodout', stdout)
-            }
+        return new Promise((resolve, reject) => {
+            new Promise((resolve, reject) => {
+                // create temporary folder to store the the unzipped files
+                exec(`mkdir ${process.env.HOME}/temp`, (err, stderr, stdout) => {
+                    if (err) {
+                        console.log('Error on creating temp directory')
+                        reject()
+                    }
+                    else {
+                        console.log('Success on creating temp directory')
+                        resolve()
+                    }
+                })
+            })
+                .then(async () => {
+                    // unzip received presentation
+                    try {
+                        await extract(`${process.env.FILE_PATH}/storage/all/${filename}`, { dir: `${process.env.HOME}/temp` })
+                        console.log('success')
+                    }
+                    catch (err) {
+                        console.log('err', err)
+                    }
+                })
+                .then(() => {
+                    new Promise((resolve, reject) => {
+                        // read presentation.json and transform to object
+                        fs.readFile(`${process.env.HOME}/temp/presentation.json`, "utf8", (err, jsonString) => {
+                            if (err) {
+                                console.log('Error reading file from disk', err)
+                                reject()
+                            }
+                            try {
+                                presentation = JSON.parse(jsonString)
+                                console.log('PRESENTATION', presentation)
+                                if (presentation != null)
+                                    resolve()
+                            }
+                            catch (err) {
+                                console.log('Error on parsing JSON to javascript string')
+                                reject()
+                            }
+                        })
+                    })
+                        .then(async () => {
+                            console.log('Presentation loaded', presentation)
+                            await database.createPresentation(presentation)
+                        })
+                        .then(() =>{
+                            new Promise((resolve,reject) =>{
+                                exec(`${process.env.FILE_PATH}/api/parser/scripts/importMediaToSlaves.sh ${presentation.maxscreens} ${process.env.HOME} ${process.env.FILE_PATH}/storage/${presentation.id} ${process.env.SLAVE_STORAGE}/${presentation.id}`,(err,stderr,stdout) =>{
+                                    if(err){
+                                        console.log('Error on sending media to specific storages')
+                                        reject()
+                                    }
+                                    else{
+                                        console.log('Success on sending the media to specific storage')
+                                        resolve()
+                                    }
+                                })
+                            })
+                            .then(() =>{
+                                //delete all temp
+                                new Promise((resolve,reject) =>{
+                                    exec(`rm -rf ${process.env.HOME}/temp; rm ${process.env.FILE_PATH}/storage/all/${filename}`,(err,stder,stdout) =>{
+                                        if(err){
+                                            console.log('Error on deleting')
+                                            reject()
+                                        }
+                                        else{
+                                            console.log('Success on deleting')
+                                            resolve()
+                                        }
+                                    })
+                                })
+                                .then(() =>{
+                                    resolve({ status: 200, msg: "Presentation imported with success!" })
+                                })
+                                .catch(() =>{
+                                    reject({status: 500, msg: "Internal server error. Error importing presentation"})
+                                })
+                                
+                            })
+                        })
+                })
         })
 
-        //TODO
-        //read presentation.json and save its info to the db
-
-        //get the media information from each screen and save on the correct places
-
-        //delete the tmp folder and its contents 
-
-        //delete the .zip inside the storage/all/
-
-
-        return { status: 200, msg: "Presentation imported with success!" }
+ 
+ 
+         //get the media information from each screen and save on the correct places
+ 
+         //delete the tmp folder and its contents 
+ 
+         //delete the .zip inside the storage/all/
+ 
     },
-    deleteTempExportedFiles : function (pathToZip,maxscreens){
+    deleteTempExportedFiles: function (pathToZip, maxscreens) {
         // delete zip
         exec(`rm '${pathToZip}'`, (err, stdout, stderr) => {
             if (err) {
                 console.log('Error on deleting tmp .zip', stderr, err)
             }
-            else{
-                console.log('Success on deleting tmp .zip',stdout)
+            else {
+                console.log('Success on deleting tmp .zip', stdout)
             }
         })
-        
+
         // delete slaves storage copy
-        for(var i = 1; i <= maxscreens; i++){
-            if(i != 1){
-                exec(`rm -rf ${process.env.FILE_PATH}/storage/all/${i}-media`, (err, stdout, stderr) =>{
+        for (var j = 1; j <= maxscreens; j++) {
+            if (j != 1) {
+                exec(`rm -rf ${process.env.FILE_PATH}/storage/all/${j}-media`, (err, stdout, stderr) => {
                     if (err) {
                         console.log('Error on deleting tmp files', stderr, err)
                     }
-                    else{
-                        console.log('Success on deleting tmp files',stdout)
+                    else {
+                        console.log('Success on deleting tmp files', stdout)
                     }
                 })
             }

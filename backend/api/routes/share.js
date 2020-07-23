@@ -22,7 +22,7 @@ router.get("/export/:id", (req, res, next) => {
     exportPresentation(req.params.id)
         .then((response) => {
             var fileName = response.path
-            var maxscreens = response.maxscreen
+            var maxscreens = response.maxscreens
             console.log('FILENAME', fileName)
             res.sendFile(fileName, function (err) {
                 if (err) {
