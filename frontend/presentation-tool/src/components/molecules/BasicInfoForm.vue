@@ -73,7 +73,8 @@
           :disabled="edit"
         ></v-file-input>
       </div>
-      <v-card class="mx-auto pa-2" v-else>
+      <v-card class="mx-auto" v-else outlined color="grey lighten-3">
+        <h4 class="pl-4 pt-2">One audio for the whole presentation</h4>
         <p class="pl-3 pr-2 pt-4">{{presentation.audiopath}}</p>
         <v-btn text color="teal" @click="editingAudio = false; presentation.file = null">
           change

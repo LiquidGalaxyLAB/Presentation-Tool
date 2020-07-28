@@ -27,7 +27,7 @@
       </v-speed-dial>
     </v-row>
     <div class="pa-4">
-    <v-data-table :headers="headers" :items="media" :items-per-page="itemPerPage">
+    <v-data-table :headers="headers" :items="slide.media" :items-per-page="itemPerPage">
         <template v-slot:item.actions="{ item }">
           <v-row justify="start">
             <v-btn small icon @click="editMedia(item)">
@@ -58,15 +58,12 @@ import ImageForm from "@/components/molecules/ImageForm.vue";
 import VideoForm from "@/components/molecules/VideoForm.vue";
 
 export default {
-  props: ["value","slide"],
+  props: ["slide"],
   components: {
     ImageForm,
     VideoForm
   },
   computed: {
-    media() {
-      return this.slide.media
-    },
     maxScreens() {
       let max = this.$store.state.builderStore.presentation.maxscreens;
       let arrayOfStrings = [];
@@ -85,7 +82,6 @@ export default {
         this.videoForm = true
     },
     deleteMedia(item){
-      console.log('delete',item)
       this.$store.dispatch('deleteMedia',{slideID:this.slide.id, media: item})
     }
   },

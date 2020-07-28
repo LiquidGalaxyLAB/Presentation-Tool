@@ -41,7 +41,7 @@
       </v-row>
       <v-row justify="center">
         <v-col cols="12" md="6">
-          <v-img src="@/assets/addMedia.png"></v-img>
+          <v-img src="@/assets/addicon.png"></v-img>
         </v-col>
       </v-row>
     </v-card>

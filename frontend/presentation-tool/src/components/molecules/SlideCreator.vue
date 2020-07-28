@@ -15,7 +15,8 @@
           ></v-text-field>
         </v-row>
         <v-row class="pl-8 pr-8">
-          <v-switch v-model="audio" label="Audio for this slide"></v-switch>
+          <v-switch v-model="audio" label="Audio for this slide" :disabled="blockaudio"></v-switch>
+          <div v-if="blockaudio">Audio on specific slide is disabled when full presentation audio is enable.</div>
           <v-file-input
             v-model="slide.file"
             v-if="audio"
@@ -65,6 +66,7 @@ export default {
     return {
       audio: false,
       errorDialog: false,
+      blockaudio: false,
       error: "",
       edit: false,
       slide: {
@@ -126,6 +128,11 @@ export default {
     }
   },
   created() {
+    //test if there is already an audio for the whole presentation
+    if(this.$store.state.builderStore.presentation.audiopath != ""){
+      this.blockaudio = true
+    }
+
     if (this.currentslide != null) {
       this.slide = this.currentslide;
       this.edit = true;
