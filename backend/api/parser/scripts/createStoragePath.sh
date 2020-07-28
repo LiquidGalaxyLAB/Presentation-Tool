@@ -18,7 +18,7 @@ if [ $SCREEN == "1" ]; then
     fi 
 
     # copy files from general storage to specific one
-    cp $CURRENTPATH/$FILENAME $DESTINATIONPATH
+    cp $CURRENTPATH/"$FILENAME" $DESTINATIONPATH
 else
     # for other screens
     # create directory if it doesn't exists
@@ -27,5 +27,5 @@ else
     fi"
 
     # copy files from general storage to specific one
-    scp $CURRENTPATH/$FILENAME lg$SCREEN:$DESTINATIONPATH
+    scp $CURRENTPATH/"$FILENAME" lg$SCREEN:$DESTINATIONPATH
 fi

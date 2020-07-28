@@ -156,7 +156,7 @@ module.exports = {
                             .then(() =>{
                                 //delete all temp
                                 new Promise((resolve,reject) =>{
-                                    exec(`rm -rf ${process.env.HOME}/temp; rm ${process.env.FILE_PATH}/storage/all/${filename}`,(err,stder,stdout) =>{
+                                    exec(`rm -rf ${process.env.HOME}/temp; rm ${process.env.FILE_PATH}/storage/all/"${filename}"`,(err,stder,stdout) =>{
                                         if(err){
                                             console.log('Error on deleting')
                                             reject()

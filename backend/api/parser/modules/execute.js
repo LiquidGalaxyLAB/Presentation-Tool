@@ -165,7 +165,7 @@ function openVideo(media, screen) {
 }
 
 function runOpenScript(type, screen, file_path, position) {
-    exec(`${process.env.FILE_PATH}/api/parser/scripts/open${type}.sh ${screen} ${file_path} "${position}"`, (err, stdout, stderr) => {
+    exec(`${process.env.FILE_PATH}/api/parser/scripts/open${type}.sh ${screen} "${file_path}" "${position}"`, (err, stdout, stderr) => {
         if (err) {
             console.error(err)
         }

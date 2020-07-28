@@ -72,7 +72,7 @@ module.exports = {
 }
 function createStoragePathSingleScreen(filename, screen, currentpath, destinationpath) {
     return new Promise((resolve, reject) => {
-        exec(`${process.env.FILE_PATH}/api/parser/scripts/createStoragePath.sh ${filename} ${screen} "${currentpath}" "${destinationpath}"`, (err, stderr, stdout) => {
+        exec(`${process.env.FILE_PATH}/api/parser/scripts/createStoragePath.sh "${filename}" ${screen} "${currentpath}" "${destinationpath}"`, (err, stderr, stdout) => {
             if (err) {
                 console.log(`Unable to create storage path and copy to specific storage directory ${err}`)
                 reject({status: 500, msg:`Internal Server Error. Unable to create storage path and copy to specific storage directory ${err}`})
