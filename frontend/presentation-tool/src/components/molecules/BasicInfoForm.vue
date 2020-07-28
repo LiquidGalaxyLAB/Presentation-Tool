@@ -121,6 +121,10 @@ export default {
   methods: {
     validate() {
       if (this.$refs.form.validate()) {
+        if(!this.audio){
+          this.presentation.audiopath = ""
+          this.presentation.file = null
+        }
         this.$store.dispatch("presentationBasicInformation", this.presentation);
         this.edit = true;
       }

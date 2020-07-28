@@ -79,7 +79,10 @@ export default {
   methods:{
     editMedia(item){
       this.currentMedia = item
-      this.imageForm = true
+      if(this.currentMedia.type == 'image')
+        this.imageForm = true
+      else
+        this.videoForm = true
     },
     deleteMedia(item){
       console.log('delete',item)

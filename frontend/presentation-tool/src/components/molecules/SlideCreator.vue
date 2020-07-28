@@ -93,6 +93,10 @@ export default {
       }
     },
     createSlide() {
+      if(!this.audio){
+        this.slide.audiopath = ""
+        this.slide.file = null
+      }
       if (!this.edit) {
         this.$store.dispatch("createSlideToPresentation", this.slide);
       } else {
