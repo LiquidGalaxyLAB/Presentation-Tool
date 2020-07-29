@@ -1,4 +1,4 @@
-![Logo](presentation-logo.png) 
+![Logo](logo-pequeno.png) 
 # Presentation Tool
 // badges will go here
 
