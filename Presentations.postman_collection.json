@@ -19,7 +19,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"title\": \"Wonders of Italy Test 01\",\n    \"description\": \"Italy, country of south-central Europe, occupying a peninsula that juts deep into the Mediterranean Sea. Italy comprises some of the most varied and scenic landscapes on Earth and is often described as a country shaped like a boot\",\n    \"category\":\"Test\",\n    \"audiopath\":\"wonders-of-italy/Sultans-Of-Swing.mp3\",\n    \"slides\": [\n        {\n            \"duration\": \"30000\",\n            \"flyto\":\"Rome\",\n            \"screens\": [\n                {\n                    \"screennumber\": \"3\",\n                    \"media\": [\n                        {\n                            \"filename\": \"italy-venice.jpeg\",\n                            \"type\": \"image\",\n                            \"storagepath\": \"wonders-of-italy\",\n                            \"position\": \"top\"\n                        }\n                    ]\n                },\n                {\n                    \"screennumber\": \"2\",\n                    \"media\": [\n                        {\n                            \"filename\": \"rome-from-above.mp4\",\n                            \"type\": \"video\",\n                            \"storagepath\": \"wonders-of-italy\",\n                            \"position\": \"top\"\n                        },\n                         {\n                            \"filename\": \"italy-rome.jpeg\",\n                            \"type\": \"image\",\n                            \"storagepath\": \"wonders-of-italy\",\n                            \"position\": \"bottom\"\n                        }\n                    ]\n                }\n            ]\n        },\n        {\n            \"duration\": \"30000\",\n            \"flyto\":\"Venice\",\n            \"screens\": [\n                {\n                    \"screennumber\": \"3\",\n                    \"media\": [\n                        {\n                            \"filename\": \"rome-from-above.mp4\",\n                            \"type\": \"video\",\n                            \"storagepath\": \"wonders-of-italy\",\n                            \"position\": \"top\"\n                        }\n                    ]\n                },\n                 {\n                    \"screennumber\": \"2\",\n                    \"media\": [\n                        {\n                            \"filename\": \"italy-venice.jpeg\",\n                            \"type\": \"image\",\n                            \"storagepath\": \"wonders-of-italy\",\n                            \"position\": \"middle\"\n                        }\n                    ]\n                }\n            ]\n        },\n         {\n            \"duration\": \"30000\",\n            \"flyto\":\"Florence\",\n            \"screens\": [\n                {\n                    \"screennumber\": \"1\",\n                    \"media\": [\n                        {\n                            \"filename\": \"italy-rome.jpeg\",\n                            \"type\": \"image\",\n                            \"storagepath\": \"wonders-of-italy\",\n                            \"position\": \"middle\",\n                            \"sharing\": \"true\",\n                            \"partner\": \"2\"\n                        }\n                    ]\n                }\n            ]\n        },\n         {\n            \"duration\": \"30000\",\n            \"screens\": [\n                {\n                    \"screennumber\": \"3\",\n                    \"media\": [\n                        {\n                            \"filename\": \"italy-coliseu.jpeg\",\n                            \"type\": \"image\",\n                            \"storagepath\": \"wonders-of-italy\",\n                            \"position\": \"top\",\n                            \"sharing\":\"true\",\n                            \"partner\": \"1\"\n                        }\n                    ]\n                },\n                {\n                    \"screennumber\": \"2\",\n                    \"media\": [\n                        {\n                            \"filename\": \"rome-from-above.mp4\",\n                            \"type\": \"video\",\n                            \"storagepath\": \"wonders-of-italy\",\n                            \"position\": \"middle\"\n                        }\n                    ]\n                }\n            ]\n        }\n    ]\n}",
+					"raw": "{\n    \"title\": \"Wonders of Italy Test 03\",\n    \"description\": \"Italy, country of south-central Europe, occupying a peninsula that juts deep into the Mediterranean Sea. Italy comprises some of the most varied and scenic landscapes on Earth and is often described as a country shaped like a boot\",\n    \"category\":\"Test\",\n    \"audiopath\":\"wonders-of-italy/Sultans-Of-Swing.mp3\",\n    \"slides\": [\n        {\n            \"duration\": \"30000\",\n            \"flyto\":\"Rome\",\n            \"screens\": [\n                {\n                    \"screennumber\": \"3\",\n                    \"media\": [\n                        {\n                            \"filename\": \"italy-venice.jpeg\",\n                            \"type\": \"image\",\n                            \"storagepath\": \"wonders-of-italy\",\n                            \"position\": \"top\"\n                        }\n                    ]\n                },\n                {\n                    \"screennumber\": \"2\",\n                    \"media\": [\n                        {\n                            \"filename\": \"rome-from-above.mp4\",\n                            \"type\": \"video\",\n                            \"storagepath\": \"wonders-of-italy\",\n                            \"position\": \"top\"\n                        },\n                         {\n                            \"filename\": \"italy-rome.jpeg\",\n                            \"type\": \"image\",\n                            \"storagepath\": \"wonders-of-italy\",\n                            \"position\": \"bottom\"\n                        }\n                    ]\n                }\n            ]\n        },\n        {\n            \"duration\": \"30000\",\n            \"flyto\":\"Venice\",\n            \"screens\": [\n                {\n                    \"screennumber\": \"3\",\n                    \"media\": [\n                        {\n                            \"filename\": \"rome-from-above.mp4\",\n                            \"type\": \"video\",\n                            \"storagepath\": \"wonders-of-italy\",\n                            \"position\": \"top\"\n                        }\n                    ]\n                },\n                 {\n                    \"screennumber\": \"2\",\n                    \"media\": [\n                        {\n                            \"filename\": \"italy-venice.jpeg\",\n                            \"type\": \"image\",\n                            \"storagepath\": \"wonders-of-italy\",\n                            \"position\": \"middle\"\n                        }\n                    ]\n                }\n            ]\n        },\n         {\n            \"duration\": \"30000\",\n            \"flyto\":\"Florence\",\n            \"screens\": [\n                {\n                    \"screennumber\": \"1\",\n                    \"media\": [\n                        {\n                            \"filename\": \"italy-rome.jpeg\",\n                            \"type\": \"image\",\n                            \"storagepath\": \"wonders-of-italy\",\n                            \"position\": \"middle\",\n                            \"sharing\": \"true\",\n                            \"partner\": \"2\"\n                        }\n                    ]\n                }\n            ]\n        },\n         {\n            \"duration\": \"30000\",\n            \"flyto\":\"Colosseum\",\n            \"screens\": [\n                {\n                    \"screennumber\": \"2\",\n                    \"media\": [\n                        {\n                            \"filename\": \"rome-from-above.mp4\",\n                            \"type\": \"video\",\n                            \"storagepath\": \"wonders-of-italy\",\n                            \"position\": \"middle\"\n                        }\n                    ]\n                }\n            ]\n        }\n    ]\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -60,7 +60,7 @@
 						},
 						{
 							"key": "storagepath",
-							"value": "wonders-of-italy",
+							"value": "aa",
 							"type": "text"
 						},
 						{
@@ -79,13 +79,13 @@
 					}
 				},
 				"url": {
-					"raw": "http://192.168.0.26:5000/storage/upload",
+					"raw": "http://192.168.0.10:5000/storage/upload",
 					"protocol": "http",
 					"host": [
 						"192",
 						"168",
 						"0",
-						"26"
+						"10"
 					],
 					"port": "5000",
 					"path": [
@@ -102,19 +102,19 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "http://192.168.0.26:5000/presentation/delete/5ed90a6c4182054847d42e1d",
+					"raw": "http://192.168.0.10:5000/presentation/delete/5f03bc3046cfd51e12618d45",
 					"protocol": "http",
 					"host": [
 						"192",
 						"168",
 						"0",
-						"26"
+						"10"
 					],
 					"port": "5000",
 					"path": [
 						"presentation",
 						"delete",
-						"5ed90a6c4182054847d42e1d"
+						"5f03bc3046cfd51e12618d45"
 					]
 				}
 			},
@@ -126,13 +126,13 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://192.168.0.26:5000/presentation/getall",
+					"raw": "http://192.168.0.17:5000/presentation/getall",
 					"protocol": "http",
 					"host": [
 						"192",
 						"168",
 						"0",
-						"26"
+						"17"
 					],
 					"port": "5000",
 					"path": [
@@ -157,7 +157,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"id\": \"5ef3b4a8df58d42174a1d304\",\n    \"data\": {\n        \"title\": \"CHURROSSSSSSSSSSSSSSSSSSSSSSSSSG\",\n        \"description\": \"Italy, country of south-central Europe, occupying a peninsula that juts deep into the Mediterranean Sea. Italy comprises some of the most varied and scenic landscapes on Earth and is often described as a country shaped like a boot\",\n        \"category\": \"Test\",\n        \"audiopath\": \"wonders-of-italy/Sultans-Of-Swing.mp3\",\n        \"slides\": [\n            {\n                \"screens\": [\n                    {\n                        \"media\": [\n                            {\n                                \"filename\": \"italy-venice.jpeg\",\n                                \"type\": \"image\",\n                                \"storagepath\": \"wonders-of-italy\",\n                                \"position\": \"top\"\n                            }\n                        ],\n                        \"screennumber\": 3\n                    },\n                    {\n                        \"media\": [\n                            {\n                                \"filename\": \"rome-from-above.mp4\",\n                                \"type\": \"video\",\n                                \"storagepath\": \"wonders-of-italy\",\n                                \"position\": \"top\"\n                            },\n                            {\n                                \"filename\": \"italy-rome.jpeg\",\n                                \"type\": \"image\",\n                                \"storagepath\": \"wonders-of-italy\",\n                                \"position\": \"bottom\"\n                            }\n                        ],\n                        \"screennumber\": 2\n                    }\n                ],\n                \"duration\": 30000,\n                \"flyto\": \"Rome\"\n            },\n            {\n                \"screens\": [\n                    {\n                        \"media\": [\n                            {\n                                \"filename\": \"rome-from-above.mp4\",\n                                \"type\": \"video\",\n                                \"storagepath\": \"wonders-of-italy\",\n                                \"position\": \"top\"\n                            }\n                        ],\n                        \"screennumber\": 3\n                    },\n                    {\n                        \"media\": [\n                            {\n                                \"filename\": \"italy-coliseu.jpeg\",\n                                \"type\": \"image\",\n                                \"storagepath\": \"wonders-of-italy\",\n                                \"position\": \"top\"\n                            }\n                        ],\n                        \"screennumber\": 2\n                    }\n                ],\n                \"duration\": 30000,\n                \"flyto\": \"Venice\"\n            },\n            {\n                \"screens\": [\n                    {\n                        \"media\": [\n                            {\n                                \"filename\": \"italy-rome.jpeg\",\n                                \"type\": \"image\",\n                                \"storagepath\": \"wonders-of-italy\",\n                                \"position\": \"middle\",\n                                \"sharing\": \"true\",\n                                \"partner\": 2\n                            }\n                        ],\n                        \"screennumber\": 1\n                    }\n                ],\n                \"duration\": 30000,\n                \"flyto\": \"Florence\"\n            },\n            {\n                \"screens\": [\n                    {\n                        \"media\": [\n                            {\n                                \"filename\": \"italy-coliseu.jpeg\",\n                                \"type\": \"image\",\n                                \"storagepath\": \"wonders-of-italy\",\n                                \"position\": \"top\",\n                                \"sharing\": \"true\",\n                                \"partner\": 1\n                            }\n                        ],\n                        \"screennumber\": 3\n                    },\n                    {\n                        \"media\": [\n                            {\n                                \"filename\": \"rome-from-above.mp4\",\n                                \"type\": \"video\",\n                                \"storagepath\": \"wonders-of-italy\",\n                                \"position\": \"middle\"\n                            }\n                        ],\n                        \"screennumber\": 2\n                    }\n                ],\n                \"duration\": 30000\n            }\n        ]\n    }\n}",
+					"raw": "{\n    \"id\": \"5ef3b4a8df58d42174a1d304\",\n    \"data\": {\n        \"title\": \"Wonder of Italy\",\n        \"description\": \"Italy, country of south-central Europe, occupying a peninsula that juts deep into the Mediterranean Sea. Italy comprises some of the most varied and scenic landscapes on Earth and is often described as a country shaped like a boot\",\n        \"category\": \"Test\",\n        \"audiopath\": \"wonders-of-italy/Sultans-Of-Swing.mp3\",\n        \"slides\": [\n            {\n                \"screens\": [\n                    {\n                        \"media\": [\n                            {\n                                \"filename\": \"italy-venice.jpeg\",\n                                \"type\": \"image\",\n                                \"storagepath\": \"wonders-of-italy\",\n                                \"position\": \"top\"\n                            }\n                        ],\n                        \"screennumber\": 3\n                    },\n                    {\n                        \"media\": [\n                            {\n                                \"filename\": \"rome-from-above.mp4\",\n                                \"type\": \"video\",\n                                \"storagepath\": \"wonders-of-italy\",\n                                \"position\": \"top\"\n                            },\n                            {\n                                \"filename\": \"italy-rome.jpeg\",\n                                \"type\": \"image\",\n                                \"storagepath\": \"wonders-of-italy\",\n                                \"position\": \"bottom\"\n                            }\n                        ],\n                        \"screennumber\": 2\n                    }\n                ],\n                \"duration\": 30000,\n                \"flyto\": \"Rome\"\n            },\n            {\n                \"screens\": [\n                    {\n                        \"media\": [\n                            {\n                                \"filename\": \"rome-from-above.mp4\",\n                                \"type\": \"video\",\n                                \"storagepath\": \"wonders-of-italy\",\n                                \"position\": \"top\"\n                            }\n                        ],\n                        \"screennumber\": 3\n                    },\n                    {\n                        \"media\": [\n                            {\n                                \"filename\": \"italy-coliseu.jpeg\",\n                                \"type\": \"image\",\n                                \"storagepath\": \"wonders-of-italy\",\n                                \"position\": \"top\"\n                            }\n                        ],\n                        \"screennumber\": 2\n                    }\n                ],\n                \"duration\": 30000,\n                \"flyto\": \"Venice\"\n            },\n            {\n                \"screens\": [\n                    {\n                        \"media\": [\n                            {\n                                \"filename\": \"italy-rome.jpeg\",\n                                \"type\": \"image\",\n                                \"storagepath\": \"wonders-of-italy\",\n                                \"position\": \"middle\",\n                                \"sharing\": \"true\",\n                                \"partner\": 2\n                            }\n                        ],\n                        \"screennumber\": 1\n                    }\n                ],\n                \"duration\": 30000,\n                \"flyto\": \"Florence\"\n            },\n            {\n                \"screens\": [\n                    {\n                        \"media\": [\n                            {\n                                \"filename\": \"italy-coliseu.jpeg\",\n                                \"type\": \"image\",\n                                \"storagepath\": \"wonders-of-italy\",\n                                \"position\": \"top\",\n                                \"sharing\": \"true\",\n                                \"partner\": 1\n                            }\n                        ],\n                        \"screennumber\": 3\n                    },\n                    {\n                        \"media\": [\n                            {\n                                \"filename\": \"rome-from-above.mp4\",\n                                \"type\": \"video\",\n                                \"storagepath\": \"wonders-of-italy\",\n                                \"position\": \"middle\"\n                            }\n                        ],\n                        \"screennumber\": 2\n                    }\n                ],\n                \"duration\": 30000\n            }\n        ]\n    }\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -249,6 +249,99 @@
 						"clean"
 					]
 				}
+			},
+			"response": []
+		},
+		{
+			"name": "EXPORT",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://192.168.0.17:5000/share/export/5f0f4ee0919a1017d45ddd6f",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"0",
+						"17"
+					],
+					"port": "5000",
+					"path": [
+						"share",
+						"export",
+						"5f0f4ee0919a1017d45ddd6f"
+					]
+				},
+				"description": "Exports a presentation in .zip"
+			},
+			"response": []
+		},
+		{
+			"name": "IMPORT",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "presentationzip",
+							"type": "file",
+							"src": []
+						}
+					],
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://192.168.0.17:5000/share/import",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"0",
+						"17"
+					],
+					"port": "5000",
+					"path": [
+						"share",
+						"import"
+					]
+				},
+				"description": "Imports a presentation in .zip"
 			},
 			"response": []
 		}
