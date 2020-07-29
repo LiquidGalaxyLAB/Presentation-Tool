@@ -1,4 +1,4 @@
-![Logo](logo200x200.png) 
+![Logo](./docs/logo200x200.png) 
 # Presentation Tool
 // badges will go here
 
