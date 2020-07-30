@@ -1,6 +1,6 @@
 ![Logo](./docs/logo200x200.png) 
 # Presentation Tool
-[![License](https://img.shields.io/github/license/LiquidGalaxyLAB/Presentation-Tool.svg)](https://opensource.org/licenses/Apache-2.0) [![github-languages-image](https://img.shields.io/github/languages/top/LiquidGalaxyLAB/Presentation-Tool.svg?color=red)]() [![github-language-count-image](https://img.shields.io/github/languages/count/LiquidGalaxyLAB/galaxy-pong.svg)]() [![Issues](https://img.shields.io/github/issues/LiquidGalaxyLAB/Presentation-Tool.svg)](https://github.com/LiquidGalaxyLAB/Presentation-Tool/issues) [![forks](https://img.shields.io/github/forks/LiquidGalaxyLAB/Presentation-Tool.svg)]() [![github-repo-size-image](https://img.shields.io/github/repo-size/LiquidGalaxyLAB/Presentation-Tool.svg?color=yellow)]()
+[![License](https://img.shields.io/github/license/LiquidGalaxyLAB/Presentation-Tool.svg)](https://opensource.org/licenses/Apache-2.0) [![github-languages-image](https://img.shields.io/github/languages/top/LiquidGalaxyLAB/Presentation-Tool.svg?color=red)]() [![github-language-count-image](https://img.shields.io/github/languages/count/LiquidGalaxyLAB/Presentation-Tool.svg)]() [![Issues](https://img.shields.io/github/issues/LiquidGalaxyLAB/Presentation-Tool.svg)](https://github.com/LiquidGalaxyLAB/Presentation-Tool/issues) [![forks](https://img.shields.io/github/forks/LiquidGalaxyLAB/Presentation-Tool.svg)]() [![github-repo-size-image](https://img.shields.io/github/repo-size/LiquidGalaxyLAB/Presentation-Tool.svg?color=yellow)]()
 
 ## About
 
@@ -41,7 +41,7 @@ Because it consists of overlaying processes, the Presentation Tool can be used o
 
 ### Install the API
 
-Follow the [install backend guide]() to install the API and all its pre-requisites.
+Follow the [install backend guide](./backend/readme.md) to install the API and all its pre-requisites.
 
 The API can be used alone if you use softwares like Postman, for example, to make all the API requests.
 
@@ -49,7 +49,7 @@ All the possible endpoints are described on the [readme]() of the backend sessio
 
 ### Install the user interface
 
-If you prefer an easier way and more user friendly to interact with this software, install the user interface by following the [install frontend guide]().
+If you prefer an easier way and more user friendly to interact with this software, install the user interface by following the [install frontend guide](./frontend/presentation-tool/readme.md).
 
 The user interface is meant to be used with the API, it is useless if not working with an already set up backend. 
 
