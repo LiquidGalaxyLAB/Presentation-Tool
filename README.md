@@ -1,10 +1,20 @@
 ![Logo](./docs/logo200x200.png) 
 # Presentation Tool
-// badges will go here
+[![License](https://img.shields.io/github/license/LiquidGalaxyLAB/Presentation-Tool.svg)](https://opensource.org/licenses/Apache-2.0) [![github-languages-image](https://img.shields.io/github/languages/top/LiquidGalaxyLAB/Presentation-Tool.svg?color=red)]() [![github-language-count-image](https://img.shields.io/github/languages/count/LiquidGalaxyLAB/galaxy-pong.svg)]() [![Issues](https://img.shields.io/github/issues/LiquidGalaxyLAB/Presentation-Tool.svg)](https://github.com/LiquidGalaxyLAB/Presentation-Tool/issues) [![forks](https://img.shields.io/github/forks/LiquidGalaxyLAB/Presentation-Tool.svg)]() [![github-repo-size-image](https://img.shields.io/github/repo-size/LiquidGalaxyLAB/Presentation-Tool.svg?color=yellow)]()
 
 ## About
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum in neque sed ipsum fringilla consequat. Maecenas sit amet dui iaculis, pretium mauris quis, tincidunt sapien. In et mollis nulla. Fusce fermentum interdum vehicula. Vivamus congue placerat nisl, nec venenatis nibh finibus at. Nunc lacus ante, blandit quis hendrerit vitae, mollis quis nunc. Sed sed neque ipsum. Integer rutrum purus feugiat velit bibendum pretium. Ut pellentesque neque non eros aliquam suscipit. Donec ullamcorper varius dui, sit amet rutrum turpis porttitor eget. Pellentesque sit amet dolor vel nisi pellentesque cursus sed vel quam. Quisque risus ligula, rutrum nec lobortis eget, vestibulum quis mi. Quisque quis porta magna. Phasellus vel feugiat urna.
+The Presentation Tool project started as a project for Google Summer of Code 2020. The main idea is to have a software that is capable to create different sets of data configuration to be displayed on a Liquid Galaxy. 
+
+Liquid Galaxy is a very powerful tool to visualize data, the elevated computing power given by the main-secondary architecture and the larger visualiazation brings a very interesting field to show different types of media in bigger scales. 
+
+The API idea is to empower this capability of Liquid Galaxy by proposing the execution of different types of media at the same time using the multiple processing with bash. 
+
+To deal with those creations, the API was developed to manage presentations. A presentation is a set of commands an user gives to the API, those commands are parsed and translated to open sets of media on specified positions, screens and time. 
+
+To help users manage the presentations, a tool was created to serve as a user interface connected directly with the API.
+
+Because it consists of overlaying processes, the Presentation Tool can be used on top of Google Earth. Due to this powerful partnership, the Presentation Tool is integrated with the query system of Google Earth, making it possible to do queries while displaying the media.
 
 ### Use cases
 
@@ -19,7 +29,8 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum in neque sed
 * A person has the objective of raising awareness about ecological disasters and wants to present the now and then of different forests with great impact
 
 
-### Main technologies/languages used
+### Main technologies and languages used
+
 * Javascript
 * Bash
 * [MongoDB](https://www.mongodb.com/)
@@ -28,16 +39,34 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum in neque sed
 
 ## Installation guide
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum in neque sed ipsum fringilla consequat. Maecenas sit amet dui iaculis, pretium mauris quis, tincidunt sapien. In et mollis nulla. Fusce fermentum interdum vehicula. Vivamus congue placerat nisl, nec venenatis nibh finibus at. Nunc lacus ante, blandit quis hendrerit vitae, mollis quis nunc. Sed sed neque ipsum. Integer rutrum purus feugiat velit bibendum pretium. Ut pellentesque neque non eros aliquam suscipit. Donec ullamcorper varius dui, sit amet rutrum turpis porttitor eget. Pellentesque sit amet dolor vel nisi pellentesque cursus sed vel quam. Quisque risus ligula, rutrum nec lobortis eget, vestibulum quis mi. Quisque quis porta magna. Phasellus vel feugiat urna.
+### Install the API
+
+Follow the [install backend guide]() to install the API and all its pre-requisites.
+
+The API can be used alone if you use softwares like Postman, for example, to make all the API requests.
+
+All the possible endpoints are described on the [readme]() of the backend session
+
+### Install the user interface
+
+If you prefer an easier way and more user friendly to interact with this software, install the user interface by following the [install frontend guide]().
+
+The user interface is meant to be used with the API, it is useless if not working with an already set up backend. 
 
 ## Full documentation
 
-// link to full documentation
+To further information about the project checkout the [full documentation]().
 
 ## Issues and contributing
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum in neque sed ipsum fringilla consequat. Maecenas sit amet dui iaculis, pretium mauris quis, tincidunt sapien. In et mollis nulla. Fusce fermentum interdum vehicula. Vivamus congue placerat nisl, nec venenatis nibh finibus at. Nunc lacus ante, blandit quis hendrerit vitae, mollis quis nunc. Sed sed neque ipsum. Integer rutrum purus feugiat velit bibendum pretium. Ut pellentesque neque non eros aliquam suscipit. Donec ullamcorper varius dui, sit amet rutrum turpis porttitor eget. Pellentesque sit amet dolor vel nisi pellentesque cursus sed vel quam. Quisque risus ligula, rutrum nec lobortis eget, vestibulum quis mi. Quisque quis porta magna. Phasellus vel feugiat urna.
+Fill up issues, bugs or feature requests in [our issue tracker](https://github.com/LiquidGalaxyLAB/Presentation-Tool/issues/new).
 
-## Support
+Please try to be very descriptive and clear. 
+
+If you want to contribute, make sure to take a look at the full documentation and open a [pull request](https://github.com/LiquidGalaxyLAB/Presentation-Tool/compare).
 
 ## License
+
+This software is under the [Apache 2.0 License](https://opensource.org/licenses/Apache-2.0)
+
+Copyright 2020 [Karine Aparecida Pistili Rodrigues](https://www.linkedin.com/in/karine-pistili)
