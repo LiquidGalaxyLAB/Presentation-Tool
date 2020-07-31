@@ -14,6 +14,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam vitae vestibulu
 
 #### Install a Liquid Galaxy
 
+- [ ]
 This project needs a Liquid Galaxy instance, make sure it's correctly installed before starting. Get the source code [here](https://github.com/LiquidGalaxyLAB/liquid-galaxy).
 
 #### Install MongoDB

@@ -45,7 +45,7 @@ Follow the [install backend guide](./backend/readme.md) to install the API and a
 
 The API can be used alone if you use softwares like Postman, for example, to make all the API requests.
 
-All the possible endpoints are described on the [readme]() of the backend session
+All the possible endpoints are described on the [readme](./backend/readme.md) of the backend session
 
 ### Install the user interface
 
@@ -55,7 +55,7 @@ The user interface is meant to be used with the API, it is useless if not workin
 
 ## Full documentation
 
-To further information about the project checkout the [full documentation]().
+To further information about the project checkout the full documentation in our [wiki](https://github.com/LiquidGalaxyLAB/Presentation-Tool/wiki).
 
 ## Issues and contributing
 
