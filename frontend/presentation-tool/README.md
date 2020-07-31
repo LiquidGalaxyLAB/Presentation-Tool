@@ -6,6 +6,8 @@ The user interface was developed to facilitate the managing of the presentations
 
 This tool provides full connection to all API functionality, including create, edit and delete operations, and also import and export.
 
+Within the home page, users are able to see all presentations stored on the Liquid Galaxy and filter by name or category, facilitating in cases of having a lot of presentations.
+
 It is a web application that was developed using the [Vue.js](https://vuejs.org/) framework and has a pwa support, so it can be installed as a shortcut in your devices.
 
 ## How to install
