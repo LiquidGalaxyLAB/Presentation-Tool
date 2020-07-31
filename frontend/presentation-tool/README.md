@@ -1,4 +1,4 @@
-# User interface
+# Presentation Tool - User interface
 
 ## About
 
@@ -9,6 +9,8 @@ This tool provides full connection to all API functionality, including create, e
 It is a web application that was developed using the [Vue.js](https://vuejs.org/) framework and has a pwa support, so it can be installed as a shortcut in your devices.
 
 ## How to install
+
+To properly install the frontend is very important to follow all the steps and to make sure all the required software is correctly installed and working, including the API. 
 
 ### Choose where the project will be running
 
@@ -87,7 +89,7 @@ How to open the 8080 port:
 2. Edit the the *iptables.conf* file 
 3. On the line that contains **-A INPUT -p tcp -m multiport --dports 81,8111,8112 -j ACCEPT**
 4. add the port **8080**
-5. It will have to look like that for example **-A INPUT -p tcp -m multiport --dports 81,8111,8112,5000 -j ACCEPT**
+5. It will have to look like that for example **-A INPUT -p tcp -m multiport --dports 81,8111,8112,5000,8080 -j ACCEPT**
 6. The order of the ports doesn't matter
 7. **Save** the file and ```reboot``` the computer
 
@@ -107,7 +109,7 @@ Fill up issues, bugs or feature requests in [our issue tracker](https://github.c
 
 Please try to be very descriptive and clear. 
 
-If you want to contribute, make sure to take a look at the full documentation and open a [pull request](https://github.com/LiquidGalaxyLAB/Presentation-Tool/compare).
+If you want to contribute, make sure to take a look at the [full documentation](https://github.com/LiquidGalaxyLAB/Presentation-Tool/wiki) and open a [pull request](https://github.com/LiquidGalaxyLAB/Presentation-Tool/compare).
 
 
 
