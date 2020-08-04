@@ -18,17 +18,31 @@ echo "LG_MAX: $LG_MAX"
 echo "ORIENTATION: $ORIENTATION"
 echo "POSITION: $POSITION"
 
+# to maintain width of the video
+if [ "$LG_SCREEN" -eq "1" ]; then
+    WIDTH=$(ffprobe -v error -select_streams v:0 -show_entries stream=width -of csv=s=x:p=0 $FILE_PATH)
+else
+    WIDTH=$(ssh lg@lg$LG_SCREEN ffprobe -v error -select_streams v:0 -show_entries stream=width -of csv=s=x:p=0 $FILE_PATH)
+fi
+
+echo "$WIDTH"
 
 # Checking parameters passed
 if [ "$ORIENTATION" = "right" ] || [ "$ORIENTATION" = "left" ] ; then
-    # calculates width and height
-    XPOSITION=0
-    WIDTH=$DIMENSION_SHORTEST
+   # in case image width is bigger than the screen
+    if [ "$WIDTH" -gt "$DIMENSION_SHORTEST" ];then
+        WIDTH=$DIMENSION_SHORTEST
+    fi
+    # calculates width and heigh
+    XPOSITION=$(((DIMENSION_SHORTEST /2) - (WIDTH/2)))
     HEIGHT=$((DIMENSION_LARGEST / 3))
 else
+    # in case image width is bigger than the screen
+    if [ "$WIDTH" -gt "$DIMENSION_SHORTEST" ];then
+        WIDTH=$DIMENSION_SHORTEST
+    fi
     # calculates width and height
-    XPOSITION=0
-    WIDTH=$DIMENSION_LARGEST
+    XPOSITION=$(((DIMENSION_LARGEST /2) - (WIDTH/2)))
     HEIGHT=$((DIMENSION_SHORTEST / 3))
 fi
 
