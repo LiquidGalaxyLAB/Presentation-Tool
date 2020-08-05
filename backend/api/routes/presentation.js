@@ -5,27 +5,33 @@ const router = express.Router()
 /**
  * @swagger
  *
- * /presentation/execute/:id:
+ * /presentation/execute/{id}:
  *   get:
- *     description: Executes a presentation. Receives the id of the presentation that is going to be executed
+ *     description: Executes a presentation. Receives the id of the presentation that is going to be executed as a parameter
  *     parameters:
  *        - name: id
  *          description: id of the presentation
+ *          type: string
+ *          in: path
  *          required: true
  *     responses:
  *       202:
- *         description: Presentation successfully stopped
+ *         description: Accepted. The request has being accepted to start proccessing. Executing presentation has started
  *       500:
- *         description: Internal server error
+ *         description: Internal Server Error. Something wrong happened with the server, either storage or database.
+ *       400:
+ *         description: Bad Request. There's something wrong with the parameter you used
+ *       404:
+ *         description: Not found. The presentation you are trying to execute was not found on the database
  */
 router.get("/execute/:id", (req, res, next) => {
     var id = req.params.id
     executePresentation(id)
         .then((response) => {
-            res.json(response)
+            res.status(response.status).json(response)
         })
         .catch((err) => {
-            res.json(err)
+            res.status(response.status).json(err)
         })
 
 })
@@ -38,7 +44,9 @@ router.get("/execute/:id", (req, res, next) => {
  *     description: Stops all the current tasks used when running a presentation
  *     responses:
  *       200:
- *         description: Presentation successfully stopped
+ *         description: Success. Stopped current presentation execution
+ *       500:
+ *         description: Internal Server Error. Error on stopping presentation execution
  */
 router.get("/stop", (req, res, next) => {
     stopPresentation()
@@ -58,22 +66,91 @@ router.get("/stop", (req, res, next) => {
  *     description: Gets all saved presentations from the database
  *     responses:
  *       200:
- *         description: Retrieves all documents
+ *         description: Success. Retrived all documents from the database
  *       500:
- *         description: Internal server error
+ *         description: Internal Server Error. An error occured while getting documents from the database
  */
 router.get("/getall", (req, res, next) => {
     getAllPresentations().then((array) => {
         console.log('array', array)
-        res.send(array)
+        res.status(200).send(array)
     })
         .catch(() => {
-            res.json('500')
+            res.status(500).json({staus: 'Internal Server Error. An error occured while getting documents from the database'})
         })
 })
 
-// create
-// receives the json with the info and calls the functions to save a new presentation in the database
+/**
+ * @swagger
+ *
+ * /presentation/create:
+ *   post:
+ *     description: Receives a json with the structure of a presentation and creates new presentation in the database
+ *     parameters:
+ *         - name: presentation object
+ *           in: body
+ *           description: A json following the required format containing information about a presentation. Slides and screens can be added to the json, as well parameters can be removed. Check full documentation for more information about each field
+ *           required: true
+ *           schema:
+ *              type: object
+ *              properties:
+ *                id:
+ *                 type: string
+ *                title:
+ *                 type: string
+ *                description:
+ *                 type: string
+ *                maxscreens:
+ *                 type: integer
+ *                category: 
+ *                 type: string
+ *                audiopath:
+ *                 type: string
+ *                slides:
+ *                 type: array
+ *                 items:
+ *                  type: object
+ *                  properties:
+ *                   id:
+ *                    type: string
+ *                   duration:
+ *                    type: integer
+ *                   audiopath:
+ *                    type: string 
+ *                   flyto:
+ *                    type: string
+ *                   screens:
+ *                    type: array
+ *                    items:
+ *                     type: object
+ *                     properties:
+ *                      screennumber:
+ *                       type: integer
+ *                      media:
+ *                       type: array
+ *                       items:
+ *                        type: object
+ *                        properties:
+ *                         id:
+ *                          type: string
+ *                         filename:
+ *                          type: string
+ *                         type:
+ *                          type: string
+ *                         storagepath:
+ *                          type: string
+ *                         position:
+ *                          type: string
+ *                         sharing:
+ *                          type: boolean
+ *                         partner:
+ *                          type: integer
+ *     responses:
+ *       201:
+ *         description: Success. Document created with success
+ *       500:
+ *         description: Internal Server Error. Error on creating document
+ */
 router.post("/create", (req, res, next) => {
     var presentation = req.body
     createPresentation(presentation)
