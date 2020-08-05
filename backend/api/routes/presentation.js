@@ -3,7 +3,24 @@ const express = require('express')
 const router = express.Router()
 
 // execute
-// receives the id of the presentation that is going to be executed
+// 
+
+/**
+ * @swagger
+ *
+ * /presentation/execute/:id:
+ *   get:
+ *     description: Executes a presentation. Receives the id of the presentation that is going to be executed
+ *     parameters:
+ *        - name: id
+ *          description: id of the presentation
+ *          required: true
+ *     responses:
+ *       202:
+ *         description: Presentation successfully stopped
+ *       500:
+ *         description: Internal server error
+ */
 router.get("/execute/:id", (req, res, next) => {
     var id = req.params.id
     executePresentation(id)
@@ -16,8 +33,16 @@ router.get("/execute/:id", (req, res, next) => {
 
 })
 
-// stop
-// this route stops all the current tasks used when running a presentation
+/**
+ * @swagger
+ *
+ * /presentation/stop:
+ *   get:
+ *     description: Stops all the current tasks used when running a presentation
+ *     responses:
+ *       200:
+ *         description: Presentation successfully stopped
+ */
 router.get("/stop", (req, res, next) => {
     stopPresentation()
         .then((response) => {
@@ -28,8 +53,18 @@ router.get("/stop", (req, res, next) => {
         })
 })
 
-// get all
-// gets all saved presentations from the database
+/**
+ * @swagger
+ *
+ * /presentation/getall:
+ *   get:
+ *     description: Gets all saved presentations from the database
+ *     responses:
+ *       200:
+ *         description: Retrieves all documents
+ *       500:
+ *         description: Internal server error
+ */
 router.get("/getall", (req, res, next) => {
     getAllPresentations().then((array) => {
         console.log('array', array)
