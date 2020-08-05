@@ -33,8 +33,14 @@ module.exports = {
 
         return new Promise((resolve, reject) => {
             exec(`${process.env.FILE_PATH}/api/parser/scripts/killPresentation.sh`, (err, stdout, stderr) => {
-                console.log('Stopped all current applications', stdout)
-                resolve({ status: 200, msg: `Success. Stopped current presentation execution` })
+                if (err) {
+                    reject({ status: 500, msg: `Error on stopping presentation execution. ${stderr}` })
+                }
+                else {
+                    console.log('Stopped all current applications', stdout)
+                    resolve({ status: 200, msg: `Success. Stopped current presentation execution` })
+                }
+
             })
         })
 

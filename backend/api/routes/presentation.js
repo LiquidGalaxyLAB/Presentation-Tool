@@ -2,9 +2,6 @@ const parser = require('../parser/main')
 const express = require('express')
 const router = express.Router()
 
-// execute
-// 
-
 /**
  * @swagger
  *
