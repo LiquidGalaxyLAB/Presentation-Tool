@@ -49,7 +49,7 @@ Create the environment variables needed for the project to connect the interface
 
 #### Run the app
 
-1. Run the app by running ```npm run serve --port 8080``` on the terminal inside */frontend/presentation-tool* directory
+1. Run the app by running ```npm run serve -- --port 8080``` on the terminal inside */frontend/presentation-tool* directory
 
 2. Your app will be running on ```localhost:8080```
 
@@ -97,7 +97,7 @@ How to open the 8080 port:
 
 #### Run the app
 
-1. Run the app by running ```npm run serve --port 8080``` on the terminal inside *Presentation-Tool/frontend/presentation-tool* directory
+1. Run the app by running ```npm run serve -- --port 8080``` on the terminal inside *Presentation-Tool/frontend/presentation-tool* directory
 
 2. Your app will be running on ```[masterIP]:8080``` and can be accessed by any computer connected in the same network
 

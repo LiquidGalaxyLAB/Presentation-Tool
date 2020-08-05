@@ -121,7 +121,7 @@ export default {
               }
             }
           });
-        } 
+        }
       });
     },
     addImage() {
@@ -142,18 +142,16 @@ export default {
         this.media.sharing = null;
         this.media.partner = null;
       }
-      if (this.validatePosition()) {
-        if (!this.edit)
-          this.$store.dispatch("createNewMedia", {
-            slideID: this.slideID,
-            media: this.media,
-          });
-        else
-          this.$store.dispatch("editedMedia", {
-            slideID: this.slideID,
-            media: this.media,
-          });
-      }
+      if (!this.edit)
+        this.$store.dispatch("createNewMedia", {
+          slideID: this.slideID,
+          media: this.media,
+        });
+      else
+        this.$store.dispatch("editedMedia", {
+          slideID: this.slideID,
+          media: this.media,
+        });
 
       this.show = false;
     },
