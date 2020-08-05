@@ -4,7 +4,7 @@ const bodyParser = require('body-parser')
 const swaggerJsDoc = require('swagger-jsdoc')
 const swaggerUI = require('swagger-ui-express')
 
-// Info object
+// swagger basic information object
 const swaggerOptions = {
     swaggerDefinition: {
         info:{
@@ -40,7 +40,7 @@ app.use((req, res, next) => {
     next()
 })
 
-// swagger route
+// swagger route configuration in /api-docs + setting up swaggerUI
 const swaggerDocs = swaggerJsDoc(swaggerOptions)
 app.use('/api-docs',swaggerUI.serve,swaggerUI.setup(swaggerDocs))
 
@@ -52,6 +52,7 @@ app.use('/presentation', presentationRoutes)
 app.use('/storage', storageRoutes)
 app.use('/share', shareRoutes)
 
+// users that connect to / to /api-docs
 app.get('/', (req, res, next) => { 
     res.redirect(301,`/api-docs`) 
 })
