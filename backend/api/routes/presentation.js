@@ -31,7 +31,7 @@ router.get("/execute/:id", (req, res, next) => {
             res.status(response.status).json(response)
         })
         .catch((err) => {
-            res.status(response.status).json(err)
+            res.status(err.status).json(err)
         })
 
 })
@@ -51,10 +51,10 @@ router.get("/execute/:id", (req, res, next) => {
 router.get("/stop", (req, res, next) => {
     stopPresentation()
         .then((response) => {
-            res.json(response)
+            res.status(response.status).json(response)
         })
         .catch((error) => {
-            res.json(error)
+            res.status(error.status).json(error)
         })
 })
 
@@ -76,7 +76,7 @@ router.get("/getall", (req, res, next) => {
         res.status(200).send(array)
     })
         .catch(() => {
-            res.status(500).json({staus: 'Internal Server Error. An error occured while getting documents from the database'})
+            res.status(500).json({status: 'Internal Server Error. An error occured while getting documents from the database'})
         })
 })
 
@@ -155,10 +155,10 @@ router.post("/create", (req, res, next) => {
     var presentation = req.body
     createPresentation(presentation)
         .then((response) => {
-            res.json(response)
+            res.status(response.status).json(response)
         })
         .catch((err) => {
-            res.json(err)
+            res.status(err.status).json(err)
         })
 })
 
@@ -168,10 +168,10 @@ router.delete("/delete/:id", (req, res, next) => {
     var id = req.params.id
     deletePresentation(id)
         .then((response) => {
-            res.json(response)
+            res.status(response.status).json(response)
         })
         .catch((err) => {
-            res.json(err)
+            res.status(err.status).json(err)
         })
 })
 
@@ -182,10 +182,10 @@ router.patch("/update", (req, res, next) => {
 
     updatePresentation(data)
         .then((response) => {
-            res.json(response)
+            res.status(response.status).json(response)
         })
         .catch((error) => {
-            res.json(error)
+            res.status(error.status).json(error)
         })
 })
 
