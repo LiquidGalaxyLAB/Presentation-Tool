@@ -49,7 +49,7 @@ All the possible endpoints are described on the [readme](./backend/readme.md) of
 
 ### Install the user interface
 
-If you prefer an easier way and more user friendly to interact with this software, install the user interface by following the [install frontend guide](./frontend/presentation-tool/readme.md).
+If you prefer an easier way and more user friendly to interact with this software, install the user interface by following the [install frontend guide](./frontend/presentation-tool/README.md).
 
 The user interface is meant to be used with the API, it is useless if not working with an already set up backend. 
 
