@@ -52,9 +52,9 @@ var upload = multer({ storage: storage })
  *          in: formData
  *     responses:
  *       200:
- *         description: Success. Cleanned up storage with success
+ *         description: Success. All media was uploaded and stored with success
  *       500:
- *         description: Internal Server Error. Error on cleaning storage
+ *         description: Internal Server Error. An error occurred while uploading and storing the media on the Liquid Galaxy
  */
 router.post("/upload", upload.array('media'), (req, res, next) => {
     var screens
