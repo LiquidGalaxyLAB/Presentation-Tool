@@ -18,6 +18,26 @@ var storage = multer.diskStorage({
 
 var upload = multer({ storage: storage })
 
+/**
+ * @swagger
+ *
+ * /share/export/{id}:
+ *   get:
+ *     description: Receives the id of a presentation as parameter and stores 
+ *     parameters:
+ *        - name: id
+ *          description: The _id field of the presentation. The one that represents the document id
+ *          type: string
+ *          in: path
+ *          required: true
+ *     responses:
+ *       200:
+ *         description: Success. The presentation was succesfully deleted from the database and the storage
+ *       500:
+ *         description: Internal Server Error. Something wrong happened with the server, either storage or database.
+ *       404:
+ *         description: Not found. The presentation you are trying to delete was not found on the database
+ */
 router.get("/export/:id", (req, res, next) => {
     exportPresentation(req.params.id)
         .then((response) => {
@@ -38,14 +58,34 @@ router.get("/export/:id", (req, res, next) => {
         })
 })
 
+/**
+ * @swagger
+ *
+ * /share/import:
+ *   post:
+ *     description: Receives a .zip containing a presentation and imports it to the database and storage
+ *     consumes:
+ *        - multipart/form-data
+ *     parameters:
+ *        - name: presentationzip
+ *          description: The presentation .zip has to be in a valid format that was created by the EXPORT endpoint
+ *          type: file
+ *          in: formData
+ *          required: true
+ *     responses:
+ *       200:
+ *         description: Success. Presentation imported with success!
+ *       500:
+ *         description: Internal Server Error. Error importing presentation
+ */
 router.post("/import", upload.single('presentationzip'),(req, res, next) => {
     console.log('req.file', req.file)
     importPresentation(req.file.filename)
         .then((response) => {
-            res.json(response)
+            res.status(response.status).json(response)
         })
         .catch((error) => {
-            res.json(error)
+            res.status(error.status).json(error)
         })
 })
 
