@@ -32,7 +32,7 @@ module.exports = {
         }
         else{
             console.log('Document deleted with success', id)
-            response = {status: 200, msg: `Success. Document ${id} deleted with`}
+            response = {status: 200, msg: `Success. Document ${id} deleted with success`}
         }
 
         return response

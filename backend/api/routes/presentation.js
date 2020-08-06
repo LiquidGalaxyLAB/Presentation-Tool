@@ -10,7 +10,7 @@ const router = express.Router()
  *     description: Executes a presentation. Receives the id of the presentation that is going to be executed as a parameter
  *     parameters:
  *        - name: id
- *          description: id of the presentation
+ *          description: The _id of the presentation. The one that represents the document
  *          type: string
  *          in: path
  *          required: true
@@ -162,8 +162,26 @@ router.post("/create", (req, res, next) => {
         })
 })
 
-// delete
-// receives presentation id, calls functions to delete from db and from all machines and storage
+/**
+ * @swagger
+ *
+ * /presentation/delete/{id}:
+ *   delete:
+ *     description: Receives the id of a presentation as parameter and deletes it from the database and from the Liquid Galaxy storage
+ *     parameters:
+ *        - name: id
+ *          description: The _id field of the presentation. The one that represents the document id
+ *          type: string
+ *          in: path
+ *          required: true
+ *     responses:
+ *       200:
+ *         description: Success. The request has being accepted to start proccessing. Executing presentation has started
+ *       500:
+ *         description: Internal Server Error. Something wrong happened with the server, either storage or database.
+ *       404:
+ *         description: Not found. The presentation you are trying to delete was not found on the database
+ */
 router.delete("/delete/:id", (req, res, next) => {
     var id = req.params.id
     deletePresentation(id)

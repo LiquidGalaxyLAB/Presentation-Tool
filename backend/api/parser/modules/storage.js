@@ -48,9 +48,15 @@ module.exports = {
         })
     },
     deleteMediaFromLG: function (presentationJson) {
-        var storagepath = `${presentationJson.id}`
-
+        var storagepath
         return new Promise((resolve, reject) => {
+            
+            if(presentationJson != undefined){
+                storagepath = `${presentationJson.id}`
+            }
+            else{
+                reject({status: 500, msg: "Internal Server Error. Presentation was not found inside the storage"})
+            }
             
             exec(`${process.env.FILE_PATH}/api/parser/scripts/deleteMedia.sh ${process.env.SLAVE_STORAGE}/${storagepath} ${process.env.FILE_PATH}/storage/${storagepath} ${presentationJson.maxscreens}`, (err, stdout, stderr) => {
                 if (err) {
