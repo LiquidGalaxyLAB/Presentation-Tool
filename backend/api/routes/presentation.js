@@ -176,7 +176,7 @@ router.post("/create", (req, res, next) => {
  *          required: true
  *     responses:
  *       200:
- *         description: Success. The request has being accepted to start proccessing. Executing presentation has started
+ *         description: Success. The presentation was succesfully deleted from the database and the storage
  *       500:
  *         description: Internal Server Error. Something wrong happened with the server, either storage or database.
  *       404:
@@ -193,8 +193,31 @@ router.delete("/delete/:id", (req, res, next) => {
         })
 })
 
-// update
-// receives the fields of the document that needs to be updated in the db and the id of the presentation
+/**
+ * @swagger
+ *
+ * /presentation/update:
+ *   patch:
+ *     description: Receives the fields of the document that needs to be updated in the db and the id of the presentation
+ *     parameters:
+ *        - name: data
+ *          description: A json that contains the _id of the presentation and a data field with all the desired changes
+ *          type: string
+ *          in: body
+ *          required: true
+ *          schema:
+ *           type: object
+ *           properties:
+ *             id:
+ *              type: string
+ *             data:
+ *              type: object 
+ *     responses:
+ *       200:
+ *         description: Success. Document updated with success
+ *       500:
+ *         description: Internal Server Error. Unable to update document.
+ */
 router.patch("/update", (req, res, next) => {
     var data = req.body
 
