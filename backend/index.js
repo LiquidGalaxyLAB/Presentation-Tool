@@ -23,7 +23,7 @@ const swaggerOptions = {
         servers:[`http://localhost:${process.env.PORT}`]
     },
     basePath:'/',
-    apis:['./api/routes/presentation.js']
+    apis:['./api/routes/*.js']
 }
 
 app.use(bodyParser.urlencoded({ extended: true })) //extended allows you to send big data
