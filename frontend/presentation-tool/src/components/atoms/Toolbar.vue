@@ -13,6 +13,7 @@
         @click="$router.push('/')"
       >Liquid Galaxy Presentation Tool</v-toolbar-title>
       <v-spacer></v-spacer>
+      <v-btn text color="white" @click="about=true">about</v-btn>
       <v-menu offset-y>
         <template v-slot:activator="{ on, attrs }">
           <v-btn icon v-bind="attrs" v-on="on">
@@ -34,21 +35,32 @@
 import Alert from "@/components/atoms/Alert";
 
 export default {
+  props: ["value"],
   components: {
-    Alert
+    Alert,
   },
   data: () => ({
     items: [
-      { title: "Clean Storage", icon: "mdi-delete", action: "clean-storage" }
-    ]
+      { title: "Clean Storage", icon: "mdi-delete", action: "clean-storage" },
+    ],
   }),
+  computed: {
+    about: {
+      get() {
+        return this.value;
+      },
+      set(value) {
+        this.$emit("input", value);
+      },
+    },
+  },
   methods: {
     execAction(action) {
       if (action == "clean-storage") this.cleanStorage();
     },
     cleanStorage() {
       this.$store.dispatch("cleanLiquidGalaxyStorage");
-    }
-  }
+    },
+  },
 };
 </script>
