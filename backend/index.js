@@ -49,9 +49,11 @@ app.use('/api-docs',swaggerUI.serve,swaggerUI.setup(swaggerDocs))
 const presentationRoutes = require('./api/routes/presentation')
 const storageRoutes = require('./api/routes/storage')
 const shareRoutes = require('./api/routes/share')
+const demoRoute = require('./api/routes/demo')
 app.use('/presentation', presentationRoutes)
 app.use('/storage', storageRoutes)
 app.use('/share', shareRoutes)
+app.use('/demo',demoRoute)
 
 // users that connect to / to /api-docs
 app.get('/', (req, res, next) => { 

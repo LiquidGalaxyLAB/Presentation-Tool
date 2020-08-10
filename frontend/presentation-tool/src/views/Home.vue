@@ -79,7 +79,7 @@ export default {
       this.$store.commit('setFirstEnter',false)
     },
     launchDemo() {
-      console.log("puto");
+      this.$store.dispatch('launchDemo')
     },
   },
   computed: {

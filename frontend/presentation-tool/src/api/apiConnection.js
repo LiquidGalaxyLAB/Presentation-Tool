@@ -170,6 +170,19 @@ export default {
                     reject(err)
                 })
         })
+    },
+    launchDemo: async () =>{
+        return new Promise((resolve) => {
+            axios.get(`http://${process.env.VUE_APP_LG_IP}:${process.env.VUE_APP_LG_PORT}/demo`)
+                .then((res) => {
+                    console.log('Response: ', res.data)
+                    resolve(res.data)
+                })
+                .catch((err) => {
+                    console.log('Error: ', err)
+                    resolve({status:500,msg:err})
+                })
+        })
     }
 
 }
