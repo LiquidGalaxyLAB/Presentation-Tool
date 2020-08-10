@@ -27,7 +27,7 @@
               <h3 class="pl-3 pt-12 white--text">{{thanks}}</h3>
             </v-row>
             <v-row class="mt-12 ml-0 mr-0 pt-6 pb-12" justify="space-around" align="center">
-              <v-btn dark @click="about = false">
+              <v-btn dark @click="explore()">
                 Explore
                 <v-icon right>mdi-open-in-new</v-icon>
               </v-btn>
@@ -74,6 +74,10 @@ export default {
     };
   },
   methods: {
+    explore(){
+      this.about = false
+      this.$store.commit('setFirstEnter',false)
+    },
     launchDemo() {
       console.log("puto");
     },
@@ -85,6 +89,8 @@ export default {
   },
   created() {
     this.$store.dispatch("getAllPresentations");
+    if(!this.$store.state.utilsStore.first_enter)
+      this.about = false
   },
 };
 </script>

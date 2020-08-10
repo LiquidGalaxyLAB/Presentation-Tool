@@ -114,7 +114,7 @@ export default {
 
     },
     stopPresentation: async () => {
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve) => {
             axios.get(`http://${process.env.VUE_APP_LG_IP}:${process.env.VUE_APP_LG_PORT}/presentation/stop`)
                 .then((res) => {
                     console.log('Response: ', res.data)
@@ -122,7 +122,7 @@ export default {
                 })
                 .catch((err) => {
                     console.log('Error: ', err)
-                    reject(err)
+                    resolve({status:500,msg:err})
                 })
         })
     },

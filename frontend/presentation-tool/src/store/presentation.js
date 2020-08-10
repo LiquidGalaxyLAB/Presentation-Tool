@@ -12,12 +12,12 @@ export default {
         removePresentationFromList(state, payload) {
             state.presentations.splice(payload, 1)
         },
-        pushToPresentationsList(state,payload){
+        pushToPresentationsList(state, payload) {
             state.presentations.push(payload)
         }
     },
     actions: {
-        async createPresentation({ commit, dispatch}, payload) {
+        async createPresentation({ commit, dispatch }, payload) {
             //call to upload media
             if (payload.storage.media[0] != undefined && payload.storage.media[0] != null) {
                 var response = await api.uploadMedia(payload.storage)
@@ -52,10 +52,10 @@ export default {
             }
             return true
         },
-        async stopPresentation({ commit,dispatch },payload) {
+        async stopPresentation({ commit, dispatch }, payload) {
             var res = await api.stopPresentation(payload)
-                commit('setOverlay',{value: false, text:''})
-                dispatch('logResponse', res)
+            commit('setOverlay', { value: false, text: '' })
+            dispatch('logResponse', res)
         },
         async getAllPresentations({ commit }) {
             var pres = await api.getAllPresentation()
@@ -72,16 +72,16 @@ export default {
             }
             dispatch('logResponse', res)
         },
-        async exportPresentation({commit,dispatch},payload){
+        async exportPresentation({ commit, dispatch }, payload) {
             var res = await api.exportPresentation(payload)
             dispatch('logResponse', res)
-            commit('setOverlay',{value:false, text: ''})
+            commit('setOverlay', { value: false, text: '' })
         },
-        async importPresentation({dispatch,commit},payload){
-            console.log('zip file',payload)
+        async importPresentation({ dispatch, commit }, payload) {
+            console.log('zip file', payload)
             var res = await api.importPresentation(payload)
-            commit('setOverlay',{value: false, text:''})
-            dispatch('logResponse',res)
+            commit('setOverlay', { value: false, text: '' })
+            dispatch('logResponse', res)
         }
     },
     getters: {
