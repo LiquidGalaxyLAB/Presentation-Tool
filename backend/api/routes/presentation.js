@@ -7,6 +7,8 @@ const router = express.Router()
  *
  * /presentation/execute/{id}:
  *   get:
+ *     tags:
+ *      - presentation
  *     description: Executes a presentation. Receives the id of the presentation that is going to be executed as a parameter
  *     parameters:
  *        - name: id
@@ -41,6 +43,8 @@ router.get("/execute/:id", (req, res, next) => {
  *
  * /presentation/stop:
  *   get:
+ *     tags:
+ *      - presentation
  *     description: Stops all the current tasks used when running a presentation
  *     responses:
  *       200:
@@ -63,6 +67,8 @@ router.get("/stop", (req, res, next) => {
  *
  * /presentation/getall:
  *   get:
+ *     tags:
+ *      - presentation
  *     description: Gets all saved presentations from the database
  *     responses:
  *       200:
@@ -85,6 +91,8 @@ router.get("/getall", (req, res, next) => {
  *
  * /presentation/create:
  *   post:
+ *     tags:
+ *      - presentation
  *     description: Receives a json with the structure of a presentation and creates new presentation in the database
  *     parameters:
  *         - name: presentation object
@@ -167,6 +175,8 @@ router.post("/create", (req, res, next) => {
  *
  * /presentation/delete/{id}:
  *   delete:
+ *     tags:
+ *      - presentation
  *     description: Receives the id of a presentation as parameter and deletes it from the database and from the Liquid Galaxy storage
  *     parameters:
  *        - name: id
@@ -198,6 +208,8 @@ router.delete("/delete/:id", (req, res, next) => {
  *
  * /presentation/update:
  *   patch:
+ *     tags:
+ *      - presentation
  *     description: Receives the fields of the document that needs to be updated in the db and the id of the presentation
  *     parameters:
  *        - name: data

@@ -23,6 +23,8 @@ var upload = multer({ storage: storage })
  *
  * /storage/upload:
  *   post:
+ *     tags:
+ *      - storage
  *     description: Receives an array of multipart content-type media + storagepath + array of screens. DISCLAIMER -This swagger instance only accepts one media file per time
  *     consumes:
  *        - multipart/form-data
@@ -97,6 +99,8 @@ router.post("/upload", upload.array('media'), (req, res, next) => {
  *
  * /storage/clean:
  *   get:
+ *     tags:
+ *      - storage
  *     description: This endpoint cleans the whole local storage
  *     responses:
  *       200:

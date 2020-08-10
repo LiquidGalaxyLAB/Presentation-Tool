@@ -23,20 +23,26 @@ var upload = multer({ storage: storage })
  *
  * /share/export/{id}:
  *   get:
- *     description: Receives the id of a presentation as parameter and stores 
+ *     tags:
+ *      - share
+ *     description: Receives the id of a presentation as parameter and exports to a .zip
  *     parameters:
  *        - name: id
  *          description: The _id field of the presentation. The one that represents the document id
  *          type: string
  *          in: path
  *          required: true
+ *     produces:
+ *      - application/zip
  *     responses:
  *       200:
- *         description: Success. The presentation was succesfully deleted from the database and the storage
+ *         description: Success. The presentation was succesfully exported from the database and the storage
+ *       content: 
+ *          application/zip
  *       500:
  *         description: Internal Server Error. Something wrong happened with the server, either storage or database.
  *       404:
- *         description: Not found. The presentation you are trying to delete was not found on the database
+ *         description: Not found. The presentation you are trying to export was not found on the database
  */
 router.get("/export/:id", (req, res, next) => {
     exportPresentation(req.params.id)
@@ -63,6 +69,8 @@ router.get("/export/:id", (req, res, next) => {
  *
  * /share/import:
  *   post:
+ *     tags:
+ *      - share
  *     description: Receives a .zip containing a presentation and imports it to the database and storage
  *     consumes:
  *        - multipart/form-data

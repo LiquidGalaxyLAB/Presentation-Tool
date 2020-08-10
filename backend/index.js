@@ -9,6 +9,7 @@ const swaggerOptions = {
     swaggerDefinition: {
         info:{
             title:"Presentation Tool API",
+            description: "The API idea is to propose the execution of different types of media at the same time using multiple processing with bash to show big chunks of data at the same time and alongside Google Earth and other applications. These media can be grouped in what we call a Presentation. \n\nA Presentation is a set of configurations users can save on Liquid Galaxy to programatically open media in different positions, screens and time. \n\nEach presentation contains its basic information (like name, description, audio and category) and its slides. Just like in a presentation tool, users can create slides. Each slide has a duration, an its order of execution, so users know when it's going to be executed and for how long. Inside the slides users can add different media (images, videos, audio and sync with Google Earth by using the fly to operation). \n\nThe API has a set of managing presentation functionalities, from execute and stop to read,create,edit,delete,import and export.",
             contact:{
                 name: "Karine Aparecida Pistili Rodrigues",
                 url:"https://www.linkedin.com/in/karine-pistili/",
