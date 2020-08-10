@@ -89,11 +89,13 @@ Clone the project repository on the master machine either by downloading or by r
 PORT=5000
 FILE_PATH=/home/lg/Presentation-Tool/backend
 SLAVE_STORAGE=/home/lg/storage
+HOME=/home/lg
 
 ```
 3. If you have cloned the repository on a different location, update the **FILE_PATH** variable with the current project location
 4. The **PORT** is where the API server will be running, if you want to change to a different port, feel free to do it
 5. The **SLAVE_STORAGE** is the folder that will have to be created on each slave to store the presentations' media
+6. The **HOME** var is the master home directory
 
 ### Open port 5000
 

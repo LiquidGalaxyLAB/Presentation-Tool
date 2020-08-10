@@ -27,6 +27,7 @@ var PresentationSchema = new mongoose.Schema({
   category: {type: String},
   audiopath: {type: String},
   maxscreens:{type: Number},
+  openlogos:{type: Boolean},
   slides: [{
     _id:false,
     id: {type: String, require:true},

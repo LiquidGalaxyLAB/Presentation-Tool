@@ -10,11 +10,6 @@ module.exports = {
     execPresentation: async function (presentationJson) {
         playing = true
 
-        // show partner logos
-        if(presentationJson.showlogos){
-            openLogos()
-        }
-
         // if presentation has an audio that will be played the whole time
         if (presentationJson.audiopath != undefined) {
             execAudio(presentationJson.audiopath)
@@ -22,6 +17,10 @@ module.exports = {
 
         // iterates the slides
         for (var i = 0; i < presentationJson.slides.length; i++) {
+            // show partner logos
+            if (presentationJson.openlogos) {
+                openLogos(presentationJson.maxscreens)
+            }
             if (playing) {
                 console.log('SLIDE', presentationJson.slides[i])
                 execSlide(presentationJson.slides[i])
@@ -54,8 +53,15 @@ module.exports = {
 
 }
 
-function openLogos(){
-
+function openLogos(screen) {
+    exec(`${process.env.FILE_PATH}/api/parser/scripts/openLogos.sh ${screen} ${process.env.FILE_PATH}/utils/combined-logos-1200.png ${process.env.SLAVE_STORAGE} combined-logos-1200.png`, (err, stderr, stdout) => {
+        if (err) {
+            console.log('Error on opening logos', stderr)
+        }
+        else {
+            console.log('Success on opening logos')
+        }
+    })
 }
 
 function sleep(ms) {
