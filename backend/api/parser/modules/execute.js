@@ -9,6 +9,12 @@ var playing = false
 module.exports = {
     execPresentation: async function (presentationJson) {
         playing = true
+
+        // show partner logos
+        if(presentationJson.showlogos){
+            openLogos()
+        }
+
         // if presentation has an audio that will be played the whole time
         if (presentationJson.audiopath != undefined) {
             execAudio(presentationJson.audiopath)
@@ -45,6 +51,10 @@ module.exports = {
         })
 
     }
+
+}
+
+function openLogos(){
 
 }
 
