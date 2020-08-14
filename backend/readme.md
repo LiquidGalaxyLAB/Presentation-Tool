@@ -25,21 +25,83 @@ This project needs a Liquid Galaxy instance, make sure it's correctly installed 
 
 **INSTALL ON MASTER ONLY**
 
-All presentations configuration objects are stored in a MongoDB database. Download and install MongoDB Community from [here](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-ubuntu/).
+All presentations configuration objects are stored in a MongoDB database. Download and install MongoDB Community by following the steps below of by checking out the official documentation [here](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-ubuntu/).
+
+* Import the public key used by the package management system
+
+```
+wget -qO - https://www.mongodb.org/static/pgp/server-4.4.asc | sudo apt-key add -
+```
+
+* Create a list file for MongoDB
+
+```
+echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu xenial/mongodb-org/4.4 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-4.4.list
+```
+
+* Reload local package database
+
+```
+sudo apt update
+```
+
+* Install the MongoDB packages
+
+```
+sudo apt-get install -y mongodb-org
+```
+
+* Start MongoDB
+
+```
+sudo service mongod start
+```
+
+* Begin using mongo to check if installation went ok
+
+```
+mongo
+```
 
 #### 3. Install Nodejs and NPM
 
 **INSTALL ON MASTER ONLY**
 
-The API code was done using Nodejs, to have a running server download and install [Nodejs](https://nodejs.org/en/)
+The API code was done using Nodejs, to have a running server download and install Nodejs by following the commands below or by checking out the official documentation [here](https://nodejs.org/en/)
 
-NPM can be found [here](https://www.npmjs.com/get-npm).
+* Install Node.js from apt
+
+```
+sudo apt install nodejs
+```
+
+* Update Node.js version
+
+```
+sudo npm cache clean -f
+sudo npm install -g n
+sudo n stable
+```
+
+Use the step bellow to install NPM or check out the documentation [here](https://www.npmjs.com/get-npm).
+
+* Install npm
+
+```
+sudo apt install npm
+```
 
 #### 4. Install Nodemon
 
 **INSTALL ON MASTER ONLY**
 
-To help with debugging and to see all logs while the API is running install [Nodemon](https://www.npmjs.com/get-npm).
+To help with debugging and to see all logs while the API is running install [Nodemon](https://nodemon.io/).
+
+* Run on the terminal
+
+```
+sudo npm install -g nodemon
+```
 
 #### 5. Install feh and mpv
 
@@ -47,7 +109,27 @@ To help with debugging and to see all logs while the API is running install [Nod
 
 You can install feh by running ```sudo apt install feh``` on the terminal or by following the steps on the official [documentation](https://feh.finalrewind.org/).
 
-MPV can be installed by following the steps on the official [installation guide](https://mpv.io/installation/).
+
+MPV can be installed by following the steps on the official [installation guide](https://mpv.io/installation/) or by using the commands below.
+
+* Add PPA
+
+```
+sudo add-apt-repository ppa:mc3man/mpv-tests
+```
+
+* Update the package manager
+
+```
+sudo apt update
+```
+
+* Install the program
+
+```
+sudo apt install mpv
+```
+
 
 #### 6. Install image formats libraries
 
@@ -61,14 +143,43 @@ sudo apt install libjpeg-dev
 sudo apt install libtiff-dev
 sudo apt install libexif-dev
 sudo apt install libxext-dev
-
 ```
 
 #### 7. Install Image Magick
 
 **INSTALL ON MASTER ONLY**
 
-To install Image Magick you can refer to the official [documentation](https://imagemagick.org/index.php) or follow this [guide](https://www.tecmint.com/install-imagemagick-on-debian-ubuntu/)
+To install Image Magick you can refer to the official [documentation](https://imagemagick.org/index.php) or follow the guide below.
+
+* Configure environment
+
+```
+sudo apt update 
+sudo apt install build-essential
+```
+
+* Download source files (NOTE: if the version updates just change the numbers of the package for the version you download)
+
+```
+wget https://www.imagemagick.org/download/ImageMagick.tar.gz
+tar xvzf ImageMagick.tar.gz
+$ cd ImageMagick-7.0.8-26/
+```
+
+* Compile and configure
+
+```
+./configure
+make
+sudo make install
+sudo ldconfig /usr/local/lib
+```
+
+* Verify if it was correctly installed
+
+```
+identify -version
+```
 
 Make sure to have already installed all libraries mentioned above or Image Magick won't execute properly
 

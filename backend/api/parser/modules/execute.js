@@ -19,7 +19,8 @@ module.exports = {
         for (var i = 0; i < presentationJson.slides.length; i++) {
             // show partner logos
             if (presentationJson.openlogos) {
-                openLogos(presentationJson.maxscreens)
+               // openLogos(presentationJson.maxscreens)
+               openLogos(4) //will always open on screen 4
             }
             if (playing) {
                 console.log('SLIDE', presentationJson.slides[i])
