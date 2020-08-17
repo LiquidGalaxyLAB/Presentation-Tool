@@ -248,7 +248,7 @@ If any of these steps weren't properly followed you won't be able to store any m
 
 ### Download and configure the demo
 
-1. Download the zip file located [here]() 
+1. Download the zip file located [here](https://drive.google.com/file/d/15iodtdRnQzZnMTAf1hdAPmNtQRQiXefx/view?usp=sharing) 
 
 2. Copy the download file to the *Presentation-Tool/backend/utils* directory.
 
