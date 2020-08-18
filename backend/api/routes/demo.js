@@ -43,7 +43,7 @@ async function demoPresentation() {
         else{
             return new Promise((resolve, reject) => {
                 // copy .zip to storage/all
-                exec(`cp ${process.env.FILE_PATH}/utils/Demo.zip ${process.env.FILE_PATH}/storage/all`, (err, stdout, stderr) => {
+                exec(`cp ${process.env.FILE_PATH}/utils/Brasil.zip ${process.env.FILE_PATH}/storage/all`, (err, stdout, stderr) => {
                     if (err) {
                         console.log('Error on copy')
                         reject({ status: 500, msg: 'Internal Server Error. Unable to copy to new directory' })
