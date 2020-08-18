@@ -27,6 +27,12 @@ The following programs have to be installed in your computer:
 * [Nodejs](https://nodejs.org/en/)
 * [NPM](https://www.npmjs.com/get-npm)
 
+You will also need the Vue CLI. Install it by using the command below or by following the [official docs](https://cli.vuejs.org/guide/installation.html)
+
+```
+sudo npm install -g @vue/cli
+```
+
 #### Install
 
 1. Copy the whole */frontend* directory from the project repository to the other computer

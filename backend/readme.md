@@ -145,7 +145,15 @@ sudo apt install libexif-dev
 sudo apt install libxext-dev
 ```
 
-#### 7. Install Image Magick
+#### 7. Install FFPLAY
+
+FFPLAY is used to play audio. Intall it by using the command below or by looking at the official documentation [here](https://ffmpeg.org/ffplay.html)
+
+```
+sudo apt install ffplay
+```
+
+#### 8. Install Image Magick
 
 **INSTALL ON MASTER ONLY**
 
