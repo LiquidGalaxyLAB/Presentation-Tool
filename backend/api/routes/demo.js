@@ -54,7 +54,7 @@ async function demoPresentation() {
                 })
             }).then(async () => {
                 // import zip
-                await parser.importPresentation('Demo.zip')
+                await parser.importPresentation('Brasil.zip')
                     .then(async (response) => {
                         console.log('RESPONSE', response)
                         // execute presentation
