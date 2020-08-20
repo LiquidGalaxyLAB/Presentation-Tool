@@ -195,6 +195,8 @@ Clone the project repository on the master machine either by downloading or by r
 
 ### Configure environments variables
 
+**IMPORTANT:** The environments variables are very important for the functionality of the API. If any changes were made in the computer, either renamed/moved directories or change of IP addresses and ports, make sure to ALWAYS update you .env file with the new configuration, as it won't be updated by its own.
+
 1. Inside the *Presentation-Tool/backend* directory create a file called *.env*
 
 2. Copy paste the text below into the file you have just created
