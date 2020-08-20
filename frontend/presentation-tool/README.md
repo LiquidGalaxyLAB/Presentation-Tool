@@ -67,7 +67,9 @@ No pre requisites are needed to be installed in this case, as the master machine
 
 #### Configure the environment variables
 
-Create the environment variables needed for the project to connect the interface with the API that is running on the Liquid Galaxy
+Create the environment variables needed for the project to connect the interface with the API that is running on the Liquid Galaxy. 
+
+**IMPORTANT:** The environments variables are very important for the functionality of the front-end. If any changes were made in the computer, either renamed/moved directories or change of IP addresses and ports, make sure to ALWAYS update you .env file with the new configuration, as it won't be updated by its own.
 
 1. Still on the *Presentation-Tool/frontend/presentation-tool* directory, create a file with the name *.env*
 2. Copy paste the text below on the file you have just created
