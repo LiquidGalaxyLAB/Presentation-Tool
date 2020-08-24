@@ -76,5 +76,5 @@ ssh lg@lg$LG_SCREEN [[ -f $FILE_PATH ]] && echo "File exists.. Continue" || exit
 
 
 # connect via ssh and execute the action
-ssh lg@lg$LG_SCREEN "export DISPLAY=:0 && mpv -no-border --no-keepaspect --geometry $SIZE+$POSITION $FILE_PATH;" & 
+ssh lg@lg$LG_SCREEN "export DISPLAY=:0 && mpv -no-border --no-keepaspect --geometry=$SIZE+$POSITION $FILE_PATH;" & 
 
