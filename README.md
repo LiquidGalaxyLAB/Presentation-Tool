@@ -1,4 +1,4 @@
-![Logo](./docs/logo200x200.png) 
+![Logo](./docs/logo200x200.png) ![gsoc](./docs/gsoc200x200.png)
 # Presentation Tool
 [![License](https://img.shields.io/github/license/LiquidGalaxyLAB/Presentation-Tool.svg)](https://opensource.org/licenses/Apache-2.0) [![github-languages-image](https://img.shields.io/github/languages/top/LiquidGalaxyLAB/Presentation-Tool.svg?color=red)]() [![github-language-count-image](https://img.shields.io/github/languages/count/LiquidGalaxyLAB/Presentation-Tool.svg)]() [![Issues](https://img.shields.io/github/issues/LiquidGalaxyLAB/Presentation-Tool.svg)](https://github.com/LiquidGalaxyLAB/Presentation-Tool/issues) [![forks](https://img.shields.io/github/forks/LiquidGalaxyLAB/Presentation-Tool.svg)]() [![github-repo-size-image](https://img.shields.io/github/repo-size/LiquidGalaxyLAB/Presentation-Tool.svg?color=yellow)]()
 
