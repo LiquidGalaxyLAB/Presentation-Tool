@@ -94,17 +94,32 @@ module.exports = {
 
         return new Promise((resolve, reject) => {
             new Promise((resolve, reject) => {
-                // create temporary folder to store the the unzipped files
-                exec(`mkdir ${process.env.HOME}/temp`, (err, stderr, stdout) => {
-                    if (err) {
-                        console.log('Error on creating temp directory')
-                        reject()
-                    }
-                    else {
-                        console.log('Success on creating temp directory')
-                        resolve()
-                    }
-                })
+                if (!fs.existsSync(`${process.env.HOME}/temp`)) {
+                    // create temporary folder to store the the unzipped files
+                    exec(`mkdir ${process.env.HOME}/temp`, (err, stderr, stdout) => {
+                        if (err) {
+                            console.log('Error on creating temp directory')
+                            reject()
+                        }
+                        else {
+                            console.log('Success on creating temp directory')
+                            resolve()
+                        }
+                    })
+                }
+                else{
+                    exec(`rm -rf ${process.env.HOME}/temp/*`, (err, stderr, stdout) => {
+                        if (err) {
+                            console.log('Error on cleaning temp directory')
+                            reject()
+                        }
+                        else {
+                            console.log('Success on cleaning temp directory')
+                            resolve()
+                        }
+                    })
+                }
+
             })
                 .then(async () => {
                     // unzip received presentation
@@ -140,53 +155,53 @@ module.exports = {
                             console.log('Presentation loaded', presentation)
                             await database.createPresentation(presentation)
                         })
-                        .then(() =>{
-                            new Promise((resolve,reject) =>{
-                                exec(`${process.env.FILE_PATH}/api/parser/scripts/importMediaToSlaves.sh ${presentation.maxscreens} ${process.env.HOME} ${process.env.FILE_PATH}/storage/${presentation.id} ${process.env.SLAVE_STORAGE}/${presentation.id}`,(err,stderr,stdout) =>{
-                                    if(err){
+                        .then(() => {
+                            new Promise((resolve, reject) => {
+                                exec(`${process.env.FILE_PATH}/api/parser/scripts/importMediaToSlaves.sh ${presentation.maxscreens} ${process.env.HOME} ${process.env.FILE_PATH}/storage/${presentation.id} ${process.env.SLAVE_STORAGE}/${presentation.id}`, (err, stderr, stdout) => {
+                                    if (err) {
                                         console.log('Error on sending media to specific storages')
                                         reject()
                                     }
-                                    else{
+                                    else {
                                         console.log('Success on sending the media to specific storage')
                                         resolve()
                                     }
                                 })
                             })
-                            .then(() =>{
-                                //delete all temp
-                                new Promise((resolve,reject) =>{
-                                    exec(`rm -rf ${process.env.HOME}/temp; rm ${process.env.FILE_PATH}/storage/all/"${filename}"`,(err,stder,stdout) =>{
-                                        if(err){
-                                            console.log('Error on deleting')
-                                            reject()
-                                        }
-                                        else{
-                                            console.log('Success on deleting')
-                                            resolve()
-                                        }
+                                .then(() => {
+                                    //delete all temp
+                                    new Promise((resolve, reject) => {
+                                        exec(`rm -rf ${process.env.HOME}/temp; rm ${process.env.FILE_PATH}/storage/all/"${filename}"`, (err, stder, stdout) => {
+                                            if (err) {
+                                                console.log('Error on deleting')
+                                                reject()
+                                            }
+                                            else {
+                                                console.log('Success on deleting')
+                                                resolve()
+                                            }
+                                        })
                                     })
+                                        .then(() => {
+                                            resolve({ status: 200, msg: "Presentation imported with success!" })
+                                        })
+                                        .catch(() => {
+                                            reject({ status: 500, msg: "Internal server error. Error importing presentation" })
+                                        })
+
                                 })
-                                .then(() =>{
-                                    resolve({ status: 200, msg: "Presentation imported with success!" })
-                                })
-                                .catch(() =>{
-                                    reject({status: 500, msg: "Internal server error. Error importing presentation"})
-                                })
-                                
-                            })
                         })
                 })
         })
 
- 
- 
-         //get the media information from each screen and save on the correct places
- 
-         //delete the tmp folder and its contents 
- 
-         //delete the .zip inside the storage/all/
- 
+
+
+        //get the media information from each screen and save on the correct places
+
+        //delete the tmp folder and its contents 
+
+        //delete the .zip inside the storage/all/
+
     },
     deleteTempExportedFiles: function (pathToZip, maxscreens) {
         // delete zip
