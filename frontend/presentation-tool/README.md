@@ -41,6 +41,8 @@ sudo npm install -g @vue/cli
 
 #### Configure the environment variables
 
+**IMPORTANT:** The environments variables are very important for the functionality of the User interface. If any changes were made in the computer, either renamed/moved directories or change of IP addresses and ports, make sure to ALWAYS update you .env file with the new configuration, as it won't be updated by its own.
+
 Create the environment variables needed for the project to connect the interface with the API that is running on the Liquid Galaxy
 
 1. Still on the */frontend/presentation-tool* directory, create a file with the name *.env*
