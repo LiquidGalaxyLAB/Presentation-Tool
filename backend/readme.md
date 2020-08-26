@@ -147,13 +147,25 @@ sudo apt install libxext-dev
 
 #### 7. Install FFPLAY
 
+**INSTALL ON ALL MACHINES**
+
 FFPLAY is used to play audio. Intall it by using the command below or by looking at the official documentation [here](https://ffmpeg.org/ffplay.html)
 
 ```
 sudo apt install ffplay
 ```
 
-#### 8. Install Image Magick
+#### 8. Install ffmpeg
+
+**INSTALL ON ALL MACHINES**
+
+ffmpeg is used to get information about the videos resolution. Install it using:
+
+```
+sudo apt install ffmpeg
+```
+
+#### 9. Install Image Magick
 
 **INSTALL ON MASTER ONLY**
 
