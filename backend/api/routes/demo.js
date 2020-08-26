@@ -31,9 +31,9 @@ module.exports = router
 
 async function demoPresentation() {
     return new Promise(async (resolve, reject) => {
-        var dir = `${process.env.FILE_PATH}/storage/4977f5510-b354-4e48-8d40-688cc6ba3659`
+        var dir = `${process.env.FILE_PATH}/storage/c9e27e95-104c-44a8-b89f-3d0779cba5c1`
         if(fs.existsSync(dir)){
-            await parser.executePresentation('5f18a16a4417a6565c3ecddf').then((response) =>{
+            await parser.executePresentation('5f467668f89ee33050a7109').then((response) =>{
                 resolve(response)
             })
             .catch((err) =>{
@@ -43,7 +43,7 @@ async function demoPresentation() {
         else{
             return new Promise((resolve, reject) => {
                 // copy .zip to storage/all
-                exec(`cp ${process.env.FILE_PATH}/utils/Brasil.zip ${process.env.FILE_PATH}/storage/all`, (err, stdout, stderr) => {
+                exec(`cp ${process.env.FILE_PATH}/utils/Brasil ${process.env.FILE_PATH}/storage/all`, (err, stdout, stderr) => {
                     if (err) {
                         console.log('Error on copy')
                         reject({ status: 500, msg: 'Internal Server Error. Unable to copy to new directory' })
@@ -54,7 +54,7 @@ async function demoPresentation() {
                 })
             }).then(async () => {
                 // import zip
-                await parser.importPresentation('Brasil.zip')
+                await parser.importPresentation('Brasil')
                     .then(async (response) => {
                         console.log('RESPONSE', response)
                         // execute presentation
