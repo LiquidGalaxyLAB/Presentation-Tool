@@ -31,7 +31,7 @@ module.exports = router
 
 async function demoPresentation() {
     return new Promise(async (resolve, reject) => {
-        var dir = `${process.env.FILE_PATH}/storage/4977f5510-b354-4e48-8d40-688cc6ba3659`
+        var dir = `${process.env.FILE_PATH}/storage/497f5510-b354-4e48-8d40-688cc6ba3659`
         if(fs.existsSync(dir)){
             await parser.executePresentation('5f18a16a4417a6565c3ecddf').then((response) =>{
                 resolve(response)
