@@ -3,6 +3,7 @@ const archiver = require('archiver')
 var fs = require('fs')
 const { exec } = require('child_process')
 const extract = require('extract-zip')
+const gdrive = require('../../../gdrive/index')
 
 module.exports = {
     exportPresentation: async function (id) {
@@ -38,6 +39,10 @@ module.exports = {
                     output.on('close', function () {
                         console.log(archive.pointer() + ' total bytes');
                         console.log('archiver has been finalized and the output file descriptor has closed.');
+
+                        // calls to upload to gdrive
+                        gdrive.uploadFile(output.path)
+
                         resolve({ status: 200, path: output.path, maxscreens: p[0].maxscreens })
                     });
 

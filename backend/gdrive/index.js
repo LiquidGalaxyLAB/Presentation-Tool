@@ -88,3 +88,28 @@ function listFiles(auth) {
     }
   });
 }
+
+// Uploads a export file to google drive
+module.exports = {
+  uploadFile: function (filename){
+    var fileMetadata = {
+      'name': filename
+    };
+    var media = {
+      mimeType: 'application/zip',
+      body: fs.createReadStream(`${process.env.FILE_PATH}/storage/all/${filename}`)
+    };
+    drive.files.create({
+      resource: fileMetadata,
+      media: media,
+      fields: 'id'
+    }, function (err, file) {
+      if (err) {
+        // Handle error
+        console.error(err);
+      } else {
+        console.log('File Id: ', file.id);
+      }
+    });
+  }
+}
