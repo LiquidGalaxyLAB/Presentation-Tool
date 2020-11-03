@@ -1,5 +1,6 @@
 const parser = require('../parser/main')
 const express = require('express')
+const { authenticateToken } = require('../parser/modules/authentication')
 const router = express.Router()
 
 /**
@@ -76,7 +77,7 @@ router.get("/stop", (req, res, next) => {
  *       500:
  *         description: Internal Server Error. An error occured while getting documents from the database
  */
-router.get("/getall", (req, res, next) => {
+router.get("/getall", authenticateToken, (req, res, next) => {
     getAllPresentations().then((array) => {
         console.log('array', array)
         res.status(200).send(array)
