@@ -30,10 +30,10 @@ SIZETOCROP="${IMAGECROPX}x${IMAGEHEIGHT}"
 
 
 # left side
-magick "${IMAGEPATH}" -crop $SIZETOCROP+0+0 "${HOME}/Left${IMAGENAME}"
+convert "${IMAGEPATH}" -crop $SIZETOCROP+0+0 "${HOME}/Left${IMAGENAME}"
 
 # right side
-magick "${IMAGEPATH}" -crop $SIZETOCROP+$IMAGECROPX+0 "${HOME}/Right${IMAGENAME}"
+convert "${IMAGEPATH}" -crop $SIZETOCROP+$IMAGECROPX+0 "${HOME}/Right${IMAGENAME}"
 
 # send cropped images to storage in the correct slaves
 
