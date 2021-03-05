@@ -41,16 +41,15 @@ if [ $LEFTSCREEN != "1" ]; then
 	scp ${HOME}/Left${IMAGENAME} lg${LEFTSCREEN}:${LEFTDESTINATION}/
 	rm ${HOME}/Left${IMAGENAME}
 else
-	#cp /home/lg/cat.jpg /home/lg/Documents
 	cp ${HOME}/"Left${IMAGENAME}" $LEFTDESTINATION/
-	#rm ${HOME}/Left${IMAGENAME}
+	rm ${HOME}/Left${IMAGENAME}
 fi
 
 if [ $RIGHTSCREEN != "1" ]; then
 	scp ${HOME}/Right${IMAGENAME} lg${RIGHTSCREEN}:${RIGHTDESTINATION}/
 	rm ${HOME}/Right${IMAGENAME}
 else
-	"cp ${HOME}/Right${IMAGENAME}" "$RIGHTDESTINATION/"
+	cp ${HOME}/"Right${IMAGENAME}" "$RIGHTDESTINATION/"
 	rm ${HOME}/Right${IMAGENAME}
 fi
 	
