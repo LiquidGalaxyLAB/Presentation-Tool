@@ -10,7 +10,7 @@ const fs = require('fs')
  * /demo:
  *   get:
  *     tags:
- *      - demo
+ *      - demo (DEPRECATED)
  *     description: Launches a demo presentation
  *     responses:
  *       200:

@@ -59,7 +59,7 @@
           ></v-text-field>
         </v-col>
       </v-row>
-      <v-switch v-model="presentation.openlogos" label="Display partner's logos on Liquid Galaxy"></v-switch>
+      <!-- <v-switch v-model="presentation.openlogos" label="Display partner's logos on Liquid Galaxy"></v-switch> -->
       <div v-if="!editingAudio">
         <v-switch v-model="audio" label="One audio for the whole presentation" :readonly="edit"></v-switch>
         <v-file-input
