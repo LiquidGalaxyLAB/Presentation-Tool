@@ -218,11 +218,23 @@ async function openSharedImage(media, screen) {
     if (media.position == "middle") {
         runOpenMidImageSharing(screen, media.partner, leftDest, rightDest)
     } else {
-        runOpenScript('Image', screen, leftDest, media.position)
-        runOpenScript('Image', media.partner, rightDest, media.position)
+        runOpenImageSharing(screen, media.partner, leftDest, rightDest,media.position)
     }
 
+}
 
+function runOpenImageSharing(leftScreen, rightScreen, leftDest, rightDest,position) {
+    exec(`${process.env.FILE_PATH}/api/parser/scripts/openImageSharing.sh ${leftScreen} ${rightScreen} ${leftDest} ${rightDest} ${position}`, (err, stdout, stderr) => {
+        if (err) {
+            console.error(err)
+        }
+        if (stderr) {
+            console.log(`stderr: ${stderr}`);
+        }
+        else {
+            console.log(`stdout: ${stdout}`);
+        }
+    })
 }
 
 function runOpenMidImageSharing(leftScreen, rightScreen, leftDest, rightDest) {

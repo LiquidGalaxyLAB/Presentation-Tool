@@ -51,8 +51,7 @@ fi
 if [ "$POSITION" = "top" ]; then
     YPOSITION=0
 elif [ "$POSITION" = "center" ]; then
-    YPOSITION=$HEIGHT
-    echo "here"  
+    YPOSITION=$HEIGHT 
 elif [ "$POSITION" = "bottom" ]; then
     YPOSITION=$((2*HEIGHT))
 else
