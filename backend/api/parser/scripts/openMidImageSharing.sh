@@ -7,7 +7,6 @@ RIGHTSCREEN=$2
 LEFT_FILE_PATH=$3
 RIGHT_FILE_PATH=$4
 
-LG_MAX=$(sed "2q;d" ${HOME}/personavars.txt)      # maximum screens this lg has
 ORIENTATION=$(xrandr --query --verbose | grep -w "connected" | cut -d ' ' -f 6)
 DIMENSION_LARGEST=$(xrandr | grep '*' | head -n1 | awk '{print $1}' | cut -d 'x' -f1) # gets the screen dimension of the largest side
 DIMENSION_SHORTEST=$(xrandr | grep '*' | head -n1 | awk '{print $1}' | cut -d 'x' -f2) # gets the screen dimension of the shortest side

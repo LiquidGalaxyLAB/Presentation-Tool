@@ -18,31 +18,38 @@
           </v-col>
           <v-col cols="12" md="6" sm="5" class="teal">
             <v-row class="ma-0">
-              <h1 class="pl-3 pt-12 white--text text-center">Welcome to the Presentation Tool project!</h1>
+              <h1 class="pl-3 pt-12 white--text text-center">
+                Welcome to the Presentation Tool project!
+              </h1>
             </v-row>
             <v-row class="ma-0">
-              <h3 class="pl-3 pt-12 white--text">{{desc}}</h3>
+              <h3 class="pl-3 pt-12 white--text">{{ desc }}</h3>
             </v-row>
             <v-row class="ma-0">
-              <h3 class="pl-3 pt-12 white--text">{{thanks}}</h3>
+              <h3 class="pl-3 pt-12 white--text">{{ thanks }}</h3>
             </v-row>
-            <v-row class="mt-12 ml-0 mr-0 pt-6 pb-12" justify="space-around" align="center">
+            <v-row
+              class="mt-12 ml-0 mr-0 pt-6 pb-12"
+              justify="space-around"
+              align="center"
+            >
               <v-btn dark @click="explore()">
                 Explore
                 <v-icon right>mdi-open-in-new</v-icon>
               </v-btn>
-              <v-btn color="grey lighten-2" @click="launchDemo()">
+              <!-- <v-btn color="grey lighten-2" @click="launchDemo()">
                 Launch a demo
                 <v-icon right>mdi-play-circle-outline</v-icon>
-              </v-btn>
+              </v-btn> -->
             </v-row>
           </v-col>
         </v-row>
         <v-footer absolute color="black">
           <v-spacer />
-          <h4
-            class="white--text pl-3"
-          >&copy; {{new Date().getFullYear()}} - Karine Aparecida Pistili Rodrigues</h4>
+          <h4 class="white--text pl-3">
+            &copy; {{ new Date().getFullYear() }} - Karine Aparecida Pistili
+            Rodrigues
+          </h4>
         </v-footer>
       </v-card>
     </v-dialog>
@@ -68,18 +75,18 @@ export default {
   data() {
     return {
       importDialog: false,
-      about: true,
+      about: false,
       desc: `A tool to empower the Liquid Galaxy capability by proposing programatical display of different types of media alongside Google Earth`,
       thanks: `This is a Google Summer of Code 2020 project for the Liquid Galaxy organization. Special thanks to Google Summer of Code, Liquid Galaxy LAB and to all involved partners.`,
     };
   },
   methods: {
-    explore(){
-      this.about = false
-      this.$store.commit('setFirstEnter',false)
+    explore() {
+      this.about = false;
+      this.$store.commit("setFirstEnter", false);
     },
     launchDemo() {
-      this.$store.dispatch('launchDemo')
+      this.$store.dispatch("launchDemo");
     },
   },
   computed: {
@@ -89,8 +96,6 @@ export default {
   },
   created() {
     this.$store.dispatch("getAllPresentations");
-    if(!this.$store.state.utilsStore.first_enter)
-      this.about = false
   },
 };
 </script>
