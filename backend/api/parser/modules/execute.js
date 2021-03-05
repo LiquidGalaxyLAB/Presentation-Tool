@@ -19,8 +19,8 @@ module.exports = {
         for (var i = 0; i < presentationJson.slides.length; i++) {
             // show partner logos
             if (presentationJson.openlogos) {
-               // openLogos(presentationJson.maxscreens)
-               openLogos(4) //will always open on screen 4
+                // openLogos(presentationJson.maxscreens)
+                openLogos(4) //will always open on screen 4
             }
             if (playing) {
                 console.log('SLIDE', presentationJson.slides[i])
@@ -245,7 +245,11 @@ function openSharedVideo(media, screen) {
 }
 
 function flyTo(destination) {
-    fs.writeFile(`/tmp/query.txt`, `search=${destination}`, (err) => {
+    let mode
+    if (destination.includes('<LookAt>')) mode = 'flytoview'
+    else mode = 'search'
+
+    fs.writeFile(`/tmp/query.txt`, `${mode}=${destination}`, (err) => {
         if (err) {
             console.log('Error on writing query.txt')
             throw err
