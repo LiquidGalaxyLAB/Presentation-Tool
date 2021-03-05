@@ -102,7 +102,7 @@ export default {
       if (!this.edit) {
         this.$store.dispatch("createSlideToPresentation", this.slide);
       } else {
-        console.log('editing')
+        this.$store.dispatch("editSlideOnPresentation",this.slide)
       }
       this.show = false;
     },

@@ -81,14 +81,16 @@ export default {
             commit('setSlideToPresentation', {index: index, slide: payload})
         },
         editSlideOnPresentation({commit,state},payload){
-            console.log('editedslide',payload)
             var index
+            if (payload.file != null) {
+                payload.audiopath = utils.generateStoragePathName(state.presentation.id, payload.file.name)
+            }
             state.presentation.slides.forEach((slide,i) =>{
                 if(slide.id == payload.id){
                     index = i
                 }
             })
-            commit('setSlideToPresentation',{index:index, payload})
+            commit('setSlideToPresentation',{index:index, slide:payload})
         },
         deleteSlide({commit,state},payload){
             console.log('payload',payload)
