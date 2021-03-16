@@ -1,10 +1,12 @@
 const mongoose = require('mongoose')
 
 //connects to the presentationDB database located in the localhost
-module.exports = mongoose.connect(`mongodb://localhost:27017/presentationsDB`,{
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-})
+module.exports = mongoose.connect(`mongodb://mongo:27017/presentationsDB`,{
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useFindAndModify: false,
+  useCreateIndex: true
+});
 
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
